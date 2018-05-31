@@ -57,91 +57,99 @@
     <Reference Include="C1.Win.C1Ribbon.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1SplitContainer.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="C1.Win.C1TrueDBGrid.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=75ae3fb0e2b1e0da, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\DLL\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Renci.SshNet">
-      <HintPath>..\..\DLL\Renci.SshNet.dll</HintPath>
+    <Reference Include="Renci.SshNet, Version=2014.4.6.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Renci.SshNet.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.Analyst">
-      <HintPath>..\..\DLL\simpi.Analyst.dll</HintPath>
+    <Reference Include="simpi.Analyst, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.Analyst.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.Codeset">
-      <HintPath>..\..\DLL\simpi.Codeset.dll</HintPath>
+    <Reference Include="simpi.Codeset, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.Codeset.dll</HintPath>
     </Reference>
     <Reference Include="simpi.CoreBilling">
-      <HintPath>..\..\DLL\simpi.CoreBilling.dll</HintPath>
+      <HintPath>..\DLL\simpi.CoreBilling.dll</HintPath>
     </Reference>
     <Reference Include="simpi.CoreCompliance">
-      <HintPath>..\..\DLL\simpi.CoreCompliance.dll</HintPath>
+      <HintPath>..\DLL\simpi.CoreCompliance.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.CoreData">
-      <HintPath>..\..\DLL\simpi.CoreData.dll</HintPath>
+    <Reference Include="simpi.CoreData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.CoreData.dll</HintPath>
     </Reference>
     <Reference Include="simpi.GlobalConnection">
-      <HintPath>..\..\DLL\simpi.GlobalConnection.dll</HintPath>
+      <HintPath>..\DLL\simpi.GlobalConnection.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.GlobalUtilities">
-      <HintPath>..\..\DLL\simpi.GlobalUtilities.dll</HintPath>
+    <Reference Include="simpi.GlobalCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.GlobalCore.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.GlobalUtilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.GlobalUtilities.dll</HintPath>
     </Reference>
     <Reference Include="simpi.MarketCompany">
-      <HintPath>..\..\DLL\simpi.MarketCompany.dll</HintPath>
+      <HintPath>..\DLL\simpi.MarketCompany.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.MarketDatabase">
-      <HintPath>..\..\DLL\simpi.MarketDatabase.dll</HintPath>
-    </Reference>
-    <Reference Include="simpi.MarketInstrument, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DLL\simpi.MarketInstrument.dll</HintPath>
+    <Reference Include="simpi.MarketInstrument">
+      <HintPath>..\DLL\simpi.MarketInstrument.dll</HintPath>
     </Reference>
     <Reference Include="simpi.MasterClient">
-      <HintPath>..\..\DLL\simpi.MasterClient.dll</HintPath>
+      <HintPath>..\DLL\simpi.MasterClient.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.MasterPortfolio">
-      <HintPath>..\..\DLL\simpi.MasterPortfolio.dll</HintPath>
+    <Reference Include="simpi.MasterPortfolio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.MasterPortfolio.dll</HintPath>
     </Reference>
     <Reference Include="simpi.MasterSales">
-      <HintPath>..\..\DLL\simpi.MasterSales.dll</HintPath>
+      <HintPath>..\DLL\simpi.MasterSales.dll</HintPath>
     </Reference>
     <Reference Include="simpi.MasterSecurities">
-      <HintPath>..\..\DLL\simpi.MasterSecurities.dll</HintPath>
+      <HintPath>..\DLL\simpi.MasterSecurities.dll</HintPath>
     </Reference>
     <Reference Include="simpi.MasterSimpi">
-      <HintPath>..\..\DLL\simpi.MasterSimpi.dll</HintPath>
+      <HintPath>..\DLL\simpi.MasterSimpi.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.ParameterBank, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DLL\simpi.ParameterBank.dll</HintPath>
+    <Reference Include="simpi.ParameterBank">
+      <HintPath>..\DLL\simpi.ParameterBank.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterClient">
-      <HintPath>..\..\DLL\simpi.ParameterClient.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterClient.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterFA">
-      <HintPath>..\..\DLL\simpi.ParameterFA.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterFA.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterPortfolio">
-      <HintPath>..\..\DLL\simpi.ParameterPortfolio.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterPortfolio.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterSecurities">
-      <HintPath>..\..\DLL\simpi.ParameterSecurities.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterSecurities.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterSimpi">
-      <HintPath>..\..\DLL\simpi.ParameterSimpi.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterSimpi.dll</HintPath>
     </Reference>
     <Reference Include="simpi.ParameterTA">
-      <HintPath>..\..\DLL\simpi.ParameterTA.dll</HintPath>
+      <HintPath>..\DLL\simpi.ParameterTA.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.SimpiAccess">
-      <HintPath>..\..\DLL\simpi.SimpiAccess.dll</HintPath>
+    <Reference Include="simpi.SimpiAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.SimpiAccess.dll</HintPath>
     </Reference>
     <Reference Include="simpi.SimpiLogin">
-      <HintPath>..\..\DLL\simpi.SimpiLogin.dll</HintPath>
+      <HintPath>..\DLL\simpi.SimpiLogin.dll</HintPath>
     </Reference>
     <Reference Include="simpi.SimpiMaster">
-      <HintPath>..\..\DLL\simpi.SimpiMaster.dll</HintPath>
+      <HintPath>..\DLL\simpi.SimpiMaster.dll</HintPath>
     </Reference>
-    <Reference Include="simpi.SystemLog">
-      <HintPath>..\..\DLL\simpi.SystemLog.dll</HintPath>
+    <Reference Include="simpi.SystemLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\simpi.SystemLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
