@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnLoad.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAIISURBVDhPnZJPSBtBFMZHFBX/lYKiIbszUlMEqQcLRRG8
+        ePLkqQHBQuNsFCy0Fry1tUHoqRUh7ipGdLYqKsRCQfEinrwIHtpDD72W4kFBKFTdVdSs30ySskkrFRce
+        Mzsz32/evPcR4vsSgYEymxphm/F1QfkBxktBDRfxxWbGa5s9rfefz5mLhogO8RxERzjs2ZSfYr6LMG3W
+        9xJjROjRjmRTuPgvCMh1EGwoIQK3f4WgZ4kO3r32xuxGkoQLBTPeZ8UQbs/W88b/CrMHhNb/CIC9TNr7
+        gva330TsWTUVXowUEbz7LQCpDGApRmJFfoAb1xscU+txJ2hnaraxUu79TgSqHZNOnljBVoIKf/7zdsZf
+        +cWpeKjEtfRPrkU9x6IORGsnU6zNNek45hdYGyG4fcsHGPUDPI8UuJbWJYWAHEqQa+oHEqagWJcZrPgL
+        CC9U59cArSk9NulDiN4B8EOBFIzuEqHzIVT+XLWPGReImZlgVPtXIWVGZ6bWjAw2M9nsEBGM3Effv6ez
+        4JfpML5J580z3hIPPS/Jh0kIbv+JbFbVHjrxQjpQ+YHyaYxO2lDGL/lv1TyryKlNkhQCsOxYbFitL4Z6
+        qz7qvFsehCtL52j0MYBr0pGIsYXaJ+X5ADzjzdmU9uBaz8jUE/cG7uT7QgrQ3irpC2Wk23xeIlCW+lCb
+        k9VtOEpzBRx7DcWm/CzJAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="imgAUM.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAGOSURBVDhPldJJSAJRAMbx7iKFaTMeu0VQHroE7UUHnZwk
+        R1tQWySyugW2UUTRtahjnQ2SCEGhhZaxwlYzby0kUdQhy+zQpdPXe3OIIhNn4M/jMfN+D96brKw0T1+E
+        Ry8p3Tf/vnNFjEgghM33dvSHBXkI3ZUuXkva4XtpxOKjGa5jS2aI64xHEocIJB3wvgrwxgUsP5PxRUDn
+        jik9QhfTnf1vDnieTVgiC2meuIXMrRiNWNAttqVGnCKPT1xg72MYvkQ3VuJdWHgyYuy6ELZoNuxRFZyX
+        avTE8sBOKX8jHVuNoNk3jN8FkgNoPc+GLaKC7UID/W4uctwKKdWg4i/y8zooNP9gQEtYg2aS9ZxB7VZe
+        ZodIIQrM3HMwnzEwnzBoOmVRta7OHNDNFmH6jkPDISNlOGJRFpAJTMY46EOMlCHEotQvExi/5VC/z5IY
+        1JGxxCcXuOFQG2RQE2RRfaCFblUmMHLNo1JkpSpELYq9MgH3FY/ybXJ4pHICFC3LBArm8sFMKKXon6ca
+        UqS8xi82DgZ1RQ5+PwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="imgFee.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAGOSURBVDhPldJJSAJRAMbx7iKFaTMeu0VQHroE7UUHnZwk
+        R1tQWySyugW2UUTRtahjnQ2SCEGhhZaxwlYzby0kUdQhy+zQpdPXe3OIIhNn4M/jMfN+D96brKw0T1+E
+        Ry8p3Tf/vnNFjEgghM33dvSHBXkI3ZUuXkva4XtpxOKjGa5jS2aI64xHEocIJB3wvgrwxgUsP5PxRUDn
+        jik9QhfTnf1vDnieTVgiC2meuIXMrRiNWNAttqVGnCKPT1xg72MYvkQ3VuJdWHgyYuy6ELZoNuxRFZyX
+        avTE8sBOKX8jHVuNoNk3jN8FkgNoPc+GLaKC7UID/W4uctwKKdWg4i/y8zooNP9gQEtYg2aS9ZxB7VZe
+        ZodIIQrM3HMwnzEwnzBoOmVRta7OHNDNFmH6jkPDISNlOGJRFpAJTMY46EOMlCHEotQvExi/5VC/z5IY
+        1JGxxCcXuOFQG2RQE2RRfaCFblUmMHLNo1JkpSpELYq9MgH3FY/ybXJ4pHICFC3LBArm8sFMKKXon6ca
+        UqS8xi82DgZ1RQ5+PwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="imgSales.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAGgSURBVDhPlZJPKINhHMedZkNry7+02d537yzGGFshmYSR
+        o0RJOXBYDtqY0pZ/aWo3kosDV4V2UIiLi7uzo5vDWvvzPs+7P/p63klSw96nvvX09Pw+v+/vT0VFiZPZ
+        WIcYjSC9v4tUZAcJpngwgFJ/S769Pz8gf3eK3NEacocB5A9WIIYXFQJuz74BDCKGlsoH5G4ukL8+YdmZ
+        g6gPWZ8XyVGnAsB9DIXYMaTpHtBJO6RJB9K9LeUDpL0gctsLoBMO0PEOSKPtSLkEhYDQPOiYHXSEORhu
+        Q6rbogCwFYC0Ogs6ZAP1MA3YkOwwKwBs+iH5Z1hgC0i/FbRPQLLN9Dsgo6tHRt+AtLYWCbUeNOxHdnkK
+        xM2DuHhQJ4+EYMBdZXVRV5VVRf1YIhlSeDyHNOcB9XaBDraCODmQTqZ2E6jdjAJzATuHS5WmtJuERlcc
+        H3VbQVqNTCYQG5PA7rwRLzo9HtQ1f/dChsgLJDosINZmEAsL5gzImg3/B3/V9KbRFksReZa9qRHxugY8
+        VWnLn4IMelVVf/aCMysP/nIiZ/0v8wdpIxA8KcOJNwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="imgAccount.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAGgSURBVDhPlZJPKINhHMedZkNry7+02d537yzGGFshmYSR
+        o0RJOXBYDtqY0pZ/aWo3kosDV4V2UIiLi7uzo5vDWvvzPs+7P/p63klSw96nvvX09Pw+v+/vT0VFiZPZ
+        WIcYjSC9v4tUZAcJpngwgFJ/S769Pz8gf3eK3NEacocB5A9WIIYXFQJuz74BDCKGlsoH5G4ukL8+YdmZ
+        g6gPWZ8XyVGnAsB9DIXYMaTpHtBJO6RJB9K9LeUDpL0gctsLoBMO0PEOSKPtSLkEhYDQPOiYHXSEORhu
+        Q6rbogCwFYC0Ogs6ZAP1MA3YkOwwKwBs+iH5Z1hgC0i/FbRPQLLN9Dsgo6tHRt+AtLYWCbUeNOxHdnkK
+        xM2DuHhQJ4+EYMBdZXVRV5VVRf1YIhlSeDyHNOcB9XaBDraCODmQTqZ2E6jdjAJzATuHS5WmtJuERlcc
+        H3VbQVqNTCYQG5PA7rwRLzo9HtQ1f/dChsgLJDosINZmEAsL5gzImg3/B3/V9KbRFksReZa9qRHxugY8
+        VWnLn4IMelVVf/aCMysP/nIiZ/0v8wdpIxA8KcOJNwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="imgCommission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAGOSURBVDhPldJJSAJRAMbx7iKFaTMeu0VQHroE7UUHnZwk
+        R1tQWySyugW2UUTRtahjnQ2SCEGhhZaxwlYzby0kUdQhy+zQpdPXe3OIIhNn4M/jMfN+D96brKw0T1+E
+        Ry8p3Tf/vnNFjEgghM33dvSHBXkI3ZUuXkva4XtpxOKjGa5jS2aI64xHEocIJB3wvgrwxgUsP5PxRUDn
+        jik9QhfTnf1vDnieTVgiC2meuIXMrRiNWNAttqVGnCKPT1xg72MYvkQ3VuJdWHgyYuy6ELZoNuxRFZyX
+        avTE8sBOKX8jHVuNoNk3jN8FkgNoPc+GLaKC7UID/W4uctwKKdWg4i/y8zooNP9gQEtYg2aS9ZxB7VZe
+        ZodIIQrM3HMwnzEwnzBoOmVRta7OHNDNFmH6jkPDISNlOGJRFpAJTMY46EOMlCHEotQvExi/5VC/z5IY
+        1JGxxCcXuOFQG2RQE2RRfaCFblUmMHLNo1JkpSpELYq9MgH3FY/ybXJ4pHICFC3LBArm8sFMKKXon6ca
+        UqS8xi82DgZ1RQ5+PwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="chartNAV.PropBag" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;&lt;Chart2DPropBag Version="4.0.20151.38"&gt;&lt;StyleCollection&gt;&lt;NamedStyle Name="Legend" ParentName="Legend.default" StyleData="AlignHorz=Center;AlignVert=Top;" /&gt;&lt;NamedStyle Name="Area" ParentName="Area.default" StyleData="BackColor=Window;Border=Solid,ControlDark,1;Rounding=10 10 10 10;" /&gt;&lt;NamedStyle Name="Control" ParentName="Control.default" StyleData="BackColor=White;Border=Solid,ControlDark,1;ForeColor=30, 57, 91;" /&gt;&lt;NamedStyle Name="Header" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;Wrap=False;" /&gt;&lt;NamedStyle Name="AxisY" ParentName="Area" StyleData="AlignHorz=Near;AlignVert=Center;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate270;" /&gt;&lt;NamedStyle Name="AxisY2" ParentName="Area" StyleData="AlignHorz=Far;AlignVert=Center;ForeColor=ControlDarkDark;Rotation=Rotate90;" /&gt;&lt;NamedStyle Name="Footer" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Control.default" ParentName="" StyleData="BackColor=Control;Border=None,Transparent,1;ForeColor=ControlText;" /&gt;&lt;NamedStyle Name="LabelStyleDefault" ParentName="LabelStyleDefault.default" /&gt;&lt;NamedStyle Name="Area.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="PlotArea" ParentName="Area" StyleData="BackColor=Cyan;BackColor2=Lime;Border=None,Transparent,1;GradientStyle=DiagonalCenter;HatchStyle=None;Opaque=True;" /&gt;&lt;NamedStyle Name="LabelStyleDefault.default" ParentName="Control" StyleData="BackColor=Transparent;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="AxisX" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Bottom;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;/StyleCollection&gt;&lt;ChartGroupsCollection&gt;&lt;ChartGroup Name="Group1" Use3D="False"&gt;&lt;DataSerializer DefaultSet="True"&gt;&lt;DataSeriesCollection&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="Black" /&gt;&lt;SymbolStyle Size="2" Color="LightPink" OutlineColor="Red" Shape="Box" /&gt;&lt;SeriesLabel&gt;AUM&lt;/SeriesLabel&gt;&lt;X&gt;1;2;3;4;5&lt;/X&gt;&lt;Y&gt;20;22;19;24;25&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="DarkGray" /&gt;&lt;SymbolStyle Color="CornflowerBlue" Shape="Dot" /&gt;&lt;SeriesLabel&gt;Sales&lt;/SeriesLabel&gt;&lt;X&gt;1;2;3;4;5&lt;/X&gt;&lt;Y&gt;5;10;0;4;7&lt;/Y&gt;&lt;DataTypes&gt;Double;Double;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;/DataSeriesCollection&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;ChartGroup Name="Group2"&gt;&lt;DataSerializer&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;/ChartGroupsCollection&gt;&lt;Header Compass="North" Visible="False" /&gt;&lt;Footer Compass="South" Visible="False" /&gt;&lt;Legend Compass="South" Visible="False" /&gt;&lt;ChartArea LocationDefault="-1, -1" SizeDefault="-1, -1" PlotLocation="-1, -1" PlotSize="-1, -1"&gt;&lt;Margin /&gt;&lt;/ChartArea&gt;&lt;Axes&gt;&lt;Axis Max="5" Min="1" UnitMajor="1" UnitMinor="0.5" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" _onTop="-1" Compass="South"&gt;&lt;GridMajor Visible="True" Spacing="1" /&gt;&lt;/Axis&gt;&lt;Axis Max="25" Min="0" UnitMajor="5" UnitMinor="2.5" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" _onTop="-1" Compass="West"&gt;&lt;GridMajor Visible="True" Spacing="5" /&gt;&lt;/Axis&gt;&lt;Axis Max="0" Min="0" UnitMajor="0" UnitMinor="0" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="East"&gt;&lt;Text&gt;Axis Y2&lt;/Text&gt;&lt;/Axis&gt;&lt;/Axes&gt;&lt;AutoLabelArrangement /&gt;&lt;VisualEffectsData&gt;45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group1=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group0=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1&lt;/VisualEffectsData&gt;&lt;/Chart2DPropBag&gt;</value>
+  </data>
+  <data name="chartSales.PropBag" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;&lt;Chart2DPropBag Version="4.0.20151.38"&gt;&lt;StyleCollection&gt;&lt;NamedStyle Name="Legend" ParentName="Legend.default" StyleData="AlignHorz=Center;AlignVert=Top;" /&gt;&lt;NamedStyle Name="Area" ParentName="Area.default" StyleData="BackColor=Window;Border=Solid,ControlDark,1;Rounding=10 10 10 10;" /&gt;&lt;NamedStyle Name="Control" ParentName="Control.default" StyleData="BackColor=White;Border=Solid,ControlDark,1;ForeColor=30, 57, 91;" /&gt;&lt;NamedStyle Name="Header" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;Wrap=False;" /&gt;&lt;NamedStyle Name="AxisY" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Bottom;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="AxisY2" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Top;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="Footer" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Control.default" ParentName="" StyleData="BackColor=Control;Border=None,Transparent,1;ForeColor=ControlText;" /&gt;&lt;NamedStyle Name="LabelStyleDefault" ParentName="LabelStyleDefault.default" /&gt;&lt;NamedStyle Name="Area.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="PlotArea" ParentName="Area" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="LabelStyleDefault.default" ParentName="Control" StyleData="BackColor=Transparent;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="AxisX" ParentName="Area" StyleData="AlignHorz=Near;AlignVert=Center;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate270;" /&gt;&lt;/StyleCollection&gt;&lt;ChartGroupsCollection&gt;&lt;ChartGroup Name="Group1" ChartType="Bar" Use3D="False"&gt;&lt;DataSerializer DefaultSet="True"&gt;&lt;DataSeriesCollection&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightPink" /&gt;&lt;SymbolStyle Color="LightPink" OutlineColor="DeepPink" Shape="Box" /&gt;&lt;SeriesLabel&gt;Agent A&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;20&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightBlue" /&gt;&lt;SymbolStyle Color="LightBlue" OutlineColor="DarkBlue" Shape="Dot" /&gt;&lt;SeriesLabel&gt;Agent B&lt;/SeriesLabel&gt;&lt;X&gt;2&lt;/X&gt;&lt;Y&gt;14&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightGreen" /&gt;&lt;SymbolStyle Color="LightGreen" OutlineColor="DarkGreen" Shape="Tri" /&gt;&lt;SeriesLabel&gt;Agent C&lt;/SeriesLabel&gt;&lt;X&gt;3&lt;/X&gt;&lt;Y&gt;10&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="Orchid" /&gt;&lt;SymbolStyle Color="Orchid" OutlineColor="DarkOrchid" Shape="Diamond" /&gt;&lt;SeriesLabel&gt;Agent D&lt;/SeriesLabel&gt;&lt;X&gt;4&lt;/X&gt;&lt;Y&gt;16&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;/DataSeriesCollection&gt;&lt;PointStylesList&gt;&lt;PointStyle&gt;&lt;FillStyle /&gt;&lt;SymbolStyle Color="ControlText" Shape="Dot" /&gt;&lt;LineStyle Color="ControlText" /&gt;&lt;Label&gt;Agent A&lt;/Label&gt;&lt;/PointStyle&gt;&lt;PointStyle&gt;&lt;FillStyle /&gt;&lt;SymbolStyle Color="ControlText" Shape="Dot" /&gt;&lt;LineStyle Color="ControlText" /&gt;&lt;Label&gt;Agent B&lt;/Label&gt;&lt;/PointStyle&gt;&lt;PointStyle&gt;&lt;FillStyle /&gt;&lt;SymbolStyle Color="ControlText" Shape="Dot" /&gt;&lt;LineStyle Color="ControlText" /&gt;&lt;Label&gt;Agent C&lt;/Label&gt;&lt;/PointStyle&gt;&lt;PointStyle&gt;&lt;FillStyle /&gt;&lt;SymbolStyle Color="ControlText" Shape="Dot" /&gt;&lt;LineStyle Color="ControlText" /&gt;&lt;Label&gt;Agent D&lt;/Label&gt;&lt;/PointStyle&gt;&lt;/PointStylesList&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;ChartGroup Name="Group2"&gt;&lt;DataSerializer&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;/ChartGroupsCollection&gt;&lt;Header Compass="North" Visible="False" /&gt;&lt;Footer Compass="South" Visible="False" /&gt;&lt;Legend Compass="East" Visible="False" /&gt;&lt;ChartArea LocationDefault="-1, -1" SizeDefault="-1, -1" Inverted="True" PlotLocation="-1, -1" PlotSize="-1, -1"&gt;&lt;Margin /&gt;&lt;/ChartArea&gt;&lt;Axes&gt;&lt;Axis Max="4" Min="0" UnitMajor="1" UnitMinor="0.5" AutoMajor="True" AutoMinor="True" AutoMax="False" AutoMin="False" AnnoMethod="ValueLabels" _onTop="-1" Compass="West"&gt;&lt;GridMajor Visible="True" Spacing="1" /&gt;&lt;ValueLabels&gt;&lt;ValueLabel Text="Agent A" Value="1" /&gt;&lt;ValueLabel Text="Agent B" Value="2" /&gt;&lt;ValueLabel Text="Agent C" Value="3" /&gt;&lt;ValueLabel Text="Agent D" Value="4" /&gt;&lt;/ValueLabels&gt;&lt;/Axis&gt;&lt;Axis Max="20" Min="0" UnitMajor="5" UnitMinor="2" AutoMajor="False" AutoMinor="False" AutoMax="True" AutoMin="False" _onTop="-1" Compass="South"&gt;&lt;Text&gt;AUM&lt;/Text&gt;&lt;GridMajor Visible="True" Spacing="5" /&gt;&lt;/Axis&gt;&lt;Axis Max="0" Min="0" UnitMajor="0" UnitMinor="0" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="North"&gt;&lt;Text&gt;Axis Y2&lt;/Text&gt;&lt;/Axis&gt;&lt;/Axes&gt;&lt;AutoLabelArrangement /&gt;&lt;VisualEffectsData&gt;45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group1=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group0=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1&lt;/VisualEffectsData&gt;&lt;/Chart2DPropBag&gt;</value>
+  </data>
+  <data name="chartCity.PropBag" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;&lt;Chart2DPropBag Version="4.0.20151.38"&gt;&lt;StyleCollection&gt;&lt;NamedStyle Name="LabelStyleDefault.default" ParentName="Control" StyleData="BackColor=Transparent;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend" ParentName="Legend.default" /&gt;&lt;NamedStyle Name="Control" ParentName="Control.default" StyleData="BackColor=White;Border=Solid,ControlDark,1;ForeColor=30, 57, 91;" /&gt;&lt;NamedStyle Name="Header" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;Wrap=False;" /&gt;&lt;NamedStyle Name="AxisX" ParentName="Area" StyleData="AlignHorz=Near;AlignVert=Center;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate270;" /&gt;&lt;NamedStyle Name="AxisY2" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Top;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="Footer" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Control.default" ParentName="" StyleData="BackColor=Control;Border=None,Transparent,1;ForeColor=ControlText;" /&gt;&lt;NamedStyle Name="LabelStyleDefault" ParentName="LabelStyleDefault.default" /&gt;&lt;NamedStyle Name="Area.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="PlotArea" ParentName="Area" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="AxisY" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Bottom;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="Area" ParentName="Area.default" StyleData="BackColor=Window;Border=Solid,ControlDark,1;Rounding=10 10 10 10;" /&gt;&lt;/StyleCollection&gt;&lt;ChartGroupsCollection&gt;&lt;ChartGroup Name="Group1" ChartType="Bar" Use3D="False"&gt;&lt;DataSerializer DefaultSet="True"&gt;&lt;DataSeriesCollection&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightPink" /&gt;&lt;SymbolStyle Color="LightPink" OutlineColor="DeepPink" Shape="Box" /&gt;&lt;SeriesLabel&gt;series 0&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;20&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightBlue" /&gt;&lt;SymbolStyle Color="LightBlue" OutlineColor="DarkBlue" Shape="Dot" /&gt;&lt;SeriesLabel&gt;series 1&lt;/SeriesLabel&gt;&lt;X&gt;2&lt;/X&gt;&lt;Y&gt;8&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightGreen" /&gt;&lt;SymbolStyle Color="LightGreen" OutlineColor="DarkGreen" Shape="Tri" /&gt;&lt;SeriesLabel&gt;series 2&lt;/SeriesLabel&gt;&lt;X&gt;3&lt;/X&gt;&lt;Y&gt;10&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="Orchid" /&gt;&lt;SymbolStyle Color="Orchid" OutlineColor="DarkOrchid" Shape="Diamond" /&gt;&lt;SeriesLabel&gt;series 3&lt;/SeriesLabel&gt;&lt;X&gt;4&lt;/X&gt;&lt;Y&gt;16&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;/DataSeriesCollection&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;ChartGroup Name="Group2"&gt;&lt;DataSerializer&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;/ChartGroupsCollection&gt;&lt;Header Compass="North" Visible="False" /&gt;&lt;Footer Compass="South" Visible="False" /&gt;&lt;Legend Compass="East" Visible="False" /&gt;&lt;ChartArea LocationDefault="-1, -1" SizeDefault="-1, -1" Inverted="True" PlotLocation="-1, -1" PlotSize="-1, -1"&gt;&lt;Margin /&gt;&lt;/ChartArea&gt;&lt;Axes&gt;&lt;Axis Max="4" Min="0" UnitMajor="1" UnitMinor="0.5" AutoMajor="True" AutoMinor="True" AutoMax="False" AutoMin="False" AnnoMethod="ValueLabels" _onTop="-1" Compass="West"&gt;&lt;GridMajor Visible="True" Spacing="1" /&gt;&lt;ValueLabels&gt;&lt;ValueLabel Text="Jakarta" Value="1" /&gt;&lt;ValueLabel Text="Medan" Value="2" /&gt;&lt;ValueLabel Text="Surabaya" Value="3" /&gt;&lt;ValueLabel Text="Makasar" Value="4" /&gt;&lt;/ValueLabels&gt;&lt;/Axis&gt;&lt;Axis Max="20" Min="0" UnitMajor="5" UnitMinor="2.5" AutoMajor="False" AutoMinor="True" AutoMax="True" AutoMin="False" _onTop="-1" Compass="South"&gt;&lt;Text&gt;AUM&lt;/Text&gt;&lt;GridMajor Visible="True" Spacing="5" /&gt;&lt;/Axis&gt;&lt;Axis Max="0" Min="0" UnitMajor="0" UnitMinor="0" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="North"&gt;&lt;Text&gt;Axis Y2&lt;/Text&gt;&lt;/Axis&gt;&lt;/Axes&gt;&lt;AutoLabelArrangement /&gt;&lt;VisualEffectsData&gt;45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group1=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group0=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1&lt;/VisualEffectsData&gt;&lt;/Chart2DPropBag&gt;</value>
+  </data>
+  <data name="chartFund.PropBag" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;&lt;Chart2DPropBag Version="4.0.20151.38"&gt;&lt;StyleCollection&gt;&lt;NamedStyle Name="LabelStyleDefault.default" ParentName="Control" StyleData="BackColor=Transparent;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend" ParentName="Legend.default" /&gt;&lt;NamedStyle Name="Control" ParentName="Control.default" StyleData="BackColor=White;Border=Solid,ControlDark,1;ForeColor=30, 57, 91;" /&gt;&lt;NamedStyle Name="Header" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;Wrap=False;" /&gt;&lt;NamedStyle Name="AxisX" ParentName="Area" StyleData="AlignHorz=Near;AlignVert=Center;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate270;" /&gt;&lt;NamedStyle Name="AxisY2" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Top;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="Footer" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Control.default" ParentName="" StyleData="BackColor=Control;Border=None,Transparent,1;ForeColor=ControlText;" /&gt;&lt;NamedStyle Name="LabelStyleDefault" ParentName="LabelStyleDefault.default" /&gt;&lt;NamedStyle Name="Area.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="PlotArea" ParentName="Area" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="AxisY" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Bottom;Font=Microsoft Sans Serif, 8.25pt;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="Area" ParentName="Area.default" StyleData="BackColor=Window;Border=Solid,ControlDark,1;Rounding=10 10 10 10;" /&gt;&lt;/StyleCollection&gt;&lt;ChartGroupsCollection&gt;&lt;ChartGroup Name="Group1" ChartType="Bar" Use3D="False"&gt;&lt;DataSerializer DefaultSet="True"&gt;&lt;DataSeriesCollection&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightPink" /&gt;&lt;SymbolStyle Color="LightPink" OutlineColor="DeepPink" Shape="Box" /&gt;&lt;SeriesLabel&gt;series 0&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;20&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightBlue" /&gt;&lt;SymbolStyle Color="LightBlue" OutlineColor="DarkBlue" Shape="Dot" /&gt;&lt;SeriesLabel&gt;series 1&lt;/SeriesLabel&gt;&lt;X&gt;2&lt;/X&gt;&lt;Y&gt;8&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="LightGreen" /&gt;&lt;SymbolStyle Color="LightGreen" OutlineColor="DarkGreen" Shape="Tri" /&gt;&lt;SeriesLabel&gt;series 2&lt;/SeriesLabel&gt;&lt;X&gt;3&lt;/X&gt;&lt;Y&gt;10&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer&gt;&lt;LineStyle Color="Orchid" /&gt;&lt;SymbolStyle Color="Orchid" OutlineColor="DarkOrchid" Shape="Diamond" /&gt;&lt;SeriesLabel&gt;series 3&lt;/SeriesLabel&gt;&lt;X&gt;4&lt;/X&gt;&lt;Y&gt;16&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;/DataSeriesCollection&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;ChartGroup Name="Group2"&gt;&lt;DataSerializer&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;/ChartGroupsCollection&gt;&lt;Header Compass="North" Visible="False" /&gt;&lt;Footer Compass="South" Visible="False" /&gt;&lt;Legend Compass="East" Visible="False" /&gt;&lt;ChartArea LocationDefault="-1, -1" SizeDefault="-1, -1" Inverted="True" PlotLocation="-1, -1" PlotSize="-1, -1"&gt;&lt;Margin /&gt;&lt;/ChartArea&gt;&lt;Axes&gt;&lt;Axis Max="4" Min="0" UnitMajor="1" UnitMinor="0.5" AutoMajor="True" AutoMinor="True" AutoMax="False" AutoMin="False" AnnoMethod="ValueLabels" _onTop="-1" Compass="West"&gt;&lt;GridMajor Visible="True" Spacing="1" /&gt;&lt;ValueLabels&gt;&lt;ValueLabel Text="Fund A" Value="1" /&gt;&lt;ValueLabel Text="Fund D" Value="2" /&gt;&lt;ValueLabel Text="Fund C" Value="3" /&gt;&lt;ValueLabel Text="Fund B" Value="4" /&gt;&lt;/ValueLabels&gt;&lt;/Axis&gt;&lt;Axis Max="20" Min="0" UnitMajor="5" UnitMinor="2.5" AutoMajor="False" AutoMinor="True" AutoMax="True" AutoMin="False" _onTop="-1" Compass="South"&gt;&lt;Text&gt;AUM&lt;/Text&gt;&lt;GridMajor Visible="True" Spacing="5" /&gt;&lt;/Axis&gt;&lt;Axis Max="0" Min="0" UnitMajor="0" UnitMinor="0" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="North"&gt;&lt;Text&gt;Axis Y2&lt;/Text&gt;&lt;/Axis&gt;&lt;/Axes&gt;&lt;AutoLabelArrangement /&gt;&lt;VisualEffectsData&gt;45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group1=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group0=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1&lt;/VisualEffectsData&gt;&lt;/Chart2DPropBag&gt;</value>
+  </data>
+  <data name="chartAsset.PropBag" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;&lt;Chart2DPropBag Version="4.0.20151.38"&gt;&lt;StyleCollection&gt;&lt;NamedStyle Name="LabelStyleDefault.default" ParentName="Control" StyleData="BackColor=Transparent;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend" ParentName="Legend.default" StyleData="AlignHorz=Center;AlignVert=Top;" /&gt;&lt;NamedStyle Name="Control" ParentName="Control.default" StyleData="BackColor=White;Border=Solid,ControlDark,1;ForeColor=30, 57, 91;" /&gt;&lt;NamedStyle Name="Header" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Legend.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;Wrap=False;" /&gt;&lt;NamedStyle Name="AxisX" ParentName="Area" StyleData="AlignHorz=Center;AlignVert=Bottom;ForeColor=ControlDarkDark;Rotation=Rotate0;" /&gt;&lt;NamedStyle Name="AxisY2" ParentName="Area" StyleData="AlignHorz=Far;AlignVert=Center;ForeColor=ControlDarkDark;Rotation=Rotate90;" /&gt;&lt;NamedStyle Name="Footer" ParentName="Control" StyleData="Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="Control.default" ParentName="" StyleData="BackColor=Control;Border=None,Transparent,1;ForeColor=ControlText;" /&gt;&lt;NamedStyle Name="LabelStyleDefault" ParentName="LabelStyleDefault.default" /&gt;&lt;NamedStyle Name="Area.default" ParentName="Control" StyleData="AlignVert=Top;Border=None,Transparent,1;" /&gt;&lt;NamedStyle Name="PlotArea" ParentName="Area" StyleData="BackColor=Cyan;BackColor2=Lime;Border=None,Transparent,1;GradientStyle=DiagonalCenter;HatchStyle=None;Opaque=True;" /&gt;&lt;NamedStyle Name="AxisY" ParentName="Area" StyleData="AlignHorz=Near;AlignVert=Center;ForeColor=ControlDarkDark;Rotation=Rotate270;" /&gt;&lt;NamedStyle Name="Area" ParentName="Area.default" StyleData="BackColor=207, 221, 238;BackColor2=;Border=Solid,ControlDark,1;GradientStyle=None;HatchStyle=None;Opaque=True;Rounding=1 1 1 1;" /&gt;&lt;/StyleCollection&gt;&lt;ChartGroupsCollection&gt;&lt;ChartGroup Name="Group1" ChartType="Pie"&gt;&lt;DataSerializer DefaultSet="True"&gt;&lt;DataSeriesCollection&gt;&lt;DataSeriesSerializer Offset="20"&gt;&lt;LineStyle Color="LightPink" /&gt;&lt;SymbolStyle Color="LightPink" OutlineColor="DeepPink" Shape="Box" /&gt;&lt;SeriesLabel&gt;EQ&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;20&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer Offset="20"&gt;&lt;LineStyle Color="LightBlue" /&gt;&lt;SymbolStyle Color="LightBlue" OutlineColor="DarkBlue" Shape="Dot" /&gt;&lt;SeriesLabel&gt;FI&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;8&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer Offset="20"&gt;&lt;LineStyle Color="LightGreen" /&gt;&lt;SymbolStyle Color="LightGreen" OutlineColor="DarkGreen" Shape="Tri" /&gt;&lt;SeriesLabel&gt;MIX&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;10&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;DataSeriesSerializer Offset="20"&gt;&lt;LineStyle Color="Orchid" /&gt;&lt;SymbolStyle Color="Orchid" OutlineColor="DarkOrchid" Shape="Diamond" /&gt;&lt;SeriesLabel&gt;CPF&lt;/SeriesLabel&gt;&lt;X&gt;1&lt;/X&gt;&lt;Y&gt;16&lt;/Y&gt;&lt;DataTypes&gt;Single;Single;Double;Double;Double&lt;/DataTypes&gt;&lt;FillStyle /&gt;&lt;Histogram /&gt;&lt;/DataSeriesSerializer&gt;&lt;/DataSeriesCollection&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;ChartGroup Name="Group2"&gt;&lt;DataSerializer&gt;&lt;Highlight /&gt;&lt;/DataSerializer&gt;&lt;/ChartGroup&gt;&lt;/ChartGroupsCollection&gt;&lt;Header Compass="North" Visible="False" /&gt;&lt;Footer Compass="South" Visible="False" /&gt;&lt;Legend Compass="South" Visible="True" /&gt;&lt;ChartArea LocationDefault="-1, -1" SizeDefault="-1, -1" Depth="20" Rotation="45" Elevation="45" PlotLocation="-1, -1" PlotSize="-1, -1"&gt;&lt;Margin /&gt;&lt;/ChartArea&gt;&lt;Axes&gt;&lt;Axis Max="5" Min="1" UnitMajor="1" UnitMinor="0.5" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="South"&gt;&lt;Text&gt;Axis X&lt;/Text&gt;&lt;GridMajor Visible="True" Spacing="1" /&gt;&lt;/Axis&gt;&lt;Axis Max="25" Min="5" UnitMajor="5" UnitMinor="2.5" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="West"&gt;&lt;Text&gt;Axis Y&lt;/Text&gt;&lt;GridMajor Visible="True" Spacing="5" /&gt;&lt;/Axis&gt;&lt;Axis Max="0" Min="0" UnitMajor="0" UnitMinor="0" AutoMajor="True" AutoMinor="True" AutoMax="True" AutoMin="True" Compass="East"&gt;&lt;Text&gt;Axis Y2&lt;/Text&gt;&lt;/Axis&gt;&lt;/Axes&gt;&lt;AutoLabelArrangement /&gt;&lt;VisualEffectsData&gt;45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group1=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1;Group0=45,1,0.6,0.1,0.5,0.9,0,0,0.15,0,0,1,0.5,-25,0,0,0,1,64,1&lt;/VisualEffectsData&gt;&lt;/Chart2DPropBag&gt;</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAelPcAHpT3AB6U
+        9wAelPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHpT3AB6U
+        9woelPcLHpT3AAAAAAAAAAAAAAAAAAAAAABjH58AYx+fAGMfnwdjH58PYx+fBGMfnwAAAAAAAAAAAB6U
+        9wAelPcOHpT3Qh6U9wRjH58AYx+fDmMfn05jH58MYx+fCGMfn1RjH5+yYx+fz2Mfn4xjH58LYx+fAAAA
+        AAAelPcAHpT3Ax6U93welPcsYx+fAGMfn25jH5/zYx+fimMfn5hjH5/2Yx+f/2Mfn+9jH5+YYx+fDGMf
+        nwAAAAAAHpT3AB6U9wMelPemHpT3c2MfnyVjH5/XYx+f/2Mfn/1jH5/9Yx+f02Mfn3tjH58xYx+fB2Mf
+        nwBjH58AHpT3AB6U9wAelPctHpT34h6U96tjH59vYx+f+2Mfn/9jH5/8Yx+fmmMfnxxjH58AYx+fAAAA
+        AAAAAAAAHpT3AB6U9wEelPctHpT3uh6U9/8elPfHYx+fp2Mfn/9jH5//Yx+fwmMfnxRjH58AAAAAAB6U
+        9wAelPcAHpT3CB6U9zIelPeEHpT34B6U9/8elPf/HpT3ymMfn7xjH5//Yx+f/2Mfn4FjH58AYx+fAB6U
+        9wAelPcBHpT3SB6U97IelPfsHpT3/x6U9+kelPf2HpT3/x6U97JjH5+vYx+f/2Mfn/9jH596Yx+fAGMf
+        nwAelPcAHpT3Bx6U96welPf/HpT39h6U97IelPc4HpT3jh6U9/welPd9Yx+ffmMfn/5jH5//Yx+fpWMf
+        nwRjH58AHpT3AB6U9wAelPcjHpT3WB6U90IelPcNHpT3AB6U9xQelPeVHpT3N2MfnzVjH5/kYx+f/2Mf
+        n+hjH586Yx+fAGMfnwAAAAAAAAAAAAAAAAAAAAAAAAAAAB6U9wAelPcAHpT3DB6U9wRjH58DYx+fimMf
+        n/9jH5//Yx+fwmMfnydjH58AYx+fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYx+fAGMf
+        nxhjH5+1Yx+f/2Mfn/9jH5/PYx+fWGMfnxFjH58AYx+fAGMfnwBjH58AYx+fAGMfnwAAAAAAAAAAAGMf
+        nwBjH58AYx+fHWMfn51jH5/zYx+f/2Mfn/hjH5/KYx+fk2Mfn3BjH59gYx+fPWMfnwZjH58AAAAAAAAA
+        AAAAAAAAYx+fAGMfnwBjH58KYx+fVWMfn7NjH5/pYx+f/WMfn/djH5/OYx+fe2MfnyBjH58AYx+fAAAA
+        AAAAAAAA//8AAP/5AAD8eAAAgDgAAIA4AAAAeAAAA+AAAAeAAAAOAAAADgAAAAcIAAAH/AAAA/8AAID/
+        AADABwAA4A8AAA==
+</value>
+  </data>
+</root>

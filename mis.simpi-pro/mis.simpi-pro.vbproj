@@ -1,0 +1,970 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4E69C0FD-96FA-4D9C-987E-5FBFC9636DF2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>mis.simpi_pro.My.MyApplication</StartupObject>
+    <RootNamespace>mis.simpi_pro</RootNamespace>
+    <AssemblyName>mis.simpi-pro</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>mis.simpi-pro.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>mis.simpi-pro.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>simpi2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.C1Pdf.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1Chart.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=a22e16972c085838, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1Command.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=e808566f358766d8, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1FlexGrid.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1InputPanel.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1Ribbon.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1SplitContainer.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1TrueDBGrid.4, Version=4.0.20151.38, Culture=neutral, PublicKeyToken=75ae3fb0e2b1e0da, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\DLL\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\DLL\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.Analyst">
+      <HintPath>..\..\DLL\simpi.Analyst.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.Codeset">
+      <HintPath>..\..\DLL\simpi.Codeset.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.CoreBilling">
+      <HintPath>..\..\DLL\simpi.CoreBilling.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.CoreCompliance">
+      <HintPath>..\..\DLL\simpi.CoreCompliance.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.CoreData">
+      <HintPath>..\..\DLL\simpi.CoreData.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.GlobalConnection">
+      <HintPath>..\..\DLL\simpi.GlobalConnection.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.GlobalUtilities">
+      <HintPath>..\..\DLL\simpi.GlobalUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MarketCompany">
+      <HintPath>..\..\DLL\simpi.MarketCompany.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MarketDatabase">
+      <HintPath>..\..\DLL\simpi.MarketDatabase.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MarketInstrument, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLL\simpi.MarketInstrument.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MasterClient">
+      <HintPath>..\..\DLL\simpi.MasterClient.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MasterPortfolio">
+      <HintPath>..\..\DLL\simpi.MasterPortfolio.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MasterSales">
+      <HintPath>..\..\DLL\simpi.MasterSales.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MasterSecurities">
+      <HintPath>..\..\DLL\simpi.MasterSecurities.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.MasterSimpi">
+      <HintPath>..\..\DLL\simpi.MasterSimpi.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterBank, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLL\simpi.ParameterBank.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterClient">
+      <HintPath>..\..\DLL\simpi.ParameterClient.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterFA">
+      <HintPath>..\..\DLL\simpi.ParameterFA.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterPortfolio">
+      <HintPath>..\..\DLL\simpi.ParameterPortfolio.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterSecurities">
+      <HintPath>..\..\DLL\simpi.ParameterSecurities.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterSimpi">
+      <HintPath>..\..\DLL\simpi.ParameterSimpi.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.ParameterTA">
+      <HintPath>..\..\DLL\simpi.ParameterTA.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.SimpiAccess">
+      <HintPath>..\..\DLL\simpi.SimpiAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.SimpiLogin">
+      <HintPath>..\..\DLL\simpi.SimpiLogin.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.SimpiMaster">
+      <HintPath>..\..\DLL\simpi.SimpiMaster.dll</HintPath>
+    </Reference>
+    <Reference Include="simpi.SystemLog">
+      <HintPath>..\..\DLL\simpi.SystemLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FormForgotPassword.designer.vb">
+      <DependentUpon>FormForgotPassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\FormForgotPassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FormLogin.Designer.vb">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\FormLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FormPassword.Designer.vb">
+      <DependentUpon>FormPassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\FormPassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FormProfileUser.Designer.vb">
+      <DependentUpon>FormProfileUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\FormProfileUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\MDIMIS.Designer.vb">
+      <DependentUpon>MDIMIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\MDIMIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetDividend.Designer.vb">
+      <DependentUpon>FundSheetDividend.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetDividend.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetEQ.Designer.vb">
+      <DependentUpon>FundSheetEQ.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetEQ.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetFI.Designer.vb">
+      <DependentUpon>FundSheetFI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetFI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetGlobal.Designer.vb">
+      <DependentUpon>FundSheetGlobal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetGlobal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetMM.Designer.vb">
+      <DependentUpon>FundSheetMM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetMM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetMarketReview.Designer.vb">
+      <DependentUpon>FundSheetMarketReview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\FundSheetMarketReview.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusEQ.Designer.vb">
+      <DependentUpon>ProductFocusEQ.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusEQ.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusFI.Designer.vb">
+      <DependentUpon>ProductFocusFI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusFI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusMM.Designer.vb">
+      <DependentUpon>ProductFocusMM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusMM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusPortfolioStrategy.Designer.vb">
+      <DependentUpon>ProductFocusPortfolioStrategy.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Marketing Collateral\ProductFocusPortfolioStrategy.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MIS Crosstab\MISCalculatorReturn.Designer.vb">
+      <DependentUpon>MISCalculatorReturn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MIS Crosstab\MISCalculatorReturn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MIS Crosstab\MISMonthlyMap.Designer.vb">
+      <DependentUpon>MISMonthlyMap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MIS Crosstab\MISMonthlyMap.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module\ModBank.vb" />
+    <Compile Include="Module\ModCompliance.vb" />
+    <Compile Include="Module\ModExport.vb" />
+    <Compile Include="Module\ModMain.vb" />
+    <Compile Include="Module\ModMasterClient.vb" />
+    <Compile Include="Module\ModMasterPortfolio.vb" />
+    <Compile Include="Module\ModMasterSales.vb" />
+    <Compile Include="Module\ModMasterSecurities.vb" />
+    <Compile Include="Module\ModParameter.vb" />
+    <Compile Include="Module\ModTest.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="MyClient\FormMyClient.Designer.vb">
+      <DependentUpon>FormMyClient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientDistributor.Designer.vb">
+      <DependentUpon>FormMyClientDistributor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientDistributor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientDistributorNominee.Designer.vb">
+      <DependentUpon>FormMyClientDistributorNominee.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientDistributorNominee.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividual.Designer.vb">
+      <DependentUpon>FormMyClientIndividual.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividual.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualEdit.Designer.vb">
+      <DependentUpon>FormMyClientIndividualEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualNew.Designer.vb">
+      <DependentUpon>FormMyClientIndividualNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSub.Designer.vb">
+      <DependentUpon>FormMyClientIndividualSub.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSub.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSubEdit.Designer.vb">
+      <DependentUpon>FormMyClientIndividualSubEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSubEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSubNew.Designer.vb">
+      <DependentUpon>FormMyClientIndividualSubNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientIndividualSubNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutional.Designer.vb">
+      <DependentUpon>FormMyClientInstitutional.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutional.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalDocument.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalDocument.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalDocument.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalEdit.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalIDCard.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalIDCard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalIDCard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalNew.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSignature.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalSignature.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSignature.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSub.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalSub.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSub.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSubEdit.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalSubEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSubEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSubNew.Designer.vb">
+      <DependentUpon>FormMyClientInstitutionalSubNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientInstitutionalSubNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemption.Designer.vb">
+      <DependentUpon>FormMyClientRedemption.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemption.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionEdit.Designer.vb">
+      <DependentUpon>FormMyClientRedemptionEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionNew.Designer.vb">
+      <DependentUpon>FormMyClientRedemptionNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionProfile.Designer.vb">
+      <DependentUpon>FormMyClientRedemptionProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRedemptionProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRiskScore.Designer.vb">
+      <DependentUpon>FormMyClientRiskScore.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientRiskScore.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscription.Designer.vb">
+      <DependentUpon>FormMyClientSubscription.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscription.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionEdit.Designer.vb">
+      <DependentUpon>FormMyClientSubscriptionEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionNew.Designer.vb">
+      <DependentUpon>FormMyClientSubscriptionNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionProfile.Designer.vb">
+      <DependentUpon>FormMyClientSubscriptionProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyClient\FormMyClientSubscriptionProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MySales\FormMySales.Designer.vb">
+      <DependentUpon>FormMySales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MySales\FormMySales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyPortfolio\FormMyPortfolio.Designer.vb">
+      <DependentUpon>FormMyPortfolio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyPortfolio\FormMyPortfolio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholder.Designer.vb">
+      <DependentUpon>FormMyUnitholder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholderOfficer.Designer.vb">
+      <DependentUpon>FormMyUnitholderOfficer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholderOfficer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholderSubAccountInstitution.Designer.vb">
+      <DependentUpon>FormMyUnitholderSubAccountInstitution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyUnitholder\FormMyUnitholderSubAccountInstitution.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheet.Designer.vb">
+      <DependentUpon>ReportAccountFactSheet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheetEmail.Designer.vb">
+      <DependentUpon>ReportAccountFactSheetEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheetEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheetSetting.Designer.vb">
+      <DependentUpon>ReportAccountFactSheetSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountFactSheetSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountFee.Designer.vb">
+      <DependentUpon>ReportAccountFee.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountFee.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatement.Designer.vb">
+      <DependentUpon>ReportAccountStatement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatementEmail.Designer.vb">
+      <DependentUpon>ReportAccountStatementEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatementEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatementSetting.Designer.vb">
+      <DependentUpon>ReportAccountStatementSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountStatementSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountValuation.Designer.vb">
+      <DependentUpon>ReportAccountValuation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountValuation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountValuationEmail.Designer.vb">
+      <DependentUpon>ReportAccountValuationEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountValuationEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundDistribution.Designer.vb">
+      <DependentUpon>ReportFundDistribution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundDistribution.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundNAV.Designer.vb">
+      <DependentUpon>ReportFundNAV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundNAV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundNAVEmail.Designer.vb">
+      <DependentUpon>ReportFundNAVEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundNAVEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundOutstanding.Designer.vb">
+      <DependentUpon>ReportFundOutstanding.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundOutstanding.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundOutstandingEmail.Designer.vb">
+      <DependentUpon>ReportFundOutstandingEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundOutstandingEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundTransaction.Designer.vb">
+      <DependentUpon>ReportFundTransaction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundTransaction.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportFundTransactionEmail.Designer.vb">
+      <DependentUpon>ReportFundTransactionEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportFundTransactionEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportInquiryTransaction.Designer.vb">
+      <DependentUpon>ReportInquiryTransaction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportInquiryTransaction.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportManagementFee.Designer.vb">
+      <DependentUpon>ReportManagementFee.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportManagementFee.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportSalesAUM.Designer.vb">
+      <DependentUpon>ReportSalesAUM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesAUM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransaction.Designer.vb">
+      <DependentUpon>ReportSalesTransaction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransaction.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransactionEmail.Designer.vb">
+      <DependentUpon>ReportSalesTransactionEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransactionEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransactionTotal.Designer.vb">
+      <DependentUpon>ReportSalesTransactionTotal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesTransactionTotal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportSalesUnitholderListing.Designer.vb">
+      <DependentUpon>ReportSalesUnitholderListing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesUnitholderListing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReportStatpro.Designer.vb">
+      <DependentUpon>ReportStatpro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportStatpro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Select\SelectMasterClient.Designer.vb">
+      <DependentUpon>SelectMasterClient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Select\SelectMasterClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Select\SelectMasterPortfolio.Designer.vb">
+      <DependentUpon>SelectMasterPortfolio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Select\SelectMasterPortfolio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Select\SelectMasterPortfolioNormal.Designer.vb">
+      <DependentUpon>SelectMasterPortfolioNormal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Select\SelectMasterPortfolioNormal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Select\SelectMasterSales.Designer.vb">
+      <DependentUpon>SelectMasterSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Select\SelectMasterSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\FormForgotPassword.resx">
+      <DependentUpon>FormForgotPassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\FormLogin.resx">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\FormPassword.resx">
+      <DependentUpon>FormPassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\FormProfileUser.resx">
+      <DependentUpon>FormProfileUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\MDIMIS.resx">
+      <DependentUpon>MDIMIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetDividend.resx">
+      <DependentUpon>FundSheetDividend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetEQ.resx">
+      <DependentUpon>FundSheetEQ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetFI.resx">
+      <DependentUpon>FundSheetFI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetGlobal.resx">
+      <DependentUpon>FundSheetGlobal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetMM.resx">
+      <DependentUpon>FundSheetMM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\FundSheetMarketReview.resx">
+      <DependentUpon>FundSheetMarketReview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\ProductFocusEQ.resx">
+      <DependentUpon>ProductFocusEQ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\ProductFocusFI.resx">
+      <DependentUpon>ProductFocusFI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\ProductFocusMM.resx">
+      <DependentUpon>ProductFocusMM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marketing Collateral\ProductFocusPortfolioStrategy.resx">
+      <DependentUpon>ProductFocusPortfolioStrategy.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MIS Crosstab\MISCalculatorReturn.resx">
+      <DependentUpon>MISCalculatorReturn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MIS Crosstab\MISMonthlyMap.resx">
+      <DependentUpon>MISMonthlyMap.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClient.resx">
+      <DependentUpon>FormMyClient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientDistributor.resx">
+      <DependentUpon>FormMyClientDistributor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientDistributorNominee.resx">
+      <DependentUpon>FormMyClientDistributorNominee.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividual.resx">
+      <DependentUpon>FormMyClientIndividual.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividualEdit.resx">
+      <DependentUpon>FormMyClientIndividualEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividualNew.resx">
+      <DependentUpon>FormMyClientIndividualNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividualSub.resx">
+      <DependentUpon>FormMyClientIndividualSub.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividualSubEdit.resx">
+      <DependentUpon>FormMyClientIndividualSubEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientIndividualSubNew.resx">
+      <DependentUpon>FormMyClientIndividualSubNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutional.resx">
+      <DependentUpon>FormMyClientInstitutional.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalDocument.resx">
+      <DependentUpon>FormMyClientInstitutionalDocument.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalEdit.resx">
+      <DependentUpon>FormMyClientInstitutionalEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalIDCard.resx">
+      <DependentUpon>FormMyClientInstitutionalIDCard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalNew.resx">
+      <DependentUpon>FormMyClientInstitutionalNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalSignature.resx">
+      <DependentUpon>FormMyClientInstitutionalSignature.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalSub.resx">
+      <DependentUpon>FormMyClientInstitutionalSub.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalSubEdit.resx">
+      <DependentUpon>FormMyClientInstitutionalSubEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientInstitutionalSubNew.resx">
+      <DependentUpon>FormMyClientInstitutionalSubNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientRedemption.resx">
+      <DependentUpon>FormMyClientRedemption.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientRedemptionEdit.resx">
+      <DependentUpon>FormMyClientRedemptionEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientRedemptionNew.resx">
+      <DependentUpon>FormMyClientRedemptionNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientRedemptionProfile.resx">
+      <DependentUpon>FormMyClientRedemptionProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientRiskScore.resx">
+      <DependentUpon>FormMyClientRiskScore.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientSubscription.resx">
+      <DependentUpon>FormMyClientSubscription.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientSubscriptionEdit.resx">
+      <DependentUpon>FormMyClientSubscriptionEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientSubscriptionNew.resx">
+      <DependentUpon>FormMyClientSubscriptionNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyClient\FormMyClientSubscriptionProfile.resx">
+      <DependentUpon>FormMyClientSubscriptionProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MySales\FormMySales.resx">
+      <DependentUpon>FormMySales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyPortfolio\FormMyPortfolio.resx">
+      <DependentUpon>FormMyPortfolio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyUnitholder\FormMyUnitholder.resx">
+      <DependentUpon>FormMyUnitholder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyUnitholder\FormMyUnitholderOfficer.resx">
+      <DependentUpon>FormMyUnitholderOfficer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyUnitholder\FormMyUnitholderSubAccountInstitution.resx">
+      <DependentUpon>FormMyUnitholderSubAccountInstitution.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountFactSheet.resx">
+      <DependentUpon>ReportAccountFactSheet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountFactSheetEmail.resx">
+      <DependentUpon>ReportAccountFactSheetEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountFactSheetSetting.resx">
+      <DependentUpon>ReportAccountFactSheetSetting.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountFee.resx">
+      <DependentUpon>ReportAccountFee.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountStatement.resx">
+      <DependentUpon>ReportAccountStatement.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountStatementEmail.resx">
+      <DependentUpon>ReportAccountStatementEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountStatementSetting.resx">
+      <DependentUpon>ReportAccountStatementSetting.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountValuation.resx">
+      <DependentUpon>ReportAccountValuation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountValuationEmail.resx">
+      <DependentUpon>ReportAccountValuationEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundDistribution.resx">
+      <DependentUpon>ReportFundDistribution.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundNAV.resx">
+      <DependentUpon>ReportFundNAV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundNAVEmail.resx">
+      <DependentUpon>ReportFundNAVEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundOutstanding.resx">
+      <DependentUpon>ReportFundOutstanding.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundOutstandingEmail.resx">
+      <DependentUpon>ReportFundOutstandingEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundTransaction.resx">
+      <DependentUpon>ReportFundTransaction.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportFundTransactionEmail.resx">
+      <DependentUpon>ReportFundTransactionEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportInquiryTransaction.resx">
+      <DependentUpon>ReportInquiryTransaction.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportManagementFee.resx">
+      <DependentUpon>ReportManagementFee.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportSalesAUM.resx">
+      <DependentUpon>ReportSalesAUM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportSalesTransaction.resx">
+      <DependentUpon>ReportSalesTransaction.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportSalesTransactionEmail.resx">
+      <DependentUpon>ReportSalesTransactionEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportSalesTransactionTotal.resx">
+      <DependentUpon>ReportSalesTransactionTotal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportSalesUnitholderListing.resx">
+      <DependentUpon>ReportSalesUnitholderListing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportStatpro.resx">
+      <DependentUpon>ReportStatpro.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Select\SelectMasterClient.resx">
+      <DependentUpon>SelectMasterClient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Select\SelectMasterPortfolio.resx">
+      <DependentUpon>SelectMasterPortfolio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Select\SelectMasterPortfolioNormal.resx">
+      <DependentUpon>SelectMasterPortfolioNormal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Select\SelectMasterSales.resx">
+      <DependentUpon>SelectMasterSales.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\simpi3.png" />
+    <None Include="Resources\icon.ico" />
+    <Content Include="simpi2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tools\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
