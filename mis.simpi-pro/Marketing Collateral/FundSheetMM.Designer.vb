@@ -47,7 +47,13 @@ Partial Class FundSheetMM
         Me.rbOption1 = New C1.Win.C1InputPanel.InputRadioButton()
         Me.rbOption2 = New C1.Win.C1InputPanel.InputRadioButton()
         Me.btnPDF = New C1.Win.C1InputPanel.InputSplitButton()
+        Me.btnPDF1 = New C1.Win.C1InputPanel.InputButton()
+        Me.btnPDF2 = New C1.Win.C1InputPanel.InputButton()
+        Me.btnPDF3 = New C1.Win.C1InputPanel.InputButton()
         Me.btnEmail = New C1.Win.C1InputPanel.InputSplitButton()
+        Me.btnEmail1 = New C1.Win.C1InputPanel.InputButton()
+        Me.btnEmail2 = New C1.Win.C1InputPanel.InputButton()
+        Me.btnEmail3 = New C1.Win.C1InputPanel.InputButton()
         Me.btnSettingPDF = New C1.Win.C1InputPanel.InputButton()
         Me.C1DockingTab1 = New C1.Win.C1Command.C1DockingTab()
         Me.C1DockingTabPage1 = New C1.Win.C1Command.C1DockingTabPage()
@@ -151,21 +157,20 @@ Partial Class FundSheetMM
         Me.C1DockingTabPage2 = New C1.Win.C1Command.C1DockingTabPage()
         Me.C1SplitContainer1 = New C1.Win.C1SplitContainer.C1SplitContainer()
         Me.C1SplitterPanel1 = New C1.Win.C1SplitContainer.C1SplitterPanel()
-        Me.fgDuration = New C1.Win.C1FlexGrid.C1FlexGrid()
+        Me.fgDuration2 = New C1.Win.C1FlexGrid.C1FlexGrid()
+        Me.fgDuration1 = New C1.Win.C1FlexGrid.C1FlexGrid()
         Me.C1InputPanel11 = New C1.Win.C1InputPanel.C1InputPanel()
         Me.InputLabel9 = New C1.Win.C1InputPanel.InputLabel()
-        Me.InputRadioButton3 = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.InputRadioButton4 = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.InputButton2 = New C1.Win.C1InputPanel.InputButton()
+        Me.rbDuration = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.rbTTM = New C1.Win.C1InputPanel.InputRadioButton()
         Me.chartAsset = New C1.Win.C1Chart.C1Chart()
         Me.C1SplitterPanel2 = New C1.Win.C1SplitContainer.C1SplitterPanel()
         Me.DBGBank = New C1.Win.C1TrueDBGrid.C1TrueDBGrid()
         Me.C1InputPanel10 = New C1.Win.C1InputPanel.C1InputPanel()
         Me.InputLabel5 = New C1.Win.C1InputPanel.InputLabel()
-        Me.InputTextBox1 = New C1.Win.C1InputPanel.InputTextBox()
-        Me.InputRadioButton1 = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.InputRadioButton2 = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.InputButton1 = New C1.Win.C1InputPanel.InputButton()
+        Me.txtTopBank = New C1.Win.C1InputPanel.InputTextBox()
+        Me.rbValueBank = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.rbNameBank = New C1.Win.C1InputPanel.InputRadioButton()
         Me.C1SplitterPanel3 = New C1.Win.C1SplitContainer.C1SplitterPanel()
         Me.DBGSecurities = New C1.Win.C1TrueDBGrid.C1TrueDBGrid()
         Me.C1InputPanel2 = New C1.Win.C1InputPanel.C1InputPanel()
@@ -178,31 +183,39 @@ Partial Class FundSheetMM
         Me.chkAntiAlias = New C1.Win.C1InputPanel.InputCheckBox()
         Me.bRotateCounterClockwise = New C1.Win.C1InputPanel.InputButton()
         Me.bRotateClockwise = New C1.Win.C1InputPanel.InputButton()
-        Me.btnSettingSector = New C1.Win.C1InputPanel.InputButton()
+        Me.btnSettingAsset = New C1.Win.C1InputPanel.InputButton()
         Me.InputGroupHeader10 = New C1.Win.C1InputPanel.InputGroupHeader()
         Me.InputLabel94 = New C1.Win.C1InputPanel.InputLabel()
         Me.txtTopHolding = New C1.Win.C1InputPanel.InputTextBox()
         Me.rbPersen = New C1.Win.C1InputPanel.InputRadioButton()
         Me.rbName = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.btnLoadHolding = New C1.Win.C1InputPanel.InputButton()
         Me.C1DockingTabPage3 = New C1.Win.C1Command.C1DockingTabPage()
         Me.C1SplitContainer2 = New C1.Win.C1SplitContainer.C1SplitContainer()
         Me.C1SplitterPanel4 = New C1.Win.C1SplitContainer.C1SplitterPanel()
-        Me.fgPerformance = New C1.Win.C1FlexGrid.C1FlexGrid()
-        Me.fgWeek = New C1.Win.C1FlexGrid.C1FlexGrid()
+        Me.C1SplitContainer5 = New C1.Win.C1SplitContainer.C1SplitContainer()
+        Me.C1SplitterPanel13 = New C1.Win.C1SplitContainer.C1SplitterPanel()
         Me.C1InputPanel3 = New C1.Win.C1InputPanel.C1InputPanel()
         Me.InputLabel95 = New C1.Win.C1InputPanel.InputLabel()
-        Me.chkRebase = New C1.Win.C1InputPanel.InputCheckBox()
         Me.btnSettingPortfolio = New C1.Win.C1InputPanel.InputButton()
         Me.rbNAVUnit = New C1.Win.C1InputPanel.InputRadioButton()
         Me.rbReturn = New C1.Win.C1InputPanel.InputRadioButton()
-        Me.chkReplace = New C1.Win.C1InputPanel.InputCheckBox()
+        Me.chkRebase = New C1.Win.C1InputPanel.InputCheckBox()
         Me.InputGroupHeader9 = New C1.Win.C1InputPanel.InputGroupHeader()
-        Me.InputLabel96 = New C1.Win.C1InputPanel.InputLabel()
+        Me.rbInception = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.rbYTD = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.rbOneYear = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.chkReplace = New C1.Win.C1InputPanel.InputCheckBox()
         Me.txtBenchmark = New C1.Win.C1InputPanel.InputTextBox()
-        Me.btnSettingMonthly = New C1.Win.C1InputPanel.InputButton()
+        Me.C1SplitterPanel14 = New C1.Win.C1SplitContainer.C1SplitterPanel()
+        Me.fgPerformance = New C1.Win.C1FlexGrid.C1FlexGrid()
+        Me.C1SplitterPanel15 = New C1.Win.C1SplitContainer.C1SplitterPanel()
+        Me.fgWeek = New C1.Win.C1FlexGrid.C1FlexGrid()
+        Me.C1SplitterPanel16 = New C1.Win.C1SplitContainer.C1SplitterPanel()
+        Me.C1InputPanel12 = New C1.Win.C1InputPanel.C1InputPanel()
+        Me.InputLabel14 = New C1.Win.C1InputPanel.InputLabel()
         Me.rbYearOne = New C1.Win.C1InputPanel.InputRadioButton()
         Me.rbYearThis = New C1.Win.C1InputPanel.InputRadioButton()
+        Me.btnSettingMonthly = New C1.Win.C1InputPanel.InputButton()
         Me.C1SplitterPanel5 = New C1.Win.C1SplitContainer.C1SplitterPanel()
         Me.chartMonthly = New C1.Win.C1Chart.C1Chart()
         Me.C1SplitterPanel6 = New C1.Win.C1SplitContainer.C1SplitterPanel()
@@ -229,12 +242,6 @@ Partial Class FundSheetMM
         Me.btnReviewRemove = New C1.Win.C1InputPanel.InputButton()
         Me.btnReviewClear = New C1.Win.C1InputPanel.InputButton()
         Me.btnReviewList = New C1.Win.C1InputPanel.InputButton()
-        Me.btnPDF1 = New C1.Win.C1InputPanel.InputButton()
-        Me.btnPDF2 = New C1.Win.C1InputPanel.InputButton()
-        Me.btnPDF3 = New C1.Win.C1InputPanel.InputButton()
-        Me.btnEmail1 = New C1.Win.C1InputPanel.InputButton()
-        Me.btnEmail2 = New C1.Win.C1InputPanel.InputButton()
-        Me.btnEmail3 = New C1.Win.C1InputPanel.InputButton()
         CType(Me.C1InputPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.C1DockingTab1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1DockingTab1.SuspendLayout()
@@ -253,7 +260,8 @@ Partial Class FundSheetMM
         CType(Me.C1SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1SplitContainer1.SuspendLayout()
         Me.C1SplitterPanel1.SuspendLayout()
-        CType(Me.fgDuration, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.fgDuration2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.fgDuration1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.C1InputPanel11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chartAsset, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1SplitterPanel2.SuspendLayout()
@@ -266,9 +274,16 @@ Partial Class FundSheetMM
         CType(Me.C1SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1SplitContainer2.SuspendLayout()
         Me.C1SplitterPanel4.SuspendLayout()
-        CType(Me.fgPerformance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.fgWeek, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.C1SplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.C1SplitContainer5.SuspendLayout()
+        Me.C1SplitterPanel13.SuspendLayout()
         CType(Me.C1InputPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.C1SplitterPanel14.SuspendLayout()
+        CType(Me.fgPerformance, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.C1SplitterPanel15.SuspendLayout()
+        CType(Me.fgWeek, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.C1SplitterPanel16.SuspendLayout()
+        CType(Me.C1InputPanel12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1SplitterPanel5.SuspendLayout()
         CType(Me.chartMonthly, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.C1SplitterPanel6.SuspendLayout()
@@ -408,7 +423,7 @@ Partial Class FundSheetMM
         '
         Me.lblCurrency.Break = C1.Win.C1InputPanel.BreakType.Row
         Me.lblCurrency.Name = "lblCurrency"
-        Me.lblCurrency.Width = 70
+        Me.lblCurrency.Width = 138
         '
         'InputLabel4
         '
@@ -422,7 +437,7 @@ Partial Class FundSheetMM
         '
         Me.lblAUM.Break = C1.Win.C1InputPanel.BreakType.Column
         Me.lblAUM.Name = "lblAUM"
-        Me.lblAUM.Width = 100
+        Me.lblAUM.Width = 174
         '
         'InputLabel6
         '
@@ -477,6 +492,21 @@ Partial Class FundSheetMM
         Me.btnPDF.Text = "PDF"
         Me.btnPDF.Width = 100
         '
+        'btnPDF1
+        '
+        Me.btnPDF1.Name = "btnPDF1"
+        Me.btnPDF1.Text = "Layout 1"
+        '
+        'btnPDF2
+        '
+        Me.btnPDF2.Name = "btnPDF2"
+        Me.btnPDF2.Text = "Layout 2"
+        '
+        'btnPDF3
+        '
+        Me.btnPDF3.Name = "btnPDF3"
+        Me.btnPDF3.Text = "Layout 3"
+        '
         'btnEmail
         '
         Me.btnEmail.Break = C1.Win.C1InputPanel.BreakType.None
@@ -489,6 +519,21 @@ Partial Class FundSheetMM
         Me.btnEmail.Name = "btnEmail"
         Me.btnEmail.Text = "EMAIL"
         Me.btnEmail.Width = 100
+        '
+        'btnEmail1
+        '
+        Me.btnEmail1.Name = "btnEmail1"
+        Me.btnEmail1.Text = "Layout 1"
+        '
+        'btnEmail2
+        '
+        Me.btnEmail2.Name = "btnEmail2"
+        Me.btnEmail2.Text = "Layout 2"
+        '
+        'btnEmail3
+        '
+        Me.btnEmail3.Name = "btnEmail3"
+        Me.btnEmail3.Text = "Layout 3"
         '
         'btnSettingPDF
         '
@@ -1325,7 +1370,8 @@ Partial Class FundSheetMM
         'C1SplitterPanel1
         '
         Me.C1SplitterPanel1.BackColor = System.Drawing.Color.White
-        Me.C1SplitterPanel1.Controls.Add(Me.fgDuration)
+        Me.C1SplitterPanel1.Controls.Add(Me.fgDuration2)
+        Me.C1SplitterPanel1.Controls.Add(Me.fgDuration1)
         Me.C1SplitterPanel1.Controls.Add(Me.C1InputPanel11)
         Me.C1SplitterPanel1.Controls.Add(Me.chartAsset)
         Me.C1SplitterPanel1.Dock = C1.Win.C1SplitContainer.PanelDockStyle.Left
@@ -1337,18 +1383,33 @@ Partial Class FundSheetMM
         Me.C1SplitterPanel1.Text = "Asset Class"
         Me.C1SplitterPanel1.Width = 390
         '
-        'fgDuration
+        'fgDuration2
         '
-        Me.fgDuration.ColumnInfo = "0,0,0,0,0,95,Columns:"
-        Me.fgDuration.Dock = System.Windows.Forms.DockStyle.Top
-        Me.fgDuration.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.fgDuration.Location = New System.Drawing.Point(0, 269)
-        Me.fgDuration.Name = "fgDuration"
-        Me.fgDuration.Rows.Count = 1
-        Me.fgDuration.Rows.DefaultSize = 19
-        Me.fgDuration.Size = New System.Drawing.Size(390, 80)
-        Me.fgDuration.StyleInfo = resources.GetString("fgDuration.StyleInfo")
-        Me.fgDuration.TabIndex = 23
+        Me.fgDuration2.BorderStyle = C1.Win.C1FlexGrid.Util.BaseControls.BorderStyleEnum.None
+        Me.fgDuration2.ColumnInfo = "0,0,0,0,0,95,Columns:"
+        Me.fgDuration2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.fgDuration2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.fgDuration2.Location = New System.Drawing.Point(195, 273)
+        Me.fgDuration2.Name = "fgDuration2"
+        Me.fgDuration2.Rows.Count = 1
+        Me.fgDuration2.Rows.DefaultSize = 19
+        Me.fgDuration2.Size = New System.Drawing.Size(195, 76)
+        Me.fgDuration2.StyleInfo = resources.GetString("fgDuration2.StyleInfo")
+        Me.fgDuration2.TabIndex = 25
+        '
+        'fgDuration1
+        '
+        Me.fgDuration1.BorderStyle = C1.Win.C1FlexGrid.Util.BaseControls.BorderStyleEnum.None
+        Me.fgDuration1.ColumnInfo = "0,0,0,0,0,95,Columns:"
+        Me.fgDuration1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.fgDuration1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.fgDuration1.Location = New System.Drawing.Point(0, 273)
+        Me.fgDuration1.Name = "fgDuration1"
+        Me.fgDuration1.Rows.Count = 1
+        Me.fgDuration1.Rows.DefaultSize = 19
+        Me.fgDuration1.Size = New System.Drawing.Size(195, 76)
+        Me.fgDuration1.StyleInfo = resources.GetString("fgDuration1.StyleInfo")
+        Me.fgDuration1.TabIndex = 23
         '
         'C1InputPanel11
         '
@@ -1356,10 +1417,9 @@ Partial Class FundSheetMM
         Me.C1InputPanel11.Dock = System.Windows.Forms.DockStyle.Top
         Me.C1InputPanel11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.C1InputPanel11.Items.Add(Me.InputLabel9)
-        Me.C1InputPanel11.Items.Add(Me.InputRadioButton3)
-        Me.C1InputPanel11.Items.Add(Me.InputRadioButton4)
-        Me.C1InputPanel11.Items.Add(Me.InputButton2)
-        Me.C1InputPanel11.Location = New System.Drawing.Point(0, 239)
+        Me.C1InputPanel11.Items.Add(Me.rbDuration)
+        Me.C1InputPanel11.Items.Add(Me.rbTTM)
+        Me.C1InputPanel11.Location = New System.Drawing.Point(0, 243)
         Me.C1InputPanel11.Name = "C1InputPanel11"
         Me.C1InputPanel11.Size = New System.Drawing.Size(390, 30)
         Me.C1InputPanel11.TabIndex = 24
@@ -1370,24 +1430,20 @@ Partial Class FundSheetMM
         Me.InputLabel9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InputLabel9.Name = "InputLabel9"
         Me.InputLabel9.Text = "Duration && YTM"
-        Me.InputLabel9.Width = 190
+        Me.InputLabel9.Width = 208
         '
-        'InputRadioButton3
+        'rbDuration
         '
-        Me.InputRadioButton3.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.InputRadioButton3.Name = "InputRadioButton3"
-        Me.InputRadioButton3.Text = "By Duration"
+        Me.rbDuration.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbDuration.Checked = True
+        Me.rbDuration.Name = "rbDuration"
+        Me.rbDuration.Text = "By Duration"
         '
-        'InputRadioButton4
+        'rbTTM
         '
-        Me.InputRadioButton4.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.InputRadioButton4.Name = "InputRadioButton4"
-        Me.InputRadioButton4.Text = "By TTM"
-        '
-        'InputButton2
-        '
-        Me.InputButton2.Image = CType(resources.GetObject("InputButton2.Image"), System.Drawing.Image)
-        Me.InputButton2.Name = "InputButton2"
+        Me.rbTTM.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbTTM.Name = "rbTTM"
+        Me.rbTTM.Text = "By TTM"
         '
         'chartAsset
         '
@@ -1398,7 +1454,7 @@ Partial Class FundSheetMM
         Me.chartAsset.Location = New System.Drawing.Point(0, 0)
         Me.chartAsset.Name = "chartAsset"
         Me.chartAsset.PropBag = resources.GetString("chartAsset.PropBag")
-        Me.chartAsset.Size = New System.Drawing.Size(390, 239)
+        Me.chartAsset.Size = New System.Drawing.Size(390, 243)
         Me.chartAsset.TabIndex = 6
         '
         'C1SplitterPanel2
@@ -1417,6 +1473,7 @@ Partial Class FundSheetMM
         'DBGBank
         '
         Me.DBGBank.BackColor = System.Drawing.Color.White
+        Me.DBGBank.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DBGBank.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DBGBank.GroupByCaption = "Drag a column header here to group by that column"
         Me.DBGBank.Images.Add(CType(resources.GetObject("DBGBank.Images"), System.Drawing.Image))
@@ -1437,10 +1494,9 @@ Partial Class FundSheetMM
         Me.C1InputPanel10.Dock = System.Windows.Forms.DockStyle.Top
         Me.C1InputPanel10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.C1InputPanel10.Items.Add(Me.InputLabel5)
-        Me.C1InputPanel10.Items.Add(Me.InputTextBox1)
-        Me.C1InputPanel10.Items.Add(Me.InputRadioButton1)
-        Me.C1InputPanel10.Items.Add(Me.InputRadioButton2)
-        Me.C1InputPanel10.Items.Add(Me.InputButton1)
+        Me.C1InputPanel10.Items.Add(Me.txtTopBank)
+        Me.C1InputPanel10.Items.Add(Me.rbValueBank)
+        Me.C1InputPanel10.Items.Add(Me.rbNameBank)
         Me.C1InputPanel10.Location = New System.Drawing.Point(0, 0)
         Me.C1InputPanel10.Name = "C1InputPanel10"
         Me.C1InputPanel10.Size = New System.Drawing.Size(735, 35)
@@ -1453,32 +1509,26 @@ Partial Class FundSheetMM
         Me.InputLabel5.HorizontalAlign = C1.Win.C1InputPanel.InputContentAlignment.Far
         Me.InputLabel5.Name = "InputLabel5"
         Me.InputLabel5.Text = "Top Bank: "
-        Me.InputLabel5.Width = 431
         '
-        'InputTextBox1
+        'txtTopBank
         '
-        Me.InputTextBox1.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.InputTextBox1.Name = "InputTextBox1"
-        Me.InputTextBox1.Text = "5"
-        Me.InputTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.InputTextBox1.Width = 35
+        Me.txtTopBank.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.txtTopBank.Name = "txtTopBank"
+        Me.txtTopBank.Text = "5"
+        Me.txtTopBank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtTopBank.Width = 25
         '
-        'InputRadioButton1
+        'rbValueBank
         '
-        Me.InputRadioButton1.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.InputRadioButton1.Name = "InputRadioButton1"
-        Me.InputRadioButton1.Text = "By Value"
+        Me.rbValueBank.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbValueBank.Name = "rbValueBank"
+        Me.rbValueBank.Text = "By Value"
         '
-        'InputRadioButton2
+        'rbNameBank
         '
-        Me.InputRadioButton2.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.InputRadioButton2.Name = "InputRadioButton2"
-        Me.InputRadioButton2.Text = "By Name"
-        '
-        'InputButton1
-        '
-        Me.InputButton1.Image = CType(resources.GetObject("InputButton1.Image"), System.Drawing.Image)
-        Me.InputButton1.Name = "InputButton1"
+        Me.rbNameBank.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbNameBank.Name = "rbNameBank"
+        Me.rbNameBank.Text = "By Name"
         '
         'C1SplitterPanel3
         '
@@ -1494,6 +1544,7 @@ Partial Class FundSheetMM
         'DBGSecurities
         '
         Me.DBGSecurities.BackColor = System.Drawing.Color.White
+        Me.DBGSecurities.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DBGSecurities.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DBGSecurities.GroupByCaption = "Drag a column header here to group by that column"
         Me.DBGSecurities.Images.Add(CType(resources.GetObject("DBGSecurities.Images"), System.Drawing.Image))
@@ -1522,13 +1573,12 @@ Partial Class FundSheetMM
         Me.C1InputPanel2.Items.Add(Me.chkAntiAlias)
         Me.C1InputPanel2.Items.Add(Me.bRotateCounterClockwise)
         Me.C1InputPanel2.Items.Add(Me.bRotateClockwise)
-        Me.C1InputPanel2.Items.Add(Me.btnSettingSector)
+        Me.C1InputPanel2.Items.Add(Me.btnSettingAsset)
         Me.C1InputPanel2.Items.Add(Me.InputGroupHeader10)
         Me.C1InputPanel2.Items.Add(Me.InputLabel94)
         Me.C1InputPanel2.Items.Add(Me.txtTopHolding)
         Me.C1InputPanel2.Items.Add(Me.rbPersen)
         Me.C1InputPanel2.Items.Add(Me.rbName)
-        Me.C1InputPanel2.Items.Add(Me.btnLoadHolding)
         Me.C1InputPanel2.Location = New System.Drawing.Point(0, 0)
         Me.C1InputPanel2.Name = "C1InputPanel2"
         Me.C1InputPanel2.Size = New System.Drawing.Size(735, 87)
@@ -1602,11 +1652,11 @@ Partial Class FundSheetMM
         Me.bRotateClockwise.Text = "Clockwise"
         Me.bRotateClockwise.Width = 207
         '
-        'btnSettingSector
+        'btnSettingAsset
         '
-        Me.btnSettingSector.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.btnSettingSector.Image = CType(resources.GetObject("btnSettingSector.Image"), System.Drawing.Image)
-        Me.btnSettingSector.Name = "btnSettingSector"
+        Me.btnSettingAsset.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.btnSettingAsset.Image = CType(resources.GetObject("btnSettingAsset.Image"), System.Drawing.Image)
+        Me.btnSettingAsset.Name = "btnSettingAsset"
         '
         'InputGroupHeader10
         '
@@ -1618,8 +1668,7 @@ Partial Class FundSheetMM
         Me.InputLabel94.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InputLabel94.HorizontalAlign = C1.Win.C1InputPanel.InputContentAlignment.Far
         Me.InputLabel94.Name = "InputLabel94"
-        Me.InputLabel94.Text = "Top Securities Holding: "
-        Me.InputLabel94.Width = 441
+        Me.InputLabel94.Text = "Top Holding: "
         '
         'txtTopHolding
         '
@@ -1641,11 +1690,6 @@ Partial Class FundSheetMM
         Me.rbName.Break = C1.Win.C1InputPanel.BreakType.None
         Me.rbName.Name = "rbName"
         Me.rbName.Text = "By Name"
-        '
-        'btnLoadHolding
-        '
-        Me.btnLoadHolding.Image = CType(resources.GetObject("btnLoadHolding.Image"), System.Drawing.Image)
-        Me.btnLoadHolding.Name = "btnLoadHolding"
         '
         'C1DockingTabPage3
         '
@@ -1676,9 +1720,7 @@ Partial Class FundSheetMM
         '
         'C1SplitterPanel4
         '
-        Me.C1SplitterPanel4.Controls.Add(Me.fgPerformance)
-        Me.C1SplitterPanel4.Controls.Add(Me.fgWeek)
-        Me.C1SplitterPanel4.Controls.Add(Me.C1InputPanel3)
+        Me.C1SplitterPanel4.Controls.Add(Me.C1SplitContainer5)
         Me.C1SplitterPanel4.Height = 127
         Me.C1SplitterPanel4.Location = New System.Drawing.Point(0, 21)
         Me.C1SplitterPanel4.Name = "C1SplitterPanel4"
@@ -1688,32 +1730,33 @@ Partial Class FundSheetMM
         Me.C1SplitterPanel4.Text = "Summary"
         Me.C1SplitterPanel4.Width = 1126
         '
-        'fgPerformance
+        'C1SplitContainer5
         '
-        Me.fgPerformance.ColumnInfo = "0,0,0,0,0,95,Columns:"
-        Me.fgPerformance.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.fgPerformance.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.fgPerformance.Location = New System.Drawing.Point(590, 0)
-        Me.fgPerformance.Name = "fgPerformance"
-        Me.fgPerformance.Rows.Count = 1
-        Me.fgPerformance.Rows.DefaultSize = 19
-        Me.fgPerformance.Size = New System.Drawing.Size(536, 106)
-        Me.fgPerformance.StyleInfo = resources.GetString("fgPerformance.StyleInfo")
-        Me.fgPerformance.TabIndex = 21
+        Me.C1SplitContainer5.CollapsingAreaColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(250, Byte), Integer))
+        Me.C1SplitContainer5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.C1SplitContainer5.FixedLineColor = System.Drawing.Color.FromArgb(CType(CType(145, Byte), Integer), CType(CType(166, Byte), Integer), CType(CType(194, Byte), Integer))
+        Me.C1SplitContainer5.Location = New System.Drawing.Point(0, 0)
+        Me.C1SplitContainer5.Name = "C1SplitContainer5"
+        Me.C1SplitContainer5.Panels.Add(Me.C1SplitterPanel13)
+        Me.C1SplitContainer5.Panels.Add(Me.C1SplitterPanel14)
+        Me.C1SplitContainer5.Panels.Add(Me.C1SplitterPanel15)
+        Me.C1SplitContainer5.Panels.Add(Me.C1SplitterPanel16)
+        Me.C1SplitContainer5.Size = New System.Drawing.Size(1126, 106)
+        Me.C1SplitContainer5.SplitterColor = System.Drawing.Color.FromArgb(CType(CType(145, Byte), Integer), CType(CType(166, Byte), Integer), CType(CType(194, Byte), Integer))
+        Me.C1SplitContainer5.SplitterWidth = 1
+        Me.C1SplitContainer5.TabIndex = 0
+        Me.C1SplitContainer5.ToolTipGradient = C1.Win.C1SplitContainer.ToolTipGradient.Blue
         '
-        'fgWeek
+        'C1SplitterPanel13
         '
-        Me.fgWeek.BackColor = System.Drawing.Color.White
-        Me.fgWeek.ColumnInfo = "0,0,0,0,0,95,Columns:"
-        Me.fgWeek.Dock = System.Windows.Forms.DockStyle.Left
-        Me.fgWeek.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.fgWeek.Location = New System.Drawing.Point(296, 0)
-        Me.fgWeek.Name = "fgWeek"
-        Me.fgWeek.Rows.Count = 1
-        Me.fgWeek.Rows.DefaultSize = 19
-        Me.fgWeek.Size = New System.Drawing.Size(294, 106)
-        Me.fgWeek.StyleInfo = resources.GetString("fgWeek.StyleInfo")
-        Me.fgWeek.TabIndex = 20
+        Me.C1SplitterPanel13.Controls.Add(Me.C1InputPanel3)
+        Me.C1SplitterPanel13.Dock = C1.Win.C1SplitContainer.PanelDockStyle.Left
+        Me.C1SplitterPanel13.Location = New System.Drawing.Point(0, 0)
+        Me.C1SplitterPanel13.Name = "C1SplitterPanel13"
+        Me.C1SplitterPanel13.Size = New System.Drawing.Size(296, 106)
+        Me.C1SplitterPanel13.SizeRatio = 26.311R
+        Me.C1SplitterPanel13.TabIndex = 0
+        Me.C1SplitterPanel13.Width = 296
         '
         'C1InputPanel3
         '
@@ -1721,36 +1764,27 @@ Partial Class FundSheetMM
         Me.C1InputPanel3.Dock = System.Windows.Forms.DockStyle.Left
         Me.C1InputPanel3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.C1InputPanel3.Items.Add(Me.InputLabel95)
-        Me.C1InputPanel3.Items.Add(Me.chkRebase)
         Me.C1InputPanel3.Items.Add(Me.btnSettingPortfolio)
         Me.C1InputPanel3.Items.Add(Me.rbNAVUnit)
         Me.C1InputPanel3.Items.Add(Me.rbReturn)
-        Me.C1InputPanel3.Items.Add(Me.chkReplace)
+        Me.C1InputPanel3.Items.Add(Me.chkRebase)
         Me.C1InputPanel3.Items.Add(Me.InputGroupHeader9)
-        Me.C1InputPanel3.Items.Add(Me.InputLabel96)
+        Me.C1InputPanel3.Items.Add(Me.rbInception)
+        Me.C1InputPanel3.Items.Add(Me.rbYTD)
+        Me.C1InputPanel3.Items.Add(Me.rbOneYear)
+        Me.C1InputPanel3.Items.Add(Me.chkReplace)
         Me.C1InputPanel3.Items.Add(Me.txtBenchmark)
-        Me.C1InputPanel3.Items.Add(Me.btnSettingMonthly)
-        Me.C1InputPanel3.Items.Add(Me.rbYearOne)
-        Me.C1InputPanel3.Items.Add(Me.rbYearThis)
         Me.C1InputPanel3.Location = New System.Drawing.Point(0, 0)
         Me.C1InputPanel3.Name = "C1InputPanel3"
         Me.C1InputPanel3.Size = New System.Drawing.Size(296, 106)
-        Me.C1InputPanel3.TabIndex = 0
+        Me.C1InputPanel3.TabIndex = 2
         '
         'InputLabel95
         '
         Me.InputLabel95.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InputLabel95.Name = "InputLabel95"
         Me.InputLabel95.Text = "Portfolio vs Benchmark"
-        Me.InputLabel95.Width = 143
-        '
-        'chkRebase
-        '
-        Me.chkRebase.Break = C1.Win.C1InputPanel.BreakType.None
-        Me.chkRebase.Height = 19
-        Me.chkRebase.Name = "chkRebase"
-        Me.chkRebase.Text = "Rebase"
-        Me.chkRebase.Width = 106
+        Me.InputLabel95.Width = 250
         '
         'btnSettingPortfolio
         '
@@ -1769,35 +1803,129 @@ Partial Class FundSheetMM
         Me.rbReturn.Checked = True
         Me.rbReturn.Name = "rbReturn"
         Me.rbReturn.Text = "Return"
-        Me.rbReturn.Width = 68
+        Me.rbReturn.Width = 140
         '
-        'chkReplace
+        'chkRebase
         '
-        Me.chkReplace.Name = "chkReplace"
-        Me.chkReplace.Text = "Replace Benchmark"
+        Me.chkRebase.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.chkRebase.Height = 19
+        Me.chkRebase.Name = "chkRebase"
+        Me.chkRebase.Text = "Rebase"
         '
         'InputGroupHeader9
         '
         Me.InputGroupHeader9.Height = 1
         Me.InputGroupHeader9.Name = "InputGroupHeader9"
         '
-        'InputLabel96
+        'rbInception
         '
-        Me.InputLabel96.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.InputLabel96.Name = "InputLabel96"
-        Me.InputLabel96.Text = "Portfolio Monthly Return: "
-        Me.InputLabel96.Width = 143
+        Me.rbInception.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbInception.Checked = True
+        Me.rbInception.Name = "rbInception"
+        Me.rbInception.Text = "Inception"
+        '
+        'rbYTD
+        '
+        Me.rbYTD.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.rbYTD.Name = "rbYTD"
+        Me.rbYTD.Text = "YTD"
+        '
+        'rbOneYear
+        '
+        Me.rbOneYear.Name = "rbOneYear"
+        Me.rbOneYear.Text = "One Year"
+        '
+        'chkReplace
+        '
+        Me.chkReplace.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.chkReplace.Name = "chkReplace"
+        Me.chkReplace.Text = "Replace Benchmark: "
         '
         'txtBenchmark
         '
         Me.txtBenchmark.Break = C1.Win.C1InputPanel.BreakType.None
         Me.txtBenchmark.Name = "txtBenchmark"
-        Me.txtBenchmark.Width = 107
+        Me.txtBenchmark.Width = 140
         '
-        'btnSettingMonthly
+        'C1SplitterPanel14
         '
-        Me.btnSettingMonthly.Image = CType(resources.GetObject("btnSettingMonthly.Image"), System.Drawing.Image)
-        Me.btnSettingMonthly.Name = "btnSettingMonthly"
+        Me.C1SplitterPanel14.Controls.Add(Me.fgPerformance)
+        Me.C1SplitterPanel14.Dock = C1.Win.C1SplitContainer.PanelDockStyle.Right
+        Me.C1SplitterPanel14.Location = New System.Drawing.Point(590, 0)
+        Me.C1SplitterPanel14.Name = "C1SplitterPanel14"
+        Me.C1SplitterPanel14.Size = New System.Drawing.Size(536, 106)
+        Me.C1SplitterPanel14.SizeRatio = 64.734R
+        Me.C1SplitterPanel14.TabIndex = 1
+        Me.C1SplitterPanel14.Width = 536
+        '
+        'fgPerformance
+        '
+        Me.fgPerformance.BorderStyle = C1.Win.C1FlexGrid.Util.BaseControls.BorderStyleEnum.None
+        Me.fgPerformance.ColumnInfo = "0,0,0,0,0,95,Columns:"
+        Me.fgPerformance.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.fgPerformance.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.fgPerformance.Location = New System.Drawing.Point(0, 0)
+        Me.fgPerformance.Name = "fgPerformance"
+        Me.fgPerformance.Rows.Count = 1
+        Me.fgPerformance.Rows.DefaultSize = 19
+        Me.fgPerformance.Size = New System.Drawing.Size(536, 106)
+        Me.fgPerformance.StyleInfo = resources.GetString("fgPerformance.StyleInfo")
+        Me.fgPerformance.TabIndex = 24
+        '
+        'C1SplitterPanel15
+        '
+        Me.C1SplitterPanel15.Controls.Add(Me.fgWeek)
+        Me.C1SplitterPanel15.Height = 65
+        Me.C1SplitterPanel15.Location = New System.Drawing.Point(297, 0)
+        Me.C1SplitterPanel15.Name = "C1SplitterPanel15"
+        Me.C1SplitterPanel15.Size = New System.Drawing.Size(292, 65)
+        Me.C1SplitterPanel15.SizeRatio = 61.905R
+        Me.C1SplitterPanel15.TabIndex = 2
+        '
+        'fgWeek
+        '
+        Me.fgWeek.BackColor = System.Drawing.Color.White
+        Me.fgWeek.BorderStyle = C1.Win.C1FlexGrid.Util.BaseControls.BorderStyleEnum.None
+        Me.fgWeek.ColumnInfo = "0,0,0,0,0,95,Columns:"
+        Me.fgWeek.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.fgWeek.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.fgWeek.Location = New System.Drawing.Point(0, 0)
+        Me.fgWeek.Name = "fgWeek"
+        Me.fgWeek.Rows.Count = 1
+        Me.fgWeek.Rows.DefaultSize = 19
+        Me.fgWeek.Size = New System.Drawing.Size(292, 65)
+        Me.fgWeek.StyleInfo = resources.GetString("fgWeek.StyleInfo")
+        Me.fgWeek.TabIndex = 23
+        '
+        'C1SplitterPanel16
+        '
+        Me.C1SplitterPanel16.Controls.Add(Me.C1InputPanel12)
+        Me.C1SplitterPanel16.Height = 40
+        Me.C1SplitterPanel16.Location = New System.Drawing.Point(297, 66)
+        Me.C1SplitterPanel16.Name = "C1SplitterPanel16"
+        Me.C1SplitterPanel16.Size = New System.Drawing.Size(292, 40)
+        Me.C1SplitterPanel16.TabIndex = 3
+        '
+        'C1InputPanel12
+        '
+        Me.C1InputPanel12.BorderThickness = 1
+        Me.C1InputPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.C1InputPanel12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.C1InputPanel12.Items.Add(Me.InputLabel14)
+        Me.C1InputPanel12.Items.Add(Me.rbYearOne)
+        Me.C1InputPanel12.Items.Add(Me.rbYearThis)
+        Me.C1InputPanel12.Items.Add(Me.btnSettingMonthly)
+        Me.C1InputPanel12.Location = New System.Drawing.Point(0, 0)
+        Me.C1InputPanel12.Name = "C1InputPanel12"
+        Me.C1InputPanel12.Size = New System.Drawing.Size(292, 40)
+        Me.C1InputPanel12.TabIndex = 2
+        '
+        'InputLabel14
+        '
+        Me.InputLabel14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.InputLabel14.HorizontalAlign = C1.Win.C1InputPanel.InputContentAlignment.Far
+        Me.InputLabel14.Name = "InputLabel14"
+        Me.InputLabel14.Text = "Monthly Return: "
         '
         'rbYearOne
         '
@@ -1808,11 +1936,19 @@ Partial Class FundSheetMM
         '
         'rbYearThis
         '
+        Me.rbYearThis.Break = C1.Win.C1InputPanel.BreakType.None
         Me.rbYearThis.Name = "rbYearThis"
         Me.rbYearThis.Text = "This Year"
         '
+        'btnSettingMonthly
+        '
+        Me.btnSettingMonthly.Break = C1.Win.C1InputPanel.BreakType.None
+        Me.btnSettingMonthly.Image = CType(resources.GetObject("btnSettingMonthly.Image"), System.Drawing.Image)
+        Me.btnSettingMonthly.Name = "btnSettingMonthly"
+        '
         'C1SplitterPanel5
         '
+        Me.C1SplitterPanel5.BackColor = System.Drawing.Color.White
         Me.C1SplitterPanel5.Controls.Add(Me.chartMonthly)
         Me.C1SplitterPanel5.Dock = C1.Win.C1SplitContainer.PanelDockStyle.Left
         Me.C1SplitterPanel5.Height = 242
@@ -1821,7 +1957,7 @@ Partial Class FundSheetMM
         Me.C1SplitterPanel5.Size = New System.Drawing.Size(558, 221)
         Me.C1SplitterPanel5.SizeRatio = 49.6R
         Me.C1SplitterPanel5.TabIndex = 1
-        Me.C1SplitterPanel5.Text = "Portfolio Monthly Return: "
+        Me.C1SplitterPanel5.Text = "Portfolio Monthly Return"
         Me.C1SplitterPanel5.Width = 558
         '
         'chartMonthly
@@ -1837,6 +1973,7 @@ Partial Class FundSheetMM
         '
         'C1SplitterPanel6
         '
+        Me.C1SplitterPanel6.BackColor = System.Drawing.Color.White
         Me.C1SplitterPanel6.Controls.Add(Me.chartPortfolio)
         Me.C1SplitterPanel6.Height = 242
         Me.C1SplitterPanel6.Location = New System.Drawing.Point(559, 149)
@@ -2060,36 +2197,6 @@ Partial Class FundSheetMM
         Me.btnReviewList.Text = "LIST REVIEW"
         Me.btnReviewList.Width = 100
         '
-        'btnPDF1
-        '
-        Me.btnPDF1.Name = "btnPDF1"
-        Me.btnPDF1.Text = "Layout 1"
-        '
-        'btnPDF2
-        '
-        Me.btnPDF2.Name = "btnPDF2"
-        Me.btnPDF2.Text = "Layout 2"
-        '
-        'btnPDF3
-        '
-        Me.btnPDF3.Name = "btnPDF3"
-        Me.btnPDF3.Text = "Layout 3"
-        '
-        'btnEmail1
-        '
-        Me.btnEmail1.Name = "btnEmail1"
-        Me.btnEmail1.Text = "Layout 1"
-        '
-        'btnEmail2
-        '
-        Me.btnEmail2.Name = "btnEmail2"
-        Me.btnEmail2.Text = "Layout 2"
-        '
-        'btnEmail3
-        '
-        Me.btnEmail3.Name = "btnEmail3"
-        Me.btnEmail3.Text = "Layout 3"
-        '
         'FundSheetMM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2118,7 +2225,8 @@ Partial Class FundSheetMM
         CType(Me.C1SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.C1SplitContainer1.ResumeLayout(False)
         Me.C1SplitterPanel1.ResumeLayout(False)
-        CType(Me.fgDuration, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.fgDuration2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.fgDuration1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.C1InputPanel11, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chartAsset, System.ComponentModel.ISupportInitialize).EndInit()
         Me.C1SplitterPanel2.ResumeLayout(False)
@@ -2131,9 +2239,16 @@ Partial Class FundSheetMM
         CType(Me.C1SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.C1SplitContainer2.ResumeLayout(False)
         Me.C1SplitterPanel4.ResumeLayout(False)
-        CType(Me.fgPerformance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.fgWeek, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.C1SplitContainer5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.C1SplitContainer5.ResumeLayout(False)
+        Me.C1SplitterPanel13.ResumeLayout(False)
         CType(Me.C1InputPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.C1SplitterPanel14.ResumeLayout(False)
+        CType(Me.fgPerformance, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.C1SplitterPanel15.ResumeLayout(False)
+        CType(Me.fgWeek, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.C1SplitterPanel16.ResumeLayout(False)
+        CType(Me.C1InputPanel12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.C1SplitterPanel5.ResumeLayout(False)
         CType(Me.chartMonthly, System.ComponentModel.ISupportInitialize).EndInit()
         Me.C1SplitterPanel6.ResumeLayout(False)
@@ -2283,21 +2398,6 @@ Partial Class FundSheetMM
     Friend WithEvents C1DockingTabPage3 As C1.Win.C1Command.C1DockingTabPage
     Friend WithEvents C1SplitContainer2 As C1.Win.C1SplitContainer.C1SplitContainer
     Friend WithEvents C1SplitterPanel4 As C1.Win.C1SplitContainer.C1SplitterPanel
-    Friend WithEvents fgPerformance As C1.Win.C1FlexGrid.C1FlexGrid
-    Friend WithEvents fgWeek As C1.Win.C1FlexGrid.C1FlexGrid
-    Friend WithEvents C1InputPanel3 As C1.Win.C1InputPanel.C1InputPanel
-    Friend WithEvents InputLabel95 As C1.Win.C1InputPanel.InputLabel
-    Friend WithEvents chkRebase As C1.Win.C1InputPanel.InputCheckBox
-    Friend WithEvents btnSettingPortfolio As C1.Win.C1InputPanel.InputButton
-    Friend WithEvents rbNAVUnit As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents rbReturn As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents chkReplace As C1.Win.C1InputPanel.InputCheckBox
-    Friend WithEvents InputGroupHeader9 As C1.Win.C1InputPanel.InputGroupHeader
-    Friend WithEvents InputLabel96 As C1.Win.C1InputPanel.InputLabel
-    Friend WithEvents txtBenchmark As C1.Win.C1InputPanel.InputTextBox
-    Friend WithEvents btnSettingMonthly As C1.Win.C1InputPanel.InputButton
-    Friend WithEvents rbYearOne As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents rbYearThis As C1.Win.C1InputPanel.InputRadioButton
     Friend WithEvents C1SplitterPanel5 As C1.Win.C1SplitContainer.C1SplitterPanel
     Friend WithEvents chartMonthly As C1.Win.C1Chart.C1Chart
     Friend WithEvents C1SplitterPanel6 As C1.Win.C1SplitContainer.C1SplitterPanel
@@ -2324,13 +2424,12 @@ Partial Class FundSheetMM
     Friend WithEvents btnReviewRemove As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnReviewClear As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnReviewList As C1.Win.C1InputPanel.InputButton
-    Friend WithEvents fgDuration As C1.Win.C1FlexGrid.C1FlexGrid
+    Friend WithEvents fgDuration1 As C1.Win.C1FlexGrid.C1FlexGrid
     Friend WithEvents C1InputPanel2 As C1.Win.C1InputPanel.C1InputPanel
     Friend WithEvents InputLabel94 As C1.Win.C1InputPanel.InputLabel
     Friend WithEvents txtTopHolding As C1.Win.C1InputPanel.InputTextBox
     Friend WithEvents rbPersen As C1.Win.C1InputPanel.InputRadioButton
     Friend WithEvents rbName As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents btnLoadHolding As C1.Win.C1InputPanel.InputButton
     Friend WithEvents InputGroupHeader10 As C1.Win.C1InputPanel.InputGroupHeader
     Friend WithEvents InputLabel11 As C1.Win.C1InputPanel.InputLabel
     Friend WithEvents rbPie As C1.Win.C1InputPanel.InputRadioButton
@@ -2341,24 +2440,47 @@ Partial Class FundSheetMM
     Friend WithEvents chkAntiAlias As C1.Win.C1InputPanel.InputCheckBox
     Friend WithEvents bRotateCounterClockwise As C1.Win.C1InputPanel.InputButton
     Friend WithEvents bRotateClockwise As C1.Win.C1InputPanel.InputButton
-    Friend WithEvents btnSettingSector As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents btnSettingAsset As C1.Win.C1InputPanel.InputButton
     Friend WithEvents C1InputPanel10 As C1.Win.C1InputPanel.C1InputPanel
     Friend WithEvents InputLabel5 As C1.Win.C1InputPanel.InputLabel
-    Friend WithEvents InputTextBox1 As C1.Win.C1InputPanel.InputTextBox
-    Friend WithEvents InputRadioButton1 As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents InputRadioButton2 As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents InputButton1 As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents txtTopBank As C1.Win.C1InputPanel.InputTextBox
+    Friend WithEvents rbValueBank As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbNameBank As C1.Win.C1InputPanel.InputRadioButton
     Friend WithEvents DBGBank As C1.Win.C1TrueDBGrid.C1TrueDBGrid
     Friend WithEvents DBGSecurities As C1.Win.C1TrueDBGrid.C1TrueDBGrid
     Friend WithEvents C1InputPanel11 As C1.Win.C1InputPanel.C1InputPanel
     Friend WithEvents InputLabel9 As C1.Win.C1InputPanel.InputLabel
-    Friend WithEvents InputRadioButton3 As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents InputRadioButton4 As C1.Win.C1InputPanel.InputRadioButton
-    Friend WithEvents InputButton2 As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents rbDuration As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbTTM As C1.Win.C1InputPanel.InputRadioButton
     Friend WithEvents btnPDF1 As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnPDF2 As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnPDF3 As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnEmail1 As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnEmail2 As C1.Win.C1InputPanel.InputButton
     Friend WithEvents btnEmail3 As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents fgDuration2 As C1.Win.C1FlexGrid.C1FlexGrid
+    Friend WithEvents C1SplitContainer5 As C1.Win.C1SplitContainer.C1SplitContainer
+    Friend WithEvents C1SplitterPanel13 As C1.Win.C1SplitContainer.C1SplitterPanel
+    Friend WithEvents C1SplitterPanel14 As C1.Win.C1SplitContainer.C1SplitterPanel
+    Friend WithEvents C1SplitterPanel15 As C1.Win.C1SplitContainer.C1SplitterPanel
+    Friend WithEvents C1SplitterPanel16 As C1.Win.C1SplitContainer.C1SplitterPanel
+    Friend WithEvents C1InputPanel3 As C1.Win.C1InputPanel.C1InputPanel
+    Friend WithEvents InputLabel95 As C1.Win.C1InputPanel.InputLabel
+    Friend WithEvents btnSettingPortfolio As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents rbNAVUnit As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbReturn As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents chkRebase As C1.Win.C1InputPanel.InputCheckBox
+    Friend WithEvents InputGroupHeader9 As C1.Win.C1InputPanel.InputGroupHeader
+    Friend WithEvents rbInception As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbYTD As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbOneYear As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents chkReplace As C1.Win.C1InputPanel.InputCheckBox
+    Friend WithEvents txtBenchmark As C1.Win.C1InputPanel.InputTextBox
+    Friend WithEvents C1InputPanel12 As C1.Win.C1InputPanel.C1InputPanel
+    Friend WithEvents InputLabel14 As C1.Win.C1InputPanel.InputLabel
+    Friend WithEvents rbYearOne As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents rbYearThis As C1.Win.C1InputPanel.InputRadioButton
+    Friend WithEvents btnSettingMonthly As C1.Win.C1InputPanel.InputButton
+    Friend WithEvents fgWeek As C1.Win.C1FlexGrid.C1FlexGrid
+    Friend WithEvents fgPerformance As C1.Win.C1FlexGrid.C1FlexGrid
 End Class

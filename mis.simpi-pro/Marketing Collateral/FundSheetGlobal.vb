@@ -9,6 +9,7 @@ Imports simpi.MarketInstrument
 Imports simpi.MarketInstrument.ParameterSecurities
 Imports simpi.GlobalUtilities
 Imports simpi.GlobalUtilities.GlobalDate
+Imports simpi.GlobalCore.GlobalStatistic
 Imports simpi.CoreData
 Imports simpi.Analyst
 
@@ -18,7 +19,6 @@ Public Class FundSheetGlobal
     Dim objCodeset As New PortfolioCodeset
     Dim objCodesetSimpi As New simpi.SimpiMaster.SimpiCodeset
     Dim objTerm As New simpi.SimpiMaster.SimpiTerm
-    Dim objSector As New ParameterSectorClass
     Dim objNAV As New PortfolioNAV
     Dim objNAV2 As New PortfolioNAV
     Dim objNAV1 As New PortfolioNAV
@@ -28,11 +28,9 @@ Public Class FundSheetGlobal
     Dim objReview As New MarketReview
     Dim objSecurities As New MarketInstrument
 
-    Dim dtSector As New DataTable
     Dim dtNAV As New DataTable
     Dim dtBenchmark As New DataTable
     Dim dtPosition As New DataTable
-    Dim dtHolding As New DataTable
     Dim dtReturn As New DataTable
     Dim dtMonthly As New DataTable
     Dim tmp As String
@@ -44,7 +42,6 @@ Public Class FundSheetGlobal
         objCodeset.UserAccess = objAccess
         objCodesetSimpi.UserAccess = objAccess
         objTerm.UserAccess = objAccess
-        objSector.UserAccess = objAccess
         objNAV.UserAccess = objAccess
         objNAV1.UserAccess = objAccess
         objNAV2.UserAccess = objAccess
@@ -55,19 +52,16 @@ Public Class FundSheetGlobal
         objSecurities.UserAccess = objAccess
 
         dtAs.Value = Now.AddDays(-1)
-        GetParameterCountry()
         GetParameterInstrumentType()
         GetParameterInstrumentSubType()
         GetSimpiTerm()
         GetPortfolioCodeset()
         GetInstrumentUser()
+        GetParameterCountry()
 
         DBGHolding.FetchRowStyles = True
         fgWeek.DrawMode = DrawModeEnum.OwnerDraw
         fgPerformance.DrawMode = DrawModeEnum.OwnerDraw
-
-        dtHolding.Columns.Add("Sector", GetType(String))
-        dtHolding.Columns.Add("Value", GetType(Decimal))
 
         dtMonthly.Columns.Add("Date", GetType(Date))
         dtMonthly.Columns.Add("Return", GetType(Decimal))
@@ -149,11 +143,11 @@ Public Class FundSheetGlobal
     End Sub
 
     Private Sub rbOption1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption1.SelectedIndexChanged
-        DisplayOption()
+        If rbOption1.Checked Then DisplayOption()
     End Sub
 
     Private Sub rbOption2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption2.SelectedIndexChanged
-        DisplayOption()
+        If rbOption2.Checked Then DisplayOption()
     End Sub
 
     Private Sub DisplayOption()
@@ -165,6 +159,7 @@ Public Class FundSheetGlobal
         lblCurrency.Text = ""
         lblInception.Text = ""
         lblFundType.Text = ""
+        lblBenchmark.Text = ""
         lblCustodianBank.Text = ""
         lblValuation.Text = ""
         lblISIN.Text = ""
@@ -190,9 +185,20 @@ Public Class FundSheetGlobal
         lblRisk5.Text = ""
         lblRisk6.Text = ""
         lblRisk7.Text = ""
+        lblReturnInception.Text = ""
+        lblReturnStdDev.Text = ""
+        lblReturnBeta.Text = ""
+        lblReturnBestReturn.Text = ""
+        lblReturnBestMonth.Text = ""
+        lblReturnWorstReturn.Text = ""
+        lblReturnWorstMonth.Text = ""
+        lblReturnBestYear.Text = ""
         lblPolicyEQ.Text = ""
         lblPolicyFI.Text = ""
         lblPolicyMM.Text = ""
+        lblPortfolioEQ.Text = ""
+        lblPortfolioFI.Text = ""
+        lblPortfolioMM.Text = ""
         lblPolicyNotes.Text = ""
         lblAboutTitle.Text = ""
         lblAboutCompany.Text = ""
@@ -288,7 +294,7 @@ Public Class FundSheetGlobal
             objNAV.LoadAt(objPortfolio, dtAs.Value)
             If objNAV.ErrID = 0 Then
                 lblNAVUnit.Text = objNAV.GetNAVPerUnit.ToString("n4")
-                lblAUM.Text = (objNAV.GetNAV / 1000000000).ToString("n2") & " M"
+                lblAUM.Text = objNAV.GetNAV.ToString("n0")
 
                 objPosition.Clear()
                 dtPosition = objPosition.Search(objPortfolio, objNAV.GetPositionDate)
@@ -307,6 +313,7 @@ Public Class FundSheetGlobal
                 dtReturn = objReturn.SearchEOY(objPortfolio, objPortfolio.GetInceptionDate, objNAV.GetPositionDate)
                 DataMonthly()
 
+                DisplayHolding()
                 DisplayPerformance()
                 DisplayReview()
             Else
@@ -321,6 +328,8 @@ Public Class FundSheetGlobal
         performanceClear()
         chartPortfolio.ChartGroups(0).ChartData.SeriesList.Clear()
         chartMonthly.ChartGroups(0).ChartData.SeriesList.Clear()
+        chartCountry.ChartGroups(0).ChartData.SeriesList.Clear()
+        DBGHolding.Columns.Clear()
     End Sub
 
     Private Sub DataMonthly()
@@ -574,13 +583,8 @@ Public Class FundSheetGlobal
         End If
     End Sub
 
-
 #Region "holding"
-    Private Sub btnLoadHolding_Click(sender As Object, e As EventArgs) Handles btnLoadHolding.Click
-        DisplayHolding()
-    End Sub
-
-    Private Sub txtTopSector_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopSector.KeyDown
+    Private Sub txtTopSector_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopCountry.KeyDown
         If e.KeyCode = Keys.Enter Then DisplayHolding()
     End Sub
 
@@ -589,43 +593,43 @@ Public Class FundSheetGlobal
     End Sub
 
     Private Sub rbPersen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPersen.SelectedIndexChanged
-        DisplayHolding()
+        If rbPersen.Checked Then DisplayHolding()
     End Sub
 
     Private Sub rbName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbName.SelectedIndexChanged
-        DisplayHolding()
+        If rbName.Checked Then DisplayHolding()
     End Sub
 
-    Private Sub btnSettingSector_Click(sender As Object, e As EventArgs) Handles btnSettingSector.Click
+    Private Sub btnSettingCountry_Click(sender As Object, e As EventArgs) Handles btnSettingCountry.Click
         Dim pg As New PropertyGrid()
-        pg.SelectedObject = chartSector
+        pg.SelectedObject = chartCountry
         pg.Dock = DockStyle.Fill
         pg.Size = New Size(100, 300)
 
         Dim f As New Form()
-        f.Text = "Sector Allocation"
+        f.Text = "Country Allocation"
         f.Controls.Add(pg)
         f.Icon = My.Resources.icon
         f.ShowDialog()
     End Sub
 
     Private Sub tbarHoleRadius_Scroll(sender As Object, e As System.EventArgs) Handles tbarHoleRadius.Scroll
-        chartSector.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
+        chartCountry.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
     End Sub
 
-    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateCounterClockwise.Click
-        Dim pie As Pie = chartSector.ChartGroups.Group0.Pie
+    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateCounterClockwise.Click
+        Dim pie As Pie = chartCountry.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 10) Mod 360
     End Sub
 
-    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateClockwise.Click
-        Dim pie As Pie = chartSector.ChartGroups.Group0.Pie
+    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateClockwise.Click
+        Dim pie As Pie = chartCountry.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 350) Mod 360
     End Sub
 
     Private Sub chkAlpha_CheckedChanged(sender As Object, e As System.EventArgs) Handles chkAlpha.CheckedChanged
         Dim useAlpha As Boolean = chkAlpha.Checked
-        Dim cdsc As ChartDataSeriesCollection = chartSector.ChartGroups(0).ChartData.SeriesList
+        Dim cdsc As ChartDataSeriesCollection = chartCountry.ChartGroups(0).ChartData.SeriesList
         Dim cds As ChartDataSeries
         For Each cds In cdsc
             If useAlpha AndAlso cds.FillStyle.Alpha = 255 Then
@@ -637,7 +641,7 @@ Public Class FundSheetGlobal
     End Sub
 
     Private Sub chkAntiAlias_CheckedChanged(sender As Object, e As System.EventArgs) Handles chkAntiAlias.CheckedChanged
-        chartSector.UseAntiAliasedGraphics = chkAntiAlias.Checked
+        chartCountry.UseAntiAliasedGraphics = chkAntiAlias.Checked
     End Sub
 
     Private Sub DBGHolding_FetchRowStyle(sender As Object, e As FetchRowStyleEventArgs) Handles DBGHolding.FetchRowStyle
@@ -645,21 +649,21 @@ Public Class FundSheetGlobal
     End Sub
 
     Private Sub rbDonut_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbDonut.SelectedIndexChanged
-        pieCheck()
+        If rbDonut.Checked Then pieCheck()
     End Sub
 
     Private Sub rbPie_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPie.SelectedIndexChanged
-        pieCheck()
+        If rbPie.Checked Then pieCheck()
     End Sub
 
     Private Sub pieCheck()
         If rbDonut.Checked Then
             tbarHoleRadius.Enabled = True
             tbarHoleRadius.Value = 65
-            chartSector.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
+            chartCountry.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
         Else
             tbarHoleRadius.Enabled = False
-            chartSector.ChartGroups.Group0.Pie.InnerRadius = 0
+            chartCountry.ChartGroups.Group0.Pie.InnerRadius = 0
         End If
     End Sub
 
@@ -674,14 +678,14 @@ Public Class FundSheetGlobal
                         Join s In dtInstrumentUser.AsEnumerable On d.Field(Of Long)("SecuritiesID") Equals s.Field(Of Long)("SecuritiesID")
                         Join st In dtParameterInstrumentSubType.AsEnumerable On st.Field(Of Integer)("SubTypeID") Equals s.Field(Of Integer)("SubTypeID")
                         Join t In dtParameterInstrumentType.AsEnumerable On t.Field(Of Integer)("TypeID") Equals st.Field(Of Integer)("TypeID")
-                        Join c In dtParameterCountry.AsEnumerable On c.Field(Of Integer)("CountryID") Equals s.Field(Of Integer)("CountryID")
+                        Join sc In dtParameterCountry.AsEnumerable On sc.Field(Of Integer)("CountryID") Equals s.Field(Of Integer)("CountryID")
                         Select SecuritiesCode = s.Field(Of String)("SecuritiesCode"),
                                SecuritiesName = s.Field(Of String)("SecuritiesNameShort"), SubTypeCode = st.Field(Of String)("SubTypeCode"),
                                TypeID = t.Field(Of Integer)("TypeID"), TypeCode = t.Field(Of String)("TypeCode"),
-                               Country = c.Field(Of String)("CountryName"),
+                               Country = sc.Field(Of String)("CountryName"),
                                Qty = d.Field(Of Decimal)("Qty"),
-                               Price = d.Field(Of Decimal)("MarketPrice"),
-                               Cost = d.Field(Of Decimal)("CostPrice"),
+                               Price = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("MarketPrice") * 100), d.Field(Of Decimal)("MarketPrice")),
+                               Cost = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("CostPrice") * 100), d.Field(Of Decimal)("CostPrice")),
                                Value = d.Field(Of Decimal)("TotalValue"),
                                Persen = CDbl(IIf(objNAV.GetNAV = 0, 0D, CDbl(d.Field(Of Decimal)("TotalValue") * 100 / objNAV.GetNAV)))
 
@@ -719,43 +723,72 @@ Public Class FundSheetGlobal
                 End If
             End If
 
-            Dim query3 = From q In query Where q.TypeID = SetEQ() Group By key = New With {Key .Country = q.Country}
+            Dim query3 = From q In query Group By key = New With {Key .Country = q.Country}
                          Into Group Select New With {.Country = key.Country, .Value = Group.Sum(Function(r) CDbl(r.Value))}
-            Dim query4 = From q In query Where q.TypeID = SetFI() Group By key = New With {Key .SubTypeCode = q.SubTypeCode}
-                         Into Group Select New With {.SubTypeCode = key.SubTypeCode, .Value = Group.Sum(Function(r) CDbl(r.Value))}
-            Dim fund As Double = (From q In query Where q.TypeID = SetFund() Select q.Value).Sum
-            Dim pa As Double = (From q In query Where q.TypeID = SetPhysicalAsset() Select q.Value).Sum
+            Dim slice As Integer
+            Dim valueSisa, valueItem, valueTotal As Double
+            Dim stringLabel As String = ""
+            valueTotal = (From qs In query3 Select Value = qs.Value).Sum
+            valueSisa = 100
+            slice = 0
+            Integer.TryParse(txtTopCountry.Text, Top)
+            Dim queryCountry As IEnumerable
 
-            dtHolding.Clear()
-            For Each item In query3
-                Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = item.Country
-                dr("Value") = item.Value
-                dtHolding.Rows.Add(dr)
-            Next
-            For Each item In query4
-                Dim dr As DataRow = dtHolding.NewRow()
-                If item.SubTypeCode.Trim = "GOVT" Or item.SubTypeCode.Trim = "TBILLS" Then
-                    dr("Sector") = "Government"
+            If Top > 0 Then
+                Dim query4 = From q1 In query3.AsEnumerable.Take(Top)
+                If rbName.Checked Then
+                    queryCountry = From qs In query4 Order By qs.Country Ascending Select Country = qs.Country, Value = qs.Value
                 Else
-                    dr("Sector") = "Corporation"
+                    queryCountry = From qs In query4 Order By qs.Value Descending Select Country = qs.Country, Value = qs.Value
                 End If
-                dr("Value") = item.Value
-                dtHolding.Rows.Add(dr)
+            Else
+                If rbName.Checked Then
+                    queryCountry = From qs In query3 Order By qs.Country Ascending Select Country = qs.Country, Value = qs.Value
+                Else
+                    queryCountry = From qs In query3 Order By qs.Value Descending Select Country = qs.Country, Value = qs.Value
+                End If
+            End If
+
+            chartCountry.Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
+            chartCountry.ChartLabels.DefaultLabelStyle.BackColor = SystemColors.Info
+            chartCountry.ChartLabels.DefaultLabelStyle.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.Solid
+
+            Dim grp As ChartGroup = chartCountry.ChartGroups(0)
+            grp.ChartType = Chart2DTypeEnum.Pie
+            grp.Pie.OtherOffset = 0
+            grp.Pie.InnerRadius = 65
+
+            Dim dat As ChartData = grp.ChartData
+            dat.SeriesList.Clear()
+
+            Dim ColorValue() As Color = {Color.OrangeRed, Color.Tan, Color.LightGreen, Color.MediumTurquoise,
+                                         Color.DodgerBlue, Color.Magenta, Color.GreenYellow, Color.MediumBlue}
+
+            For Each item In queryCountry
+                valueItem = _valueLabel(item.Value, valueTotal)
+                valueSisa -= valueItem
+
+                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
+                series.PointData.Length = 1
+                series.PointData(0) = New PointF(1.0F, valueItem)
+                series.LineStyle.Color = ColorValue(slice Mod 8)
+                stringLabel = GetSimpiTerm(item.Country, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
+                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueItem.ToString("n2") & "%"
+                slice += 1
             Next
-            If fund > 0 Then
-                Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Mutual Fund"
-                dr("Value") = fund
-                dtHolding.Rows.Add(dr)
+
+            If valueSisa > 0 Then
+                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
+                series.PointData.Length = 1
+                series.PointData(0) = New PointF(1.0F, valueSisa)
+                series.LineStyle.Color = ColorValue(slice Mod 8)
+                stringLabel = GetSimpiTerm("Others", IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
+                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueSisa.ToString("n2") & "%"
             End If
-            If pa > 0 Then
-                Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Physical Asset"
-                dr("Value") = pa
-                dtHolding.Rows.Add(dr)
-            End If
-            DisplayHoldingSector()
+
+            chartCountry.Legend.Visible = True
+            chartCountry.Legend.Compass = CompassEnum.East
+            chartCountry.ChartGroups(0).ShowOutline = False
 
         End If
     End Sub
@@ -771,8 +804,8 @@ Public Class FundSheetGlobal
             .DataSource = dataHolding
 
             .Columns("Qty").NumberFormat = "n0"
-            .Columns("Price").NumberFormat = "n0"
-            .Columns("Cost").NumberFormat = "n0"
+            .Columns("Price").NumberFormat = "n2"
+            .Columns("Cost").NumberFormat = "n2"
             .Columns("Value").NumberFormat = "n0"
             .Columns("Persen").NumberFormat = "n2"
 
@@ -790,7 +823,7 @@ Public Class FundSheetGlobal
             .Splits(0).DisplayColumns("No").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Share").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
             .Splits(0).DisplayColumns("Name").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
-            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
+            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Country").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
             .Splits(0).DisplayColumns("Qty").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Price").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
@@ -804,6 +837,7 @@ Public Class FundSheetGlobal
             .Splits(0).DisplayColumns("No").Width = 25
             .Splits(0).DisplayColumns("Share").Width = 60
             .Splits(0).DisplayColumns("Name").Width = 175
+            .Splits(0).DisplayColumns("TypeCode").Width = 40
             .Splits(0).DisplayColumns("Country").Width = 100
             .Splits(0).DisplayColumns("Qty").Width = 75
             .Splits(0).DisplayColumns("Cost").Width = 55
@@ -815,6 +849,7 @@ Public Class FundSheetGlobal
             .Splits(0).DisplayColumns("No").Style.Font = font
             .Splits(0).DisplayColumns("Share").Style.Font = font
             .Splits(0).DisplayColumns("Name").Style.Font = font
+            .Splits(0).DisplayColumns("TypeCode").Style.Font = font
             .Splits(0).DisplayColumns("Country").Style.Font = font
             .Splits(0).DisplayColumns("Qty").Style.Font = font
             .Splits(0).DisplayColumns("Cost").Style.Font = font
@@ -825,86 +860,9 @@ Public Class FundSheetGlobal
         End With
     End Sub
 
-    Private Function _valuePie(ByVal item As Double) As Integer
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
+    Private Function _valueLabel(ByVal item As Double, ByVal total As Double) As Double
+        If total = 0 Then Return 0 Else Return CDbl(item * 100 / total)
     End Function
-
-    Private Function _valueLabel(ByVal item As Double) As Double
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
-    End Function
-
-    Private Sub DisplayHoldingSector()
-        If dtHolding IsNot Nothing AndAlso dtHolding.Rows.Count > 0 Then
-            Dim top, slice, chartSisa, chartItem As Integer
-            Dim valueSisa, valueItem As Double
-            Dim stringLabel As String = ""
-            chartSisa = 100
-            valueSisa = 100
-            slice = 0
-            Integer.TryParse(txtTopSector.Text, top)
-            Dim querySector As IEnumerable
-
-            Dim query = From q In dtHolding.AsEnumerable Order By q.Field(Of Decimal)("Value") Descending
-                        Select Country = q.Field(Of String)("Country"), Value = q.Field(Of Decimal)("Value")
-            If top > 0 Then
-                Dim query1 = From q1 In query.AsEnumerable.Take(top)
-                If rbName.Checked Then
-                    querySector = From qs In query1 Order By qs.Country Ascending Select Country = qs.Country, Value = qs.Value
-                Else
-                    querySector = From qs In query1 Order By qs.Value Descending Select Country = qs.Country, Value = qs.Value
-                End If
-            Else
-                If rbName.Checked Then
-                    querySector = From qs In query Order By qs.Country Ascending Select Sector = qs.Country, Value = qs.Value
-                Else
-                    querySector = From qs In query Order By qs.Value Descending Select Sector = qs.Country, Value = qs.Value
-                End If
-            End If
-
-            chartSector.Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
-            chartSector.ChartLabels.DefaultLabelStyle.BackColor = SystemColors.Info
-            chartSector.ChartLabels.DefaultLabelStyle.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.Solid
-
-            Dim grp As ChartGroup = chartSector.ChartGroups(0)
-            grp.ChartType = Chart2DTypeEnum.Pie
-            grp.Pie.OtherOffset = 0
-            grp.Pie.InnerRadius = 65
-
-            Dim dat As ChartData = grp.ChartData
-            dat.SeriesList.Clear()
-
-            Dim ColorValue() As Color = {Color.OrangeRed, Color.Tan, Color.LightGreen, Color.MediumTurquoise,
-                                         Color.DodgerBlue, Color.Magenta, Color.GreenYellow, Color.MediumBlue}
-
-            For Each item In querySector
-                chartItem = _valuePie(item.Value)
-                chartSisa -= chartItem
-                valueItem = _valueLabel(item.Value)
-                valueSisa -= valueItem
-
-                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
-                series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartItem)
-                series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm(item.Country, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
-                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueItem.ToString("n2") & "%"
-                slice += 1
-            Next
-
-            If valueSisa > 0 Then
-                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
-                series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartSisa)
-                series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm("Others", IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
-                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueSisa.ToString("n2") & "%"
-            End If
-
-            chartSector.Legend.Visible = True
-            chartSector.Legend.Compass = CompassEnum.East
-            chartSector.ChartGroups(0).ShowOutline = False
-        End If
-    End Sub
 
 #End Region
 
@@ -919,19 +877,31 @@ Public Class FundSheetGlobal
     End Sub
 
     Private Sub rbNAVUnit_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbNAVUnit.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbNAVUnit.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbReturn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbReturn.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbReturn.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbInception_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbInception.SelectedIndexChanged
+        If rbInception.Checked Then If rbInception.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbYTD_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYTD.SelectedIndexChanged
+        If rbYTD.Checked Then If rbYTD.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbOneYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOneYear.SelectedIndexChanged
+        If rbOneYear.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbYearOne_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearOne.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearOne.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub rbYearThis_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearThis.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearThis.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub txtBenchmark_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBenchmark.KeyDown
@@ -1064,10 +1034,10 @@ Public Class FundSheetGlobal
             .AllowResizing = AllowResizingEnum.Columns
             .SelectionMode = SelectionModeEnum.Row
             fgWeek.Cols(0).Width = 75
-            fgWeek.Cols(1).Width = 40
-            fgWeek.Cols(2).Width = 40
-            fgWeek.Cols(3).Width = 40
-            fgWeek.Cols(4).Width = 40
+            fgWeek.Cols(1).Width = 45
+            fgWeek.Cols(2).Width = 45
+            fgWeek.Cols(3).Width = 45
+            fgWeek.Cols(4).Width = 45
         End With
     End Sub
 
@@ -1097,8 +1067,8 @@ Public Class FundSheetGlobal
                       Order By q3.Field(Of Decimal)("Return") Descending
                       Select PositionDate = q3.Field(Of Date)("Date"), Monthly = q3.Field(Of Decimal)("Return")).Take(1)
         lblReturnBestYear.Text = (query3.ToList(0).Monthly * 100).ToString("n2")
-        lblReturnStdDev.Text = ""
-        lblReturnBeta.Text = ""
+        lblReturnStdDev.Text = (StdDev((From q4 In dtMonthly.AsEnumerable Select CDbl(q4.Field(Of Decimal)("Return"))).ToArray) * Math.Sqrt(12) * 100).ToString("n2")
+        lblReturnBeta.Text = "" 'Slope(return, benchmark)
     End Sub
 
     Private Sub DisplayPerformanceWeek()
@@ -1158,12 +1128,12 @@ Public Class FundSheetGlobal
                     fgWeek(1, 5) = 0.ToString("n2")
                 End If
 
-                fgWeek.Cols(0).Width = 100
-                fgWeek.Cols(1).Width = 40
-                fgWeek.Cols(2).Width = 40
-                fgWeek.Cols(3).Width = 40
-                fgWeek.Cols(4).Width = 40
-                fgWeek.Cols(5).Width = 40
+                fgWeek.Cols(0).Width = 75
+                fgWeek.Cols(1).Width = 45
+                fgWeek.Cols(2).Width = 45
+                fgWeek.Cols(3).Width = 45
+                fgWeek.Cols(4).Width = 45
+                fgWeek.Cols(5).Width = 45
             End If
             fgWeek(1, 0) = lblPortfolioCode.Text.Trim
             fgWeek(2, 0) = GetSimpiTerm(lblBenchmark.Text.Trim, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
@@ -1187,6 +1157,7 @@ Public Class FundSheetGlobal
                 End If
                 .Reset()
                 .ChartGroups(0).ChartType = Chart2DTypeEnum.Bar
+                .BackColor = Color.Transparent
 
                 Dim dscoll As ChartDataSeriesCollection = .ChartGroups(0).ChartData.SeriesList
                 dscoll.Clear()
@@ -1199,17 +1170,26 @@ Public Class FundSheetGlobal
                     series.Y(i) = item.Monthly
                     i += 1
                 Next
-
+                series.DataLabel.Visible = True
+                series.DataLabel.Style.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Regular)
+                series.DataLabel.Compass = LabelCompassEnum.North
+                series.DataLabel.Text = "{#YVAL:0.00%}"
                 Dim ax As Axis = .ChartArea.AxisX
                 ax.AnnoMethod = AnnotationMethodEnum.ValueLabels
+                ax.AnnotationRotation = 25
+                ax.Thickness = 1
+
                 i = 0
                 For Each item In query
                     ax.ValueLabels.Add(i, item.PositionDate)
                     i += 1
                 Next
-
                 Dim ay As Axis = .ChartArea.AxisY
-                ay.AnnoFormat = FormatEnum.NumericPercentage
+                ay.AnnoFormat = FormatEnum.NumericManual
+                ay.AnnoFormatString = "p0"
+                ay.AutoOrigin = False
+                ay.Origin = 0
+                ay.Thickness = 1
 
             End With
         End If
@@ -1264,11 +1244,26 @@ Public Class FundSheetGlobal
             '            Select PositionDate = n.Field(Of Date)("PositionDate"),
             '                   NAV = n.Field(Of Decimal)("NAV"), giPortfolio = n.Field(Of Decimal)("GeometricIndex"),
             '                   BenchmarkValue = b.Field(Of Decimal)("BenchmarkValue"), giBenchmark = b.Field(Of Decimal)("GeometricIndex")
-
-            Dim query = From n In dtNAV.AsEnumerable
-                        Order By n.Field(Of Date)("PositionDate") Ascending
+            Dim query As IEnumerable
+            Dim giAwal As Double = 0
+            If rbInception.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
                         Select PositionDate = n.Field(Of Date)("PositionDate"),
                                NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            ElseIf rbYTD.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > New Date(dtAs.Value.AddYears(-1).Year, 12, 31)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            Else
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > dtAs.Value.AddYears(-1)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            End If
 
             With chartPortfolio
                 .Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
@@ -1280,15 +1275,15 @@ Public Class FundSheetGlobal
                 series.SymbolStyle.Shape = SymbolShapeEnum.None
                 series.FitType = FitTypeEnum.Line
 
-                series.X.CopyDataIn((From q In query Select q.PositionDate).ToArray)
+                series.X.CopyDataIn((From q In query Select CDate(q.PositionDate)).ToArray)
                 If rbNAVUnit.Checked Then
-                    series.Y.CopyDataIn((From q In query Select q.NAV).ToArray)
+                    series.Y.CopyDataIn((From q In query Select CDbl(q.NAV)).ToArray)
                 ElseIf chkRebase.Checked Then
-                    series.Y.CopyDataIn((From q In query Select (1 + (q.giPortfolio - 1))).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (1 + ((CDbl(q.giPortfolio) / giAwal) - 1))).ToArray)
                 Else
-                    series.Y.CopyDataIn((From q In query Select q.giPortfolio - 1).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (CDbl(q.giPortfolio) / giAwal) - 1).ToArray)
                 End If
-                series.PointData.Length = query.Count
+                series.PointData.Length = (From q In query).Count
 
                 .BackColor = Color.Transparent
                 .ChartArea.AxisX.Max = (From q In query Select q.PositionDate).Last.ToOADate
@@ -1301,19 +1296,22 @@ Public Class FundSheetGlobal
                 .ChartArea.AxisX.Origin = .ChartArea.AxisX.Min
 
                 .ChartArea.AxisY.AnnoFormat = FormatEnum.NumericManual
-                If rbNAVUnit.Checked Then
-                    .ChartArea.AxisY.AnnoFormatString = "n0"
-                ElseIf chkRebase.Checked Then
-                    .ChartArea.AxisY.AnnoFormatString = "p0"
-                Else
-                    .ChartArea.AxisY.AnnoFormatString = "p0"
-                End If
                 .ChartArea.AxisY.AutoMax = True
                 .ChartArea.AxisY.AutoMin = True
                 .ChartArea.AxisY.AutoMajor = True
                 .ChartArea.AxisY.AutoMinor = True
                 .ChartArea.AxisX.Thickness = 1
                 .ChartArea.AxisY.Thickness = 1
+                If rbNAVUnit.Checked Then
+                    .ChartArea.AxisY.AnnoFormatString = "n0"
+                    .ChartArea.AxisY.AutoOrigin = True
+                ElseIf chkRebase.Checked Then
+                    .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 1
+                Else
+                    .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 0
+                End If
 
             End With
 
@@ -1395,6 +1393,5 @@ Public Class FundSheetGlobal
 #Region "pdf, email & setting"
 
 #End Region
-
 
 End Class

@@ -9,6 +9,7 @@ Imports simpi.MarketInstrument
 Imports simpi.MarketInstrument.ParameterSecurities
 Imports simpi.GlobalUtilities
 Imports simpi.GlobalUtilities.GlobalDate
+Imports simpi.GlobalCore.GlobalStatistic
 Imports simpi.CoreData
 Imports simpi.Analyst
 
@@ -27,8 +28,6 @@ Public Class FundSheetFI
     Dim objPosition As New PositionSecurities
     Dim objReview As New MarketReview
     Dim objSecurities As New MarketInstrument
-
-    Dim dtSector As New DataTable
     Dim dtNAV As New DataTable
     Dim dtBenchmark As New DataTable
     Dim dtPosition As New DataTable
@@ -38,7 +37,7 @@ Public Class FundSheetFI
     Dim tmp As String
     Dim no As Integer
 
-    Private Sub FundSheetFI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FundSheetEQ_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         objSimpi.UserAccess = objAccess
         objPortfolio.UserAccess = objAccess
         objCodeset.UserAccess = objAccess
@@ -60,12 +59,15 @@ Public Class FundSheetFI
         GetSimpiTerm()
         GetPortfolioCodeset()
         GetInstrumentUser()
+        GetBankAccountUser()
 
         DBGHolding.FetchRowStyles = True
+        fgDuration1.DrawMode = DrawModeEnum.OwnerDraw
+        fgDuration2.DrawMode = DrawModeEnum.OwnerDraw
         fgWeek.DrawMode = DrawModeEnum.OwnerDraw
         fgPerformance.DrawMode = DrawModeEnum.OwnerDraw
 
-        dtHolding.Columns.Add("Sector", GetType(String))
+        dtHolding.Columns.Add("Asset", GetType(String))
         dtHolding.Columns.Add("Value", GetType(Decimal))
 
         dtMonthly.Columns.Add("Date", GetType(Date))
@@ -148,11 +150,11 @@ Public Class FundSheetFI
     End Sub
 
     Private Sub rbOption1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption1.SelectedIndexChanged
-        DisplayOption()
+        If rbOption1.Checked Then DisplayOption()
     End Sub
 
     Private Sub rbOption2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption2.SelectedIndexChanged
-        DisplayOption()
+        If rbOption2.Checked Then DisplayOption()
     End Sub
 
     Private Sub DisplayOption()
@@ -164,6 +166,7 @@ Public Class FundSheetFI
         lblCurrency.Text = ""
         lblInception.Text = ""
         lblFundType.Text = ""
+        lblBenchmark.Text = ""
         lblCustodianBank.Text = ""
         lblValuation.Text = ""
         lblISIN.Text = ""
@@ -189,9 +192,20 @@ Public Class FundSheetFI
         lblRisk5.Text = ""
         lblRisk6.Text = ""
         lblRisk7.Text = ""
+        lblReturnInception.Text = ""
+        lblReturnStdDev.Text = ""
+        lblReturnBeta.Text = ""
+        lblReturnBestReturn.Text = ""
+        lblReturnBestMonth.Text = ""
+        lblReturnWorstReturn.Text = ""
+        lblReturnWorstMonth.Text = ""
+        lblReturnBestYear.Text = ""
         lblPolicyEQ.Text = ""
         lblPolicyFI.Text = ""
         lblPolicyMM.Text = ""
+        lblPortfolioEQ.Text = ""
+        lblPortfolioFI.Text = ""
+        lblPortfolioMM.Text = ""
         lblPolicyNotes.Text = ""
         lblAboutTitle.Text = ""
         lblAboutCompany.Text = ""
@@ -287,7 +301,7 @@ Public Class FundSheetFI
             objNAV.LoadAt(objPortfolio, dtAs.Value)
             If objNAV.ErrID = 0 Then
                 lblNAVUnit.Text = objNAV.GetNAVPerUnit.ToString("n4")
-                lblAUM.Text = (objNAV.GetNAV / 1000000000).ToString("n2") & " M"
+                lblAUM.Text = objNAV.GetNAV.ToString("n0")
 
                 objPosition.Clear()
                 dtPosition = objPosition.Search(objPortfolio, objNAV.GetPositionDate)
@@ -306,6 +320,7 @@ Public Class FundSheetFI
                 dtReturn = objReturn.SearchEOY(objPortfolio, objPortfolio.GetInceptionDate, objNAV.GetPositionDate)
                 DataMonthly()
 
+                DisplaySecurities()
                 DisplayPerformance()
                 DisplayReview()
             Else
@@ -318,8 +333,11 @@ Public Class FundSheetFI
     Private Sub DataClear()
         reviewClear()
         performanceClear()
+        durationClear()
         chartPortfolio.ChartGroups(0).ChartData.SeriesList.Clear()
         chartMonthly.ChartGroups(0).ChartData.SeriesList.Clear()
+        chartAsset.ChartGroups(0).ChartData.SeriesList.Clear()
+        DBGHolding.Columns.Clear()
     End Sub
 
     Private Sub DataMonthly()
@@ -573,33 +591,35 @@ Public Class FundSheetFI
         End If
     End Sub
 
-
 #Region "holding"
-
-    Private Sub btnLoadHolding_Click(sender As Object, e As EventArgs) Handles btnLoadHolding.Click
-        DisplayHolding()
-    End Sub
-
     Private Sub txtTopHolding_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopHolding.KeyDown
-        If e.KeyCode = Keys.Enter Then DisplayHolding()
+        If e.KeyCode = Keys.Enter Then DisplaySecurities()
     End Sub
 
     Private Sub rbPersen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPersen.SelectedIndexChanged
-        DisplayHolding()
+        If rbPersen.Checked Then DisplaySecurities()
     End Sub
 
     Private Sub rbName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbName.SelectedIndexChanged
-        DisplayHolding()
+        If rbName.Checked Then DisplaySecurities()
     End Sub
 
-    Private Sub btnSettingSector_Click(sender As Object, e As EventArgs) Handles btnSettingSector.Click
+    Private Sub rbDuration_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbDuration.SelectedIndexChanged
+        If rbDuration.Checked Then DisplaySecurities()
+    End Sub
+
+    Private Sub rbTTM_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbTTM.SelectedIndexChanged
+        If rbTTM.Checked Then DisplaySecurities()
+    End Sub
+
+    Private Sub btnSettingAsset_Click(sender As Object, e As EventArgs) Handles btnSettingAsset.Click
         Dim pg As New PropertyGrid()
         pg.SelectedObject = chartAsset
         pg.Dock = DockStyle.Fill
         pg.Size = New Size(100, 300)
 
         Dim f As New Form()
-        f.Text = "Asset Class"
+        f.Text = "Asset Class Allocation"
         f.Controls.Add(pg)
         f.Icon = My.Resources.icon
         f.ShowDialog()
@@ -609,12 +629,12 @@ Public Class FundSheetFI
         chartAsset.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
     End Sub
 
-    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateCounterClockwise.Click
+    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateCounterClockwise.Click
         Dim pie As Pie = chartAsset.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 10) Mod 360
     End Sub
 
-    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateClockwise.Click
+    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateClockwise.Click
         Dim pie As Pie = chartAsset.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 350) Mod 360
     End Sub
@@ -640,12 +660,34 @@ Public Class FundSheetFI
         If e.Row Mod 2 = 0 Then e.CellStyle.BackColor = Color.LemonChiffon
     End Sub
 
+    Private Sub fgDuration1_BeforeEdit(sender As Object, e As RowColEventArgs) Handles fgDuration1.BeforeEdit
+        e.Cancel = True
+    End Sub
+
+    Private Sub fgDuration2_BeforeEdit(sender As Object, e As RowColEventArgs) Handles fgDuration2.BeforeEdit
+        e.Cancel = True
+    End Sub
+
+    Private Sub fgDuration1_OwnerDrawCell(sender As Object, e As C1.Win.C1FlexGrid.OwnerDrawCellEventArgs) Handles fgDuration1.OwnerDrawCell
+        Dim s As CellStyle
+        s = fgDuration1.Styles.Add("RowStyle")
+        s.BackColor = Color.LemonChiffon
+        If e.Row > 0 And e.Row Mod 2 = 0 Then fgDuration1.Rows(e.Row).Style = fgDuration1.Styles("RowStyle")
+    End Sub
+
+    Private Sub fgDuration2_OwnerDrawCell(sender As Object, e As C1.Win.C1FlexGrid.OwnerDrawCellEventArgs) Handles fgDuration2.OwnerDrawCell
+        Dim s As CellStyle
+        s = fgDuration2.Styles.Add("RowStyle")
+        s.BackColor = Color.LemonChiffon
+        If e.Row > 0 And e.Row Mod 2 = 0 Then fgDuration2.Rows(e.Row).Style = fgDuration2.Styles("RowStyle")
+    End Sub
+
     Private Sub rbDonut_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbDonut.SelectedIndexChanged
-        pieCheck()
+        If rbDonut.Checked Then pieCheck()
     End Sub
 
     Private Sub rbPie_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPie.SelectedIndexChanged
-        pieCheck()
+        If rbPie.Checked Then pieCheck()
     End Sub
 
     Private Sub pieCheck()
@@ -664,24 +706,257 @@ Public Class FundSheetFI
         Return no
     End Function
 
-    Private Sub DisplayHolding()
+    Private Sub durationClear()
+        With fgDuration1
+            .Rows.Count = 5
+            .Cols.Count = 3
+            .ExtendLastCol = False
+            fgDuration1(0, 0) = "Period"
+            fgDuration1(0, 1) = "%"
+            fgDuration1(0, 2) = "YTM"
+
+            fgDuration1(1, 0) = "< 1 year"
+            fgDuration1(1, 1) = "%"
+            fgDuration1(1, 2) = "YTM"
+
+            fgDuration1(2, 0) = "1-3 years"
+            fgDuration1(2, 1) = "%"
+            fgDuration1(2, 2) = "YTM"
+
+            fgDuration1(3, 0) = "3-5 years"
+            fgDuration1(3, 1) = "%"
+            fgDuration1(3, 2) = "YTM"
+
+            fgDuration1(4, 0) = "5-6 years"
+            fgDuration1(4, 1) = "%"
+            fgDuration1(4, 2) = "YTM"
+
+            .AllowResizing = AllowResizingEnum.Columns
+            .SelectionMode = SelectionModeEnum.Row
+            fgDuration1.Cols(0).Width = 80
+            fgDuration1.Cols(1).Width = 55
+            fgDuration1.Cols(2).Width = 55
+
+            fgDuration1.Cols(0).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDuration1.Cols(1).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDuration1.Cols(2).TextAlignFixed = TextAlignEnum.CenterCenter
+
+            fgDuration1.Cols(0).TextAlign = TextAlignEnum.CenterCenter
+            fgDuration1.Cols(1).TextAlign = TextAlignEnum.RightCenter
+            fgDuration1.Cols(2).TextAlign = TextAlignEnum.RightCenter
+        End With
+
+        With fgDuration2
+            .Rows.Count = 5
+            .Cols.Count = 3
+            .ExtendLastCol = False
+            fgDuration2(0, 0) = "Period"
+            fgDuration2(0, 1) = "%"
+            fgDuration2(0, 2) = "YTM"
+
+            fgDuration2(1, 0) = "6-7 year"
+            fgDuration2(1, 1) = "%"
+            fgDuration2(1, 2) = "YTM"
+
+            fgDuration2(2, 0) = "7-10 years"
+            fgDuration2(2, 1) = "%"
+            fgDuration2(2, 2) = "YTM"
+
+            fgDuration2(3, 0) = "10-15 years"
+            fgDuration2(3, 1) = "%"
+            fgDuration2(3, 2) = "YTM"
+
+            fgDuration2(4, 0) = "< 15 years"
+            fgDuration2(4, 1) = "%"
+            fgDuration2(4, 2) = "YTM"
+
+            .AllowResizing = AllowResizingEnum.Columns
+            .SelectionMode = SelectionModeEnum.Row
+            fgDuration2.Cols(0).Width = 80
+            fgDuration2.Cols(1).Width = 55
+            fgDuration2.Cols(2).Width = 55
+
+            fgDuration2.Cols(0).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDuration2.Cols(1).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDuration2.Cols(2).TextAlignFixed = TextAlignEnum.CenterCenter
+
+            fgDuration2.Cols(0).TextAlign = TextAlignEnum.CenterCenter
+            fgDuration2.Cols(1).TextAlign = TextAlignEnum.RightCenter
+            fgDuration2.Cols(2).TextAlign = TextAlignEnum.RightCenter
+        End With
+    End Sub
+
+    Private Function _years(ByVal days As Integer) As Double
+        Return CDbl(days) / 365.0
+    End Function
+
+    Private Sub DisplaySecurities()
         If dtPosition IsNot Nothing AndAlso dtPosition.Rows.Count > 0 AndAlso dtInstrumentUser IsNot Nothing AndAlso dtInstrumentUser.Rows.Count > 0 Then
             Dim query = From d In dtPosition.AsEnumerable Order By d.Field(Of Decimal)("TotalValue") Descending
                         Join s In dtInstrumentUser.AsEnumerable On d.Field(Of Long)("SecuritiesID") Equals s.Field(Of Long)("SecuritiesID")
                         Join st In dtParameterInstrumentSubType.AsEnumerable On st.Field(Of Integer)("SubTypeID") Equals s.Field(Of Integer)("SubTypeID")
                         Join t In dtParameterInstrumentType.AsEnumerable On t.Field(Of Integer)("TypeID") Equals st.Field(Of Integer)("TypeID")
-                        Select SecuritiesCode = s.Field(Of String)("SecuritiesCode"),
-                               SecuritiesName = s.Field(Of String)("SecuritiesNameShort"), SubTypeCode = st.Field(Of String)("SubTypeCode"),
-                               TypeID = t.Field(Of Integer)("TypeID"), TypeCode = t.Field(Of String)("TypeCode"),
+                        Select SecuritiesCode = s.Field(Of String)("SecuritiesCode"), SecuritiesName = s.Field(Of String)("SecuritiesNameShort"),
+                               SubTypeCode = st.Field(Of String)("SubTypeCode"), TypeID = t.Field(Of Integer)("TypeID"), TypeCode = t.Field(Of String)("TypeCode"),
                                Qty = d.Field(Of Decimal)("Qty"),
-                               Price = d.Field(Of Decimal)("MarketPrice"),
-                               Cost = d.Field(Of Decimal)("CostPrice"),
-                               Value = d.Field(Of Decimal)("TotalValue"),
+                               Price = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("MarketPrice") * 100), d.Field(Of Decimal)("MarketPrice")),
+                               Cost = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("CostPrice") * 100), d.Field(Of Decimal)("CostPrice")),
+                               Value = d.Field(Of Decimal)("TotalValue"), Duration = d.Field(Of Decimal)("Duration"),
+                               TTM = d.Field(Of Integer)("TTM"), YTM = d.Field(Of Decimal)("YTM"),
                                Persen = CDbl(IIf(objNAV.GetNAV = 0, 0D, CDbl(d.Field(Of Decimal)("TotalValue") * 100 / objNAV.GetNAV)))
 
             lblPortfolioEQ.Text = (From q In query Where q.TypeID = SetEQ() Select q.Persen).Sum.ToString("n2")
             lblPortfolioFI.Text = (From q In query Where q.TypeID = SetFI() Select q.Persen).Sum.ToString("n2")
             lblPortfolioMM.Text = (100 - CDbl(lblPortfolioEQ.Text) - CDbl(lblPortfolioFI.Text)).ToString("n2")
+
+            Dim queryFI = From qf In query Where qf.TypeID = SetFI() Select Duration = CDbl(qf.Duration), TTM = qf.TTM, YTM = CDbl(qf.YTM), value = CDbl(qf.Value)
+            Dim fiTotal As Double
+
+            If objNAV.GetNAV = 0 Then
+                fgDuration1(1, 1) = 0.ToString("n2")
+                fgDuration1(2, 1) = 0.ToString("n2")
+                fgDuration1(3, 1) = 0.ToString("n2")
+                fgDuration1(4, 1) = 0.ToString("n2")
+                fgDuration2(1, 1) = 0.ToString("n2")
+                fgDuration2(2, 1) = 0.ToString("n2")
+                fgDuration2(3, 1) = 0.ToString("n2")
+                fgDuration2(4, 1) = 0.ToString("n2")
+            Else
+                If rbDuration.Checked Then
+                    fgDuration1(1, 1) = ((From fi In queryFI Where fi.Duration <= 1 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(2, 1) = ((From fi In queryFI Where fi.Duration > 1 And fi.Duration <= 3 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(3, 1) = ((From fi In queryFI Where fi.Duration > 3 And fi.Duration <= 5 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(4, 1) = ((From fi In queryFI Where fi.Duration > 5 And fi.Duration <= 6 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(1, 1) = ((From fi In queryFI Where fi.Duration > 6 And fi.Duration <= 7 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(2, 1) = ((From fi In queryFI Where fi.Duration > 7 And fi.Duration <= 10 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(3, 1) = ((From fi In queryFI Where fi.Duration > 10 And fi.Duration <= 15 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(4, 1) = ((From fi In queryFI Where fi.Duration > 15 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                Else
+                    fgDuration1(1, 1) = ((From fi In queryFI Where fi.TTM <= 365 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(2, 1) = ((From fi In queryFI Where fi.TTM > 365 And fi.TTM <= 1095 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(3, 1) = ((From fi In queryFI Where fi.TTM > 1095 And fi.TTM <= 1825 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration1(4, 1) = ((From fi In queryFI Where fi.TTM > 1825 And fi.TTM <= 2190 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(1, 1) = ((From fi In queryFI Where fi.TTM > 2190 And fi.TTM <= 2555 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(2, 1) = ((From fi In queryFI Where fi.TTM > 2555 And fi.TTM <= 3650 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(3, 1) = ((From fi In queryFI Where fi.TTM > 3650 And fi.TTM <= 5475 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                    fgDuration2(4, 1) = ((From fi In queryFI Where fi.TTM > 5475 Select CDbl(fi.value)).Sum * 100 / objNAV.GetNAV).ToString("n2")
+                End If
+            End If
+
+
+            If rbDuration.Checked Then
+                fiTotal = (From fi In queryFI Where fi.Duration <= 1 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(1, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(1, 2) = ((From fi In queryFI Where fi.Duration <= 1 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 1 And fi.Duration <= 3 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(2, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(2, 2) = ((From fi In queryFI Where fi.Duration > 1 And fi.Duration <= 3 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 3 And fi.Duration <= 5 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(3, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(3, 2) = ((From fi In queryFI Where fi.Duration > 3 And fi.Duration <= 5 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 5 And fi.Duration <= 6 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(4, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(4, 2) = ((From fi In queryFI Where fi.Duration > 5 And fi.Duration <= 6 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 6 And fi.Duration <= 7 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(1, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(1, 2) = ((From fi In queryFI Where fi.Duration > 6 And fi.Duration <= 7 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 7 And fi.Duration <= 10 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(2, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(2, 2) = ((From fi In queryFI Where fi.Duration > 7 And fi.Duration <= 10 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 10 And fi.Duration <= 15 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(3, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(3, 2) = ((From fi In queryFI Where fi.Duration > 10 And fi.Duration <= 15 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.Duration > 15 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(4, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(4, 2) = ((From fi In queryFI Where fi.Duration > 15 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+            Else
+                fiTotal = (From fi In queryFI Where fi.TTM <= 365 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(1, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(1, 2) = ((From fi In queryFI Where fi.TTM <= 365 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 365 And fi.TTM <= 1095 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(2, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(2, 2) = ((From fi In queryFI Where fi.TTM > 365 And fi.TTM <= 1095 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 1095 And fi.TTM <= 1825 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(3, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(3, 2) = ((From fi In queryFI Where fi.TTM > 1095 And fi.TTM <= 1825 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 1825 And fi.TTM <= 2190 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration1(4, 2) = 0.ToString("n2")
+                Else
+                    fgDuration1(4, 2) = ((From fi In queryFI Where fi.TTM > 1825 And fi.TTM <= 2190 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 2190 And fi.TTM <= 2555 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(1, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(1, 2) = ((From fi In queryFI Where fi.TTM > 2190 And fi.TTM <= 2555 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 2555 And fi.TTM <= 3650 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(2, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(2, 2) = ((From fi In queryFI Where fi.TTM > 2555 And fi.TTM <= 3650 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 3650 And fi.TTM <= 5475 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(3, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(3, 2) = ((From fi In queryFI Where fi.TTM > 3650 And fi.TTM <= 5475 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+
+                fiTotal = (From fi In queryFI Where fi.TTM > 5475 Select fi.value).Sum
+                If fiTotal = 0 Then
+                    fgDuration2(4, 2) = 0.ToString("n2")
+                Else
+                    fgDuration2(4, 2) = ((From fi In queryFI Where fi.TTM > 5475 Select CDbl(fi.YTM * fi.value)).Sum * 100 / fiTotal).ToString("n2")
+                End If
+            End If
 
             Dim Top As Integer
             Integer.TryParse(txtTopHolding.Text, Top)
@@ -691,70 +966,86 @@ Public Class FundSheetFI
                 If rbName.Checked Then
                     Dim query2 = From q In query1 Order By q.SecuritiesName Ascending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
-                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value,
+                                   Duration = q.Duration, TTM = _years(q.TTM), YTM = q.YTM * 100, Persen = q.Persen
+                    DisplaySecuritiesList(query2.ToList)
                 Else
                     Dim query2 = From q In query1 Order By q.Value Descending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
-                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value,
+                                   Duration = q.Duration, TTM = _years(q.TTM), YTM = q.YTM * 100, Persen = q.Persen
+                    DisplaySecuritiesList(query2.ToList)
                 End If
             Else
                 If rbName.Checked Then
                     Dim query2 = From q In query Order By q.SecuritiesName Ascending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
-                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value,
+                                   Duration = q.Duration, TTM = _years(q.TTM), YTM = q.YTM * 100, Persen = q.Persen
+                    DisplaySecuritiesList(query2.ToList)
                 Else
                     Dim query2 = From q In query Order By q.Value Descending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
-                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                                   Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value,
+                                   Duration = q.Duration, TTM = _years(q.TTM), YTM = q.YTM * 100, Persen = q.Persen
+                    DisplaySecuritiesList(query2.ToList)
                 End If
             End If
 
-            Dim query3 = From q In query Where q.TypeID = SetEQ() Group By key = New With {Key .TypeCode = q.TypeCode}
-                         Into Group Select New With {.TypeCode = key.TypeCode, .Value = Group.Sum(Function(r) CDbl(r.Value))}
             Dim query4 = From q In query Where q.TypeID = SetFI() Group By key = New With {Key .SubTypeCode = q.SubTypeCode}
                          Into Group Select New With {.SubTypeCode = key.SubTypeCode, .Value = Group.Sum(Function(r) CDbl(r.Value))}
+
             Dim fund As Double = (From q In query Where q.TypeID = SetFund() Select q.Value).Sum
             Dim pa As Double = (From q In query Where q.TypeID = SetPhysicalAsset() Select q.Value).Sum
+            Dim eq As Double = (From q In query Where q.TypeID = SetEQ() Select q.Value).Sum
+            Dim mm As Double = (From q In query Select q.Value).Sum
 
             dtHolding.Clear()
-            For Each item In query3
-                Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = item.TypeCode
-                dr("Value") = item.Value
-                dtHolding.Rows.Add(dr)
-            Next
             For Each item In query4
                 Dim dr As DataRow = dtHolding.NewRow()
                 If item.SubTypeCode.Trim = "GOVT" Or item.SubTypeCode.Trim = "TBILLS" Then
-                    dr("Sector") = "Government"
+                    dr("Asset") = "Government"
                 Else
-                    dr("Sector") = "Corporation"
+                    dr("Asset") = "Corporation"
                 End If
                 dr("Value") = item.Value
                 dtHolding.Rows.Add(dr)
             Next
+
+            If eq > 0 Then
+                Dim dr As DataRow = dtHolding.NewRow()
+                dr("Asset") = "Equities"
+                dr("Value") = (From q In query Where q.TypeID = SetEQ() Select q.Value).Sum.ToString("n2")
+                dtHolding.Rows.Add(dr)
+            End If
+
             If fund > 0 Then
                 Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Mutual Fund"
+                dr("Asset") = "Mutual Fund"
                 dr("Value") = fund
                 dtHolding.Rows.Add(dr)
             End If
+
             If pa > 0 Then
                 Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Physical Asset"
+                dr("Asset") = "Physical Asset"
                 dr("Value") = pa
                 dtHolding.Rows.Add(dr)
             End If
-            DisplayHoldingAsset()
+
+            mm = objNAV.GetNAV - mm
+            If mm > 0 Then
+                Dim dr As DataRow = dtHolding.NewRow()
+                dr("Asset") = "Money Market"
+                dr("Value") = mm
+                dtHolding.Rows.Add(dr)
+            End If
+            DisplaySecuritiesAsset()
 
         End If
     End Sub
 
-    Private Sub DisplayHoldingList(ByVal dataHolding As Object)
+    Private Sub DisplaySecuritiesList(ByVal dataHolding As Object)
         With DBGHolding
             .AllowAddNew = False
             .AllowDelete = False
@@ -765,10 +1056,13 @@ Public Class FundSheetFI
             .DataSource = dataHolding
 
             .Columns("Qty").NumberFormat = "n0"
-            .Columns("Price").NumberFormat = "n0"
-            .Columns("Cost").NumberFormat = "n0"
+            .Columns("Price").NumberFormat = "n2"
+            .Columns("Cost").NumberFormat = "n2"
             .Columns("Value").NumberFormat = "n0"
             .Columns("Persen").NumberFormat = "n2"
+            .Columns("Duration").NumberFormat = "n2"
+            .Columns("YTM").NumberFormat = "n2"
+            .Columns("TTM").NumberFormat = "n2"
 
             .Splits(0).DisplayColumns("No").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Share").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
@@ -778,16 +1072,22 @@ Public Class FundSheetFI
             .Splits(0).DisplayColumns("Price").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Cost").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Value").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
+            .Splits(0).DisplayColumns("Duration").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
+            .Splits(0).DisplayColumns("TTM").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
+            .Splits(0).DisplayColumns("YTM").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Persen").HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
 
             .Splits(0).DisplayColumns("No").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Share").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
             .Splits(0).DisplayColumns("Name").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
-            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
+            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Qty").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Price").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Cost").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Value").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            .Splits(0).DisplayColumns("Duration").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            .Splits(0).DisplayColumns("TTM").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            .Splits(0).DisplayColumns("YTM").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Persen").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
 
             .Columns("TypeCode").Caption = "Type"
@@ -795,12 +1095,15 @@ Public Class FundSheetFI
 
             .Splits(0).DisplayColumns("No").Width = 25
             .Splits(0).DisplayColumns("Share").Width = 60
-            .Splits(0).DisplayColumns("Name").Width = 175
-            .Splits(0).DisplayColumns("TypeCode").Width = 100
+            .Splits(0).DisplayColumns("Name").Width = 225
+            .Splits(0).DisplayColumns("TypeCode").Width = 50
             .Splits(0).DisplayColumns("Qty").Width = 75
             .Splits(0).DisplayColumns("Cost").Width = 55
             .Splits(0).DisplayColumns("Price").Width = 55
             .Splits(0).DisplayColumns("Value").Width = 100
+            .Splits(0).DisplayColumns("Duration").Width = 50
+            .Splits(0).DisplayColumns("TTM").Width = 35
+            .Splits(0).DisplayColumns("YTM").Width = 35
             .Splits(0).DisplayColumns("Persen").Width = 35
 
             Dim font As New Font("Microsoft Sans Serif", 8, FontStyle.Regular)
@@ -812,37 +1115,23 @@ Public Class FundSheetFI
             .Splits(0).DisplayColumns("Cost").Style.Font = font
             .Splits(0).DisplayColumns("Price").Style.Font = font
             .Splits(0).DisplayColumns("Value").Style.Font = font
+            .Splits(0).DisplayColumns("Duration").Style.Font = font
+            .Splits(0).DisplayColumns("TTM").Style.Font = font
+            .Splits(0).DisplayColumns("YTM").Style.Font = font
             .Splits(0).DisplayColumns("Persen").Style.Font = font
-
         End With
     End Sub
 
-    Private Function _valuePie(ByVal item As Double) As Integer
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
-    End Function
-
     Private Function _valueLabel(ByVal item As Double) As Double
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
+        If objNAV.GetNAV = 0 Then Return 0 Else Return CDbl(item * 100 / objNAV.GetNAV)
     End Function
 
-    Private Sub DisplayHoldingAsset()
+    Private Sub DisplaySecuritiesAsset()
         If dtHolding IsNot Nothing AndAlso dtHolding.Rows.Count > 0 Then
-            Dim slice, chartSisa, chartItem As Integer
-            Dim valueSisa, valueItem As Double
+            Dim slice As Integer
+            Dim valueItem As Double
             Dim stringLabel As String = ""
-            chartSisa = 100
-            valueSisa = 100
             slice = 0
-            Dim querySector As IEnumerable
-
-            Dim query = From q In dtHolding.AsEnumerable Order By q.Field(Of Decimal)("Value") Descending
-                        Select Sector = q.Field(Of String)("Sector"), Value = q.Field(Of Decimal)("Value")
-
-            If rbName.Checked Then
-                    querySector = From qs In query Order By qs.Sector Ascending Select Sector = qs.Sector, Value = qs.Value
-                Else
-                    querySector = From qs In query Order By qs.Value Descending Select Sector = qs.Sector, Value = qs.Value
-                End If
 
             chartAsset.Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
             chartAsset.ChartLabels.DefaultLabelStyle.BackColor = SystemColors.Info
@@ -859,29 +1148,19 @@ Public Class FundSheetFI
             Dim ColorValue() As Color = {Color.OrangeRed, Color.Tan, Color.LightGreen, Color.MediumTurquoise,
                                          Color.DodgerBlue, Color.Magenta, Color.GreenYellow, Color.MediumBlue}
 
-            For Each item In querySector
-                chartItem = _valuePie(item.Value)
-                chartSisa -= chartItem
+            Dim query = From q In dtHolding.AsEnumerable Select Asset = q.Field(Of String)("Asset"), Value = q.Field(Of Decimal)("Value")
+
+            For Each item In query
                 valueItem = _valueLabel(item.Value)
-                valueSisa -= valueItem
 
                 Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
                 series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartItem)
+                series.PointData(0) = New PointF(1.0F, valueItem)
                 series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm(item.Sector, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
+                stringLabel = GetSimpiTerm(item.Asset, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
                 series.Label = GlobalString.CamelCase(stringLabel) & " " & valueItem.ToString("n2") & "%"
                 slice += 1
             Next
-
-            If valueSisa > 0 Then
-                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
-                series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartSisa)
-                series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm("Others", IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
-                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueSisa.ToString("n2") & "%"
-            End If
 
             chartAsset.Legend.Visible = True
             chartAsset.Legend.Compass = CompassEnum.East
@@ -902,19 +1181,31 @@ Public Class FundSheetFI
     End Sub
 
     Private Sub rbNAVUnit_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbNAVUnit.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbNAVUnit.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbReturn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbReturn.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbReturn.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbInception_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbInception.SelectedIndexChanged
+        If rbInception.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbYTD_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYTD.SelectedIndexChanged
+        If rbYTD.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbOneYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOneYear.SelectedIndexChanged
+        If rbOneYear.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbYearOne_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearOne.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearOne.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub rbYearThis_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearThis.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearThis.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub txtBenchmark_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBenchmark.KeyDown
@@ -1047,10 +1338,10 @@ Public Class FundSheetFI
             .AllowResizing = AllowResizingEnum.Columns
             .SelectionMode = SelectionModeEnum.Row
             fgWeek.Cols(0).Width = 75
-            fgWeek.Cols(1).Width = 40
-            fgWeek.Cols(2).Width = 40
-            fgWeek.Cols(3).Width = 40
-            fgWeek.Cols(4).Width = 40
+            fgWeek.Cols(1).Width = 45
+            fgWeek.Cols(2).Width = 45
+            fgWeek.Cols(3).Width = 45
+            fgWeek.Cols(4).Width = 45
         End With
     End Sub
 
@@ -1080,8 +1371,8 @@ Public Class FundSheetFI
                       Order By q3.Field(Of Decimal)("Return") Descending
                       Select PositionDate = q3.Field(Of Date)("Date"), Monthly = q3.Field(Of Decimal)("Return")).Take(1)
         lblReturnBestYear.Text = (query3.ToList(0).Monthly * 100).ToString("n2")
-        lblReturnStdDev.Text = ""
-        lblReturnBeta.Text = ""
+        lblReturnStdDev.Text = (StdDev((From q4 In dtMonthly.AsEnumerable Select CDbl(q4.Field(Of Decimal)("Return"))).ToArray) * Math.Sqrt(12) * 100).ToString("n2")
+        lblReturnBeta.Text = "" 'Slope(return, benchmark)
     End Sub
 
     Private Sub DisplayPerformanceWeek()
@@ -1141,12 +1432,12 @@ Public Class FundSheetFI
                     fgWeek(1, 5) = 0.ToString("n2")
                 End If
 
-                fgWeek.Cols(0).Width = 100
-                fgWeek.Cols(1).Width = 40
-                fgWeek.Cols(2).Width = 40
-                fgWeek.Cols(3).Width = 40
-                fgWeek.Cols(4).Width = 40
-                fgWeek.Cols(5).Width = 40
+                fgWeek.Cols(0).Width = 75
+                fgWeek.Cols(1).Width = 45
+                fgWeek.Cols(2).Width = 45
+                fgWeek.Cols(3).Width = 45
+                fgWeek.Cols(4).Width = 45
+                fgWeek.Cols(5).Width = 45
             End If
             fgWeek(1, 0) = lblPortfolioCode.Text.Trim
             fgWeek(2, 0) = GetSimpiTerm(lblBenchmark.Text.Trim, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
@@ -1170,6 +1461,7 @@ Public Class FundSheetFI
                 End If
                 .Reset()
                 .ChartGroups(0).ChartType = Chart2DTypeEnum.Bar
+                .BackColor = Color.Transparent
 
                 Dim dscoll As ChartDataSeriesCollection = .ChartGroups(0).ChartData.SeriesList
                 dscoll.Clear()
@@ -1182,17 +1474,26 @@ Public Class FundSheetFI
                     series.Y(i) = item.Monthly
                     i += 1
                 Next
-
+                series.DataLabel.Visible = True
+                series.DataLabel.Style.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Regular)
+                series.DataLabel.Compass = LabelCompassEnum.North
+                series.DataLabel.Text = "{#YVAL:0.00%}"
                 Dim ax As Axis = .ChartArea.AxisX
                 ax.AnnoMethod = AnnotationMethodEnum.ValueLabels
+                ax.AnnotationRotation = 25
+                ax.Thickness = 1
+
                 i = 0
                 For Each item In query
                     ax.ValueLabels.Add(i, item.PositionDate)
                     i += 1
                 Next
-
                 Dim ay As Axis = .ChartArea.AxisY
-                ay.AnnoFormat = FormatEnum.NumericPercentage
+                ay.AnnoFormat = FormatEnum.NumericManual
+                ay.AnnoFormatString = "p0"
+                ay.AutoOrigin = False
+                ay.Origin = 0
+                ay.Thickness = 1
 
             End With
         End If
@@ -1247,11 +1548,26 @@ Public Class FundSheetFI
             '            Select PositionDate = n.Field(Of Date)("PositionDate"),
             '                   NAV = n.Field(Of Decimal)("NAV"), giPortfolio = n.Field(Of Decimal)("GeometricIndex"),
             '                   BenchmarkValue = b.Field(Of Decimal)("BenchmarkValue"), giBenchmark = b.Field(Of Decimal)("GeometricIndex")
-
-            Dim query = From n In dtNAV.AsEnumerable
-                        Order By n.Field(Of Date)("PositionDate") Ascending
+            Dim query As IEnumerable
+            Dim giAwal As Double = 0
+            If rbInception.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
                         Select PositionDate = n.Field(Of Date)("PositionDate"),
                                NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            ElseIf rbYTD.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > New Date(dtAs.Value.AddYears(-1).Year, 12, 31)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            Else
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > dtAs.Value.AddYears(-1)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            End If
 
             With chartPortfolio
                 .Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
@@ -1263,15 +1579,15 @@ Public Class FundSheetFI
                 series.SymbolStyle.Shape = SymbolShapeEnum.None
                 series.FitType = FitTypeEnum.Line
 
-                series.X.CopyDataIn((From q In query Select q.PositionDate).ToArray)
+                series.X.CopyDataIn((From q In query Select CDate(q.PositionDate)).ToArray)
                 If rbNAVUnit.Checked Then
-                    series.Y.CopyDataIn((From q In query Select q.NAV).ToArray)
+                    series.Y.CopyDataIn((From q In query Select CDbl(q.NAV)).ToArray)
                 ElseIf chkRebase.Checked Then
-                    series.Y.CopyDataIn((From q In query Select (1 + (q.giPortfolio - 1))).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (1 + ((CDbl(q.giPortfolio) / giAwal) - 1))).ToArray)
                 Else
-                    series.Y.CopyDataIn((From q In query Select q.giPortfolio - 1).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (CDbl(q.giPortfolio) / giAwal) - 1).ToArray)
                 End If
-                series.PointData.Length = query.Count
+                series.PointData.Length = (From q In query).Count
 
                 .BackColor = Color.Transparent
                 .ChartArea.AxisX.Max = (From q In query Select q.PositionDate).Last.ToOADate
@@ -1286,10 +1602,13 @@ Public Class FundSheetFI
                 .ChartArea.AxisY.AnnoFormat = FormatEnum.NumericManual
                 If rbNAVUnit.Checked Then
                     .ChartArea.AxisY.AnnoFormatString = "n0"
+                    .ChartArea.AxisY.AutoOrigin = True
                 ElseIf chkRebase.Checked Then
                     .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 1
                 Else
                     .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 0
                 End If
                 .ChartArea.AxisY.AutoMax = True
                 .ChartArea.AxisY.AutoMin = True

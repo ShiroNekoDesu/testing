@@ -4,11 +4,14 @@ Imports C1.Win.C1Chart
 Imports simpi.MasterSimpi
 Imports simpi.MasterPortfolio
 Imports simpi.MasterPortfolio.ParameterPortfolio
+Imports simpi.MasterPortfolio.ParameterBank
 Imports simpi.MasterSecurities
 Imports simpi.MarketInstrument
 Imports simpi.MarketInstrument.ParameterSecurities
 Imports simpi.GlobalUtilities
 Imports simpi.GlobalUtilities.GlobalDate
+Imports simpi.GlobalUtilities.GlobalString
+Imports simpi.GlobalCore.GlobalStatistic
 Imports simpi.CoreData
 Imports simpi.Analyst
 
@@ -27,18 +30,21 @@ Public Class FundSheetDividend
     Dim objPosition As New PositionSecurities
     Dim objReview As New MarketReview
     Dim objSecurities As New MarketInstrument
-
-    Dim dtSector As New DataTable
+    Dim objBank As New PositionBank
+    Dim objDividend As New PortfolioDistribution
     Dim dtNAV As New DataTable
     Dim dtBenchmark As New DataTable
     Dim dtPosition As New DataTable
     Dim dtHolding As New DataTable
+    Dim dtBank As New DataTable
     Dim dtReturn As New DataTable
     Dim dtMonthly As New DataTable
+    Dim dtDistribution As New DataTable
+    Dim dtDividend As New DataTable
     Dim tmp As String
     Dim no As Integer
 
-    Private Sub FundSheetDividend_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FundSheetEQ_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         objSimpi.UserAccess = objAccess
         objPortfolio.UserAccess = objAccess
         objCodeset.UserAccess = objAccess
@@ -53,6 +59,8 @@ Public Class FundSheetDividend
         objPosition.UserAccess = objAccess
         objReview.UserAccess = objAccess
         objSecurities.UserAccess = objAccess
+        objBank.UserAccess = objAccess
+        objDividend.UserAccess = objAccess
 
         dtAs.Value = Now.AddDays(-1)
         GetParameterInstrumentType()
@@ -60,16 +68,24 @@ Public Class FundSheetDividend
         GetSimpiTerm()
         GetPortfolioCodeset()
         GetInstrumentUser()
+        GetBankAccountUser()
 
         DBGSecurities.FetchRowStyles = True
+        DBGBank.FetchRowStyles = True
+        fgDividend.DrawMode = DrawModeEnum.OwnerDraw
         fgWeek.DrawMode = DrawModeEnum.OwnerDraw
         fgPerformance.DrawMode = DrawModeEnum.OwnerDraw
 
-        dtHolding.Columns.Add("Sector", GetType(String))
+        dtHolding.Columns.Add("Asset", GetType(String))
         dtHolding.Columns.Add("Value", GetType(Decimal))
 
         dtMonthly.Columns.Add("Date", GetType(Date))
         dtMonthly.Columns.Add("Return", GetType(Decimal))
+
+        dtDividend.Columns.Add("Month", GetType(String))
+        dtDividend.Columns.Add("Rate", GetType(Decimal))
+        dtDividend.Columns.Add("NAV", GetType(Decimal))
+        dtDividend.Columns.Add("Persen", GetType(Decimal))
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
@@ -148,11 +164,11 @@ Public Class FundSheetDividend
     End Sub
 
     Private Sub rbOption1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption1.SelectedIndexChanged
-        DisplayOption()
+        If rbOption1.Checked Then DisplayOption()
     End Sub
 
     Private Sub rbOption2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOption2.SelectedIndexChanged
-        DisplayOption()
+        If rbOption2.Checked Then DisplayOption()
     End Sub
 
     Private Sub DisplayOption()
@@ -164,6 +180,7 @@ Public Class FundSheetDividend
         lblCurrency.Text = ""
         lblInception.Text = ""
         lblFundType.Text = ""
+        lblBenchmark.Text = ""
         lblCustodianBank.Text = ""
         lblValuation.Text = ""
         lblISIN.Text = ""
@@ -189,9 +206,20 @@ Public Class FundSheetDividend
         lblRisk5.Text = ""
         lblRisk6.Text = ""
         lblRisk7.Text = ""
+        lblReturnInception.Text = ""
+        lblReturnStdDev.Text = ""
+        lblReturnBeta.Text = ""
+        lblReturnBestReturn.Text = ""
+        lblReturnBestMonth.Text = ""
+        lblReturnWorstReturn.Text = ""
+        lblReturnWorstMonth.Text = ""
+        lblReturnBestYear.Text = ""
         lblPolicyEQ.Text = ""
         lblPolicyFI.Text = ""
         lblPolicyMM.Text = ""
+        lblPortfolioEQ.Text = ""
+        lblPortfolioFI.Text = ""
+        lblPortfolioMM.Text = ""
         lblPolicyNotes.Text = ""
         lblAboutTitle.Text = ""
         lblAboutCompany.Text = ""
@@ -287,10 +315,13 @@ Public Class FundSheetDividend
             objNAV.LoadAt(objPortfolio, dtAs.Value)
             If objNAV.ErrID = 0 Then
                 lblNAVUnit.Text = objNAV.GetNAVPerUnit.ToString("n4")
-                lblAUM.Text = (objNAV.GetNAV / 1000000000).ToString("n2") & " M"
+                lblAUM.Text = objNAV.GetNAV.ToString("n0")
 
                 objPosition.Clear()
                 dtPosition = objPosition.Search(objPortfolio, objNAV.GetPositionDate)
+
+                objBank.Clear()
+                dtBank = objBank.Search(objPortfolio, dtAs.Value)
 
                 objReturn.Clear()
                 objReturn.LoadAt(objPortfolio, objNAV.GetPositionDate)
@@ -301,11 +332,26 @@ Public Class FundSheetDividend
                 objReview.Clear()
                 objReview.Load(objPortfolio, objNAV.GetPositionDate)
 
+                objDividend.Clear()
+                dtDistribution = objDividend.SearchHistoryNext(objPortfolio, dtAs.Value, 1)
+                If dtDistribution IsNot Nothing AndAlso dtDistribution.Rows.Count > 0 Then
+                    lblDividendNext.Text = CDate(GetNullData(dtDistribution.Rows(0)("DateDistribution"), 2)).ToString("dd-MMM-yyyy")
+                End If
+                dtDistribution.Clear()
+                objDividend.Clear()
+                dtDistribution = objDividend.SearchHistoryLast(objPortfolio, dtAs.Value, 0)
+                DataDividend()
+
+                objDividend.SearchHistoryNext(objPortfolio, dtAs.Value, 1)
+
                 dtNAV = objNAV.SearchHistoryLast(objPortfolio, objNAV.GetPositionDate, 0)
                 dtBenchmark = objBenchmark.SearchHistoryLast(objPortfolio, objNAV.GetPositionDate, 0)
                 dtReturn = objReturn.SearchEOY(objPortfolio, objPortfolio.GetInceptionDate, objNAV.GetPositionDate)
                 DataMonthly()
 
+                DisplayBank()
+                DisplaySecurities()
+                DisplayDividend()
                 DisplayPerformance()
                 DisplayReview()
             Else
@@ -318,8 +364,51 @@ Public Class FundSheetDividend
     Private Sub DataClear()
         reviewClear()
         performanceClear()
+        dividendClear()
         chartPortfolio.ChartGroups(0).ChartData.SeriesList.Clear()
         chartMonthly.ChartGroups(0).ChartData.SeriesList.Clear()
+        chartAsset.ChartGroups(0).ChartData.SeriesList.Clear()
+        DBGSecurities.Columns.Clear()
+        DBGBank.Columns.Clear()
+    End Sub
+
+    Private Sub DataDividend()
+        If dtDistribution IsNot Nothing AndAlso dtDistribution.Rows.Count > 0 Then
+            lblDividendLast.Text = (From q In dtDistribution Order By q.Field(Of Date)("DateDistribution") Descending
+                                    Select q.Field(Of Date)("DateDistribution")).ToList(0).ToString("dd-MMM-yyyy")
+
+            Dim query = From q In dtDistribution Order By q.Field(Of Date)("DateDistribution") Descending
+                        Where q.Field(Of Date)("DateDistribution") > New Date(dtAs.Value.AddYears(-1).Year, 12, 31)
+                        Select Month = q.Field(Of Date)("DateDistribution").ToString("MMM-yy"),
+                               Rate = q.Field(Of Decimal)("DividendRate"), NAV = q.Field(Of Decimal)("UnitPrice"),
+                               Persen = q.Field(Of Decimal)("DividendRate") / (q.Field(Of Decimal)("UnitPrice") - q.Field(Of Decimal)("DividendRate"))
+
+            For Each item In query
+                Dim dr As DataRow = dtDividend.NewRow()
+                dr("Month") = item.Month
+                dr("Rate") = item.Rate
+                dr("NAV") = item.NAV
+                dr("Persen") = item.Persen
+                dtDividend.Rows.Add(dr)
+            Next
+
+            Dim query2 = From q In dtDistribution Order By q.Field(Of Date)("DateDistribution") Descending
+                         Where q.Field(Of Date)("DateDistribution") < New Date(dtAs.Value.Year, 1, 1)
+                         Group By key = New With {Key .Year = q.Field(Of Date)("DateDistribution").Year}
+                         Into Group Select New With {
+                               .Year = key.Year, .Rate = Group.Sum(Function(r) r.Field(Of Decimal)("DividendRate")), .NAV = 0,
+                               .Persen = Group.Sum(Function(r) r.Field(Of Decimal)("DividendRate") / (r.Field(Of Decimal)("UnitPrice") - r.Field(Of Decimal)("DividendRate")))}
+
+            For Each item In query2
+                Dim dr As DataRow = dtDividend.NewRow()
+                dr("Month") = item.Year
+                dr("Rate") = item.Rate
+                dr("NAV") = item.NAV
+                dr("Persen") = item.Persen
+                dtDividend.Rows.Add(dr)
+            Next
+
+        End If
     End Sub
 
     Private Sub DataMonthly()
@@ -573,33 +662,55 @@ Public Class FundSheetDividend
         End If
     End Sub
 
-
 #Region "holding"
-
-    Private Sub btnLoadHolding_Click(sender As Object, e As EventArgs) Handles btnLoadHolding.Click
-        DisplayHolding()
-    End Sub
-
     Private Sub txtTopHolding_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopHolding.KeyDown
-        If e.KeyCode = Keys.Enter Then DisplayHolding()
+        If e.KeyCode = Keys.Enter Then DisplaySecurities()
     End Sub
 
     Private Sub rbPersen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPersen.SelectedIndexChanged
-        DisplayHolding()
+        If rbPersen.Checked Then DisplaySecurities()
     End Sub
 
     Private Sub rbName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbName.SelectedIndexChanged
-        DisplayHolding()
+        If rbName.Checked Then DisplaySecurities()
     End Sub
 
-    Private Sub btnSettingSector_Click(sender As Object, e As EventArgs) Handles btnSettingSector.Click
+    Private Sub rbEach_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbEach.SelectedIndexChanged
+        If rbEach.Checked Then DisplayDividend()
+    End Sub
+
+    Private Sub rbYearly_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearly.SelectedIndexChanged
+        If rbYearly.Checked Then DisplayDividend()
+    End Sub
+
+    Private Sub rbYearlyPlus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearlyPlus.SelectedIndexChanged
+        If rbYearlyPlus.Checked Then DisplayDividend()
+    End Sub
+
+    Private Sub txtTopDividend_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopDividend.KeyDown
+        If e.KeyCode = Keys.Enter Then DisplayDividend()
+    End Sub
+
+    Private Sub txtTopBank_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTopBank.KeyDown
+        If e.KeyCode = Keys.Enter Then DisplayBank()
+    End Sub
+
+    Private Sub rbValueBank_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbValueBank.SelectedIndexChanged
+        If rbValueBank.Checked Then DisplayBank()
+    End Sub
+
+    Private Sub rbNameBank_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbNameBank.SelectedIndexChanged
+        If rbNameBank.Checked Then DisplayBank()
+    End Sub
+
+    Private Sub btnSettingAsset_Click(sender As Object, e As EventArgs) Handles btnSettingAsset.Click
         Dim pg As New PropertyGrid()
         pg.SelectedObject = chartAsset
         pg.Dock = DockStyle.Fill
         pg.Size = New Size(100, 300)
 
         Dim f As New Form()
-        f.Text = "Asset Class"
+        f.Text = "Asset Class Allocation"
         f.Controls.Add(pg)
         f.Icon = My.Resources.icon
         f.ShowDialog()
@@ -609,12 +720,12 @@ Public Class FundSheetDividend
         chartAsset.ChartGroups.Group0.Pie.InnerRadius = tbarHoleRadius.Value
     End Sub
 
-    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateCounterClockwise.Click
+    Private Sub bRotateCounterClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateCounterClockwise.Click
         Dim pie As Pie = chartAsset.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 10) Mod 360
     End Sub
 
-    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles bRotateClockwise.Click
+    Private Sub bRotateClockwise_Click(sender As Object, e As System.EventArgs) Handles btnRotateClockwise.Click
         Dim pie As Pie = chartAsset.ChartGroups.Group0.Pie
         pie.Start = (pie.Start + 350) Mod 360
     End Sub
@@ -640,12 +751,29 @@ Public Class FundSheetDividend
         If e.Row Mod 2 = 0 Then e.CellStyle.BackColor = Color.LemonChiffon
     End Sub
 
+    Private Sub fgDividend_BeforeEdit(sender As Object, e As RowColEventArgs) Handles fgDividend.BeforeEdit
+        e.Cancel = True
+    End Sub
+
+    Private Sub fgDividend_OwnerDrawCell(sender As Object, e As C1.Win.C1FlexGrid.OwnerDrawCellEventArgs) Handles fgDividend.OwnerDrawCell
+        Dim s As CellStyle
+        s = fgDividend.Styles.Add("RowStyle")
+        s.BackColor = Color.LemonChiffon
+        If e.Row > 0 And e.Row Mod 2 = 0 Then
+            fgDividend.Rows(e.Row).Style = fgDividend.Styles("RowStyle")
+        End If
+    End Sub
+
+    Private Sub DBGBank_FetchRowStyle(sender As Object, e As FetchRowStyleEventArgs) Handles DBGBank.FetchRowStyle
+        If e.Row Mod 2 = 0 Then e.CellStyle.BackColor = Color.LemonChiffon
+    End Sub
+
     Private Sub rbDonut_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbDonut.SelectedIndexChanged
-        pieCheck()
+        If rbDonut.Checked Then pieCheck()
     End Sub
 
     Private Sub rbPie_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbPie.SelectedIndexChanged
-        pieCheck()
+        If rbPie.Checked Then pieCheck()
     End Sub
 
     Private Sub pieCheck()
@@ -664,18 +792,104 @@ Public Class FundSheetDividend
         Return no
     End Function
 
-    Private Sub DisplayHolding()
+    Private Sub dividendClear()
+        With fgDividend
+            .Rows.Count = 1
+            .Cols.Count = 4
+            .ExtendLastCol = False
+            fgDividend(0, 0) = "Month"
+            fgDividend(0, 1) = "Divd/Unit"
+            fgDividend(0, 2) = "NAV/Unit"
+            fgDividend(0, 3) = "Divd%"
+
+            .AllowResizing = AllowResizingEnum.Columns
+            .SelectionMode = SelectionModeEnum.Row
+            fgDividend.Cols(0).Width = 75
+            fgDividend.Cols(1).Width = 75
+            fgDividend.Cols(2).Width = 75
+            fgDividend.Cols(3).Width = 75
+
+            fgDividend.Cols(0).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDividend.Cols(1).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDividend.Cols(2).TextAlignFixed = TextAlignEnum.CenterCenter
+            fgDividend.Cols(3).TextAlignFixed = TextAlignEnum.CenterCenter
+
+            fgDividend.Cols(0).TextAlign = TextAlignEnum.CenterCenter
+            fgDividend.Cols(1).TextAlign = TextAlignEnum.RightCenter
+            fgDividend.Cols(2).TextAlign = TextAlignEnum.RightCenter
+            fgDividend.Cols(3).TextAlign = TextAlignEnum.RightCenter
+        End With
+    End Sub
+
+    Private Sub DisplayDividend()
+        If dtDistribution IsNot Nothing AndAlso dtDistribution.Rows.Count > 0 Then
+            Dim Top As Integer
+            Integer.TryParse(txtTopDividend.Text, Top)
+            Dim queryDividend As IEnumerable
+            If rbEach.Checked Then
+                Dim query = From q In dtDistribution.AsEnumerable Order By q.Field(Of Date)("DateDistribution") Descending
+                            Select Month = q.Field(Of Date)("DateDistribution").ToString("MMM-yy"),
+                                   Rate = q.Field(Of Decimal)("DividendRate"), NAV = CDbl(q.Field(Of Decimal)("UnitPrice")),
+                                   Persen = CDbl(q.Field(Of Decimal)("DividendRate") / (q.Field(Of Decimal)("UnitPrice") - q.Field(Of Decimal)("DividendRate")))
+                If Top > 0 Then
+                    queryDividend = From qd In query.Take(Top)
+                                    Select Month = qd.Month, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                Else
+                    queryDividend = From qd In query
+                                    Select Month = qd.Month, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                End If
+            ElseIf rbYearly.Checked Then
+                Dim query = From q In dtDistribution Order By q.Field(Of Date)("DateDistribution") Descending
+                            Where q.Field(Of Date)("DateDistribution") < New Date(dtAs.Value.Year, 1, 1)
+                            Group By key = New With {Key .Year = q.Field(Of Date)("DateDistribution").Year}
+                             Into Group Select New With {
+                                   .Year = key.Year, .Rate = Group.Sum(Function(r) r.Field(Of Decimal)("DividendRate")), .NAV = CDbl(0),
+                                   .Persen = CDbl(Group.Sum(Function(r) r.Field(Of Decimal)("DividendRate") / (r.Field(Of Decimal)("UnitPrice") - r.Field(Of Decimal)("DividendRate"))))}
+                If Top > 0 Then
+                    queryDividend = From qd In query.Take(Top)
+                                    Select Month = qd.Year, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                Else
+                    queryDividend = From qd In query
+                                    Select Month = qd.Year, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                End If
+            Else
+                Dim query = From qd In dtDividend.AsEnumerable
+                            Select Month = qd.Field(Of String)("Month"),
+                                   Rate = qd.Field(Of Decimal)("Rate"),
+                                   NAV = CDbl(qd.Field(Of Decimal)("NAV")),
+                                   Persen = CDbl(qd.Field(Of Decimal)("Persen"))
+                If Top > 0 Then
+                    queryDividend = From qd In query.Take(Top)
+                                    Select Month = qd.Month, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                Else
+                    queryDividend = From qd In query
+                                    Select Month = qd.Month, Rate = qd.Rate, NAV = CDbl(qd.NAV), Persen = CDbl(qd.Persen)
+                End If
+            End If
+
+            dividendClear()
+            For Each item In queryDividend
+                fgDividend.Rows.Add()
+                fgDividend(fgDividend.Rows.Count - 1, 0) = item.Month
+                fgDividend(fgDividend.Rows.Count - 1, 1) = CDbl(item.Rate).ToString("n5")
+                fgDividend(fgDividend.Rows.Count - 1, 2) = IIf(item.NAV = 0, "-", item.NAV)
+                fgDividend(fgDividend.Rows.Count - 1, 3) = CDbl(item.Persen).ToString("p5")
+            Next
+
+        End If
+    End Sub
+
+    Private Sub DisplaySecurities()
         If dtPosition IsNot Nothing AndAlso dtPosition.Rows.Count > 0 AndAlso dtInstrumentUser IsNot Nothing AndAlso dtInstrumentUser.Rows.Count > 0 Then
             Dim query = From d In dtPosition.AsEnumerable Order By d.Field(Of Decimal)("TotalValue") Descending
                         Join s In dtInstrumentUser.AsEnumerable On d.Field(Of Long)("SecuritiesID") Equals s.Field(Of Long)("SecuritiesID")
                         Join st In dtParameterInstrumentSubType.AsEnumerable On st.Field(Of Integer)("SubTypeID") Equals s.Field(Of Integer)("SubTypeID")
                         Join t In dtParameterInstrumentType.AsEnumerable On t.Field(Of Integer)("TypeID") Equals st.Field(Of Integer)("TypeID")
-                        Select SecuritiesCode = s.Field(Of String)("SecuritiesCode"),
-                               SecuritiesName = s.Field(Of String)("SecuritiesNameShort"), SubTypeCode = st.Field(Of String)("SubTypeCode"),
-                               TypeID = t.Field(Of Integer)("TypeID"), TypeCode = t.Field(Of String)("TypeCode"),
+                        Select SecuritiesCode = s.Field(Of String)("SecuritiesCode"), SecuritiesName = s.Field(Of String)("SecuritiesNameShort"),
+                               SubTypeCode = st.Field(Of String)("SubTypeCode"), TypeID = t.Field(Of Integer)("TypeID"), TypeCode = t.Field(Of String)("TypeCode"),
                                Qty = d.Field(Of Decimal)("Qty"),
-                               Price = d.Field(Of Decimal)("MarketPrice"),
-                               Cost = d.Field(Of Decimal)("CostPrice"),
+                               Price = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("MarketPrice") * 100), d.Field(Of Decimal)("MarketPrice")),
+                               Cost = IIf(t.Field(Of Integer)("TypeID") = SetFI(), CDbl(d.Field(Of Decimal)("CostPrice") * 100), d.Field(Of Decimal)("CostPrice")),
                                Value = d.Field(Of Decimal)("TotalValue"),
                                Persen = CDbl(IIf(objNAV.GetNAV = 0, 0D, CDbl(d.Field(Of Decimal)("TotalValue") * 100 / objNAV.GetNAV)))
 
@@ -692,69 +906,167 @@ Public Class FundSheetDividend
                     Dim query2 = From q In query1 Order By q.SecuritiesName Ascending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
                                    Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                    DisplaySecuritiesList(query2.ToList)
                 Else
                     Dim query2 = From q In query1 Order By q.Value Descending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
                                    Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                    DisplaySecuritiesList(query2.ToList)
                 End If
             Else
                 If rbName.Checked Then
                     Dim query2 = From q In query Order By q.SecuritiesName Ascending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
                                    Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                    DisplaySecuritiesList(query2.ToList)
                 Else
                     Dim query2 = From q In query Order By q.Value Descending
                                  Select No = _no(), Share = q.SecuritiesCode, Name = q.SecuritiesName, TypeCode = q.TypeCode,
                                    Qty = q.Qty, Price = q.Price, Cost = q.Cost, Value = q.Value, Persen = q.Persen
-                    DisplayHoldingList(query2.ToList)
+                    DisplaySecuritiesList(query2.ToList)
                 End If
             End If
 
-            Dim query3 = From q In query Where q.TypeID = SetEQ() Group By key = New With {Key .TypeCode = q.TypeCode}
-                         Into Group Select New With {.TypeCode = key.TypeCode, .Value = Group.Sum(Function(r) CDbl(r.Value))}
             Dim query4 = From q In query Where q.TypeID = SetFI() Group By key = New With {Key .SubTypeCode = q.SubTypeCode}
                          Into Group Select New With {.SubTypeCode = key.SubTypeCode, .Value = Group.Sum(Function(r) CDbl(r.Value))}
+
             Dim fund As Double = (From q In query Where q.TypeID = SetFund() Select q.Value).Sum
             Dim pa As Double = (From q In query Where q.TypeID = SetPhysicalAsset() Select q.Value).Sum
+            Dim eq As Double = (From q In query Where q.TypeID = SetEQ() Select q.Value).Sum
+            Dim mm As Double = (From q In query Select q.Value).Sum
 
             dtHolding.Clear()
-            For Each item In query3
-                Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = item.TypeCode
-                dr("Value") = item.Value
-                dtHolding.Rows.Add(dr)
-            Next
             For Each item In query4
                 Dim dr As DataRow = dtHolding.NewRow()
                 If item.SubTypeCode.Trim = "GOVT" Or item.SubTypeCode.Trim = "TBILLS" Then
-                    dr("Sector") = "Government"
+                    dr("Asset") = "Government"
                 Else
-                    dr("Sector") = "Corporation"
+                    dr("Asset") = "Corporation"
                 End If
                 dr("Value") = item.Value
                 dtHolding.Rows.Add(dr)
             Next
+
+            If eq > 0 Then
+                Dim dr As DataRow = dtHolding.NewRow()
+                dr("Asset") = "Equities"
+                dr("Value") = (From q In query Where q.TypeID = SetEQ() Select q.Value).Sum.ToString("n2")
+                dtHolding.Rows.Add(dr)
+            End If
+
             If fund > 0 Then
                 Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Mutual Fund"
+                dr("Asset") = "Mutual Fund"
                 dr("Value") = fund
                 dtHolding.Rows.Add(dr)
             End If
+
             If pa > 0 Then
                 Dim dr As DataRow = dtHolding.NewRow()
-                dr("Sector") = "Physical Asset"
+                dr("Asset") = "Physical Asset"
                 dr("Value") = pa
                 dtHolding.Rows.Add(dr)
             End If
-            DisplayHoldingAsset()
+
+            mm = objNAV.GetNAV - mm
+            If mm > 0 Then
+                Dim dr As DataRow = dtHolding.NewRow()
+                dr("Asset") = "Money Market"
+                dr("Value") = mm
+                dtHolding.Rows.Add(dr)
+            End If
+
+            DisplaySecuritiesAsset()
 
         End If
     End Sub
 
-    Private Sub DisplayHoldingList(ByVal dataHolding As Object)
+    Private Sub DisplayBank()
+        If dtBank IsNot Nothing AndAlso dtBank.Rows.Count > 0 AndAlso dtBankAccountUser IsNot Nothing AndAlso dtBankAccountUser.Rows.Count > 0 Then
+            Dim query = From s In dtBank.AsEnumerable Join a In dtBankAccountUser.AsEnumerable
+                        On s.Field(Of Long)("AccountID") Equals a.Field(Of Long)("AccountID")
+                        Where a.Field(Of Integer)("BankTypeID") = SetBankDeposit()
+                        Group s By key = New With {
+                            Key .BankID = a.Field(Of Integer)("CompanyID"),
+                            Key .Bank = a.Field(Of String)("CompanyCode"),
+                            Key .Name = a.Field(Of String)("CompanyName")
+                            }
+                        Into Group Select New With {
+                             .BankID = key.BankID, .Bank = key.Bank, .Name = key.Name,
+                             .Amount = Group.Sum(Function(r) r.Field(Of Decimal)("AccountBalance")),
+                             .Persen = IIf(objNAV.GetNAV = 0, 0, .Amount * 100 / objNAV.GetNAV)
+                             }
+
+            Dim Top As Integer
+            Integer.TryParse(txtTopBank.Text, Top)
+            no = 0
+            If Top > 0 Then
+                Dim query1 = From q1 In query.Take(Top)
+                If rbNameBank.Checked Then
+                    Dim query2 = From q In query1 Order By q.Name Ascending
+                                 Select No = _no(), Bank = q.Bank, Name = q.Name, Amount = q.Amount, Persen = q.Persen
+                    DisplayBankList(query2.ToList)
+                Else
+                    Dim query2 = From q In query1 Order By q.Amount Descending
+                                 Select No = _no(), Bank = q.Bank, Name = q.Name, Amount = q.Amount, Persen = q.Persen
+                    DisplayBankList(query2.ToList)
+                End If
+            Else
+                If rbNameBank.Checked Then
+                    Dim query2 = From q In query Order By q.Name Ascending
+                                 Select No = _no(), Bank = q.Bank, Name = q.Name, Amount = q.Amount, Persen = q.Persen
+                    DisplayBankList(query2.ToList)
+                Else
+                    Dim query2 = From q In query Order By q.Amount Descending
+                                 Select No = _no(), Bank = q.Bank, Name = q.Name, Amount = q.Amount, Persen = q.Persen
+                    DisplayBankList(query2.ToList)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub DisplayBankList(ByVal dataBank As Object)
+        With DBGBank
+            .AllowAddNew = False
+            .AllowDelete = False
+            .AllowUpdate = False
+            .Style.WrapText = False
+            .Columns.Clear()
+            .DataSource = dataBank
+
+            .Columns("Amount").NumberFormat = "n0"
+            .Columns("Persen").NumberFormat = "n3"
+
+            .Splits(0).DisplayColumns("No").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            .Splits(0).DisplayColumns("Bank").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
+            .Splits(0).DisplayColumns("Name").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
+            .Splits(0).DisplayColumns("Amount").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            .Splits(0).DisplayColumns("Persen").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+
+            Dim No, Bank, Name, Amount, Persen As C1DisplayColumn
+            No = .Splits(0).DisplayColumns("No")
+            Bank = .Splits(0).DisplayColumns("Bank")
+            Name = .Splits(0).DisplayColumns("Name")
+            Amount = .Splits(0).DisplayColumns("Amount")
+            Persen = .Splits(0).DisplayColumns("Persen")
+
+            No.Width = 35
+            Bank.Width = 65
+            Name.Width = 160
+            Amount.Width = 100
+            Persen.Width = 50
+
+            For Each column As C1DisplayColumn In .Splits(0).DisplayColumns
+                column.Style.WrapText = True
+                .Splits(0).DisplayColumns(column.Name).HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
+            Next
+
+            .Columns("Persen").Caption = "%"
+
+        End With
+    End Sub
+
+    Private Sub DisplaySecuritiesList(ByVal dataHolding As Object)
         With DBGSecurities
             .AllowAddNew = False
             .AllowDelete = False
@@ -765,8 +1077,8 @@ Public Class FundSheetDividend
             .DataSource = dataHolding
 
             .Columns("Qty").NumberFormat = "n0"
-            .Columns("Price").NumberFormat = "n0"
-            .Columns("Cost").NumberFormat = "n0"
+            .Columns("Price").NumberFormat = "n2"
+            .Columns("Cost").NumberFormat = "n2"
             .Columns("Value").NumberFormat = "n0"
             .Columns("Persen").NumberFormat = "n2"
 
@@ -783,7 +1095,7 @@ Public Class FundSheetDividend
             .Splits(0).DisplayColumns("No").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Share").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
             .Splits(0).DisplayColumns("Name").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
-            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Near
+            .Splits(0).DisplayColumns("TypeCode").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Center
             .Splits(0).DisplayColumns("Qty").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Price").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
             .Splits(0).DisplayColumns("Cost").Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
@@ -795,8 +1107,8 @@ Public Class FundSheetDividend
 
             .Splits(0).DisplayColumns("No").Width = 25
             .Splits(0).DisplayColumns("Share").Width = 60
-            .Splits(0).DisplayColumns("Name").Width = 175
-            .Splits(0).DisplayColumns("TypeCode").Width = 100
+            .Splits(0).DisplayColumns("Name").Width = 225
+            .Splits(0).DisplayColumns("TypeCode").Width = 50
             .Splits(0).DisplayColumns("Qty").Width = 75
             .Splits(0).DisplayColumns("Cost").Width = 55
             .Splits(0).DisplayColumns("Price").Width = 55
@@ -817,32 +1129,16 @@ Public Class FundSheetDividend
         End With
     End Sub
 
-    Private Function _valuePie(ByVal item As Double) As Integer
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
-    End Function
-
     Private Function _valueLabel(ByVal item As Double) As Double
-        If objNAV.GetNAV = 0 Then Return 0 Else Return CInt(item * 100 / objNAV.GetNAV)
+        If objNAV.GetNAV = 0 Then Return 0 Else Return CDbl(item * 100 / objNAV.GetNAV)
     End Function
 
-    Private Sub DisplayHoldingAsset()
+    Private Sub DisplaySecuritiesAsset()
         If dtHolding IsNot Nothing AndAlso dtHolding.Rows.Count > 0 Then
-            Dim slice, chartSisa, chartItem As Integer
-            Dim valueSisa, valueItem As Double
+            Dim slice As Integer
+            Dim valueItem As Double
             Dim stringLabel As String = ""
-            chartSisa = 100
-            valueSisa = 100
             slice = 0
-            Dim querySector As IEnumerable
-
-            Dim query = From q In dtHolding.AsEnumerable Order By q.Field(Of Decimal)("Value") Descending
-                        Select Sector = q.Field(Of String)("Sector"), Value = q.Field(Of Decimal)("Value")
-
-            If rbName.Checked Then
-                querySector = From qs In query Order By qs.Sector Ascending Select Sector = qs.Sector, Value = qs.Value
-            Else
-                querySector = From qs In query Order By qs.Value Descending Select Sector = qs.Sector, Value = qs.Value
-            End If
 
             chartAsset.Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
             chartAsset.ChartLabels.DefaultLabelStyle.BackColor = SystemColors.Info
@@ -859,29 +1155,19 @@ Public Class FundSheetDividend
             Dim ColorValue() As Color = {Color.OrangeRed, Color.Tan, Color.LightGreen, Color.MediumTurquoise,
                                          Color.DodgerBlue, Color.Magenta, Color.GreenYellow, Color.MediumBlue}
 
-            For Each item In querySector
-                chartItem = _valuePie(item.Value)
-                chartSisa -= chartItem
+            Dim query = From q In dtHolding.AsEnumerable Select Asset = q.Field(Of String)("Asset"), Value = q.Field(Of Decimal)("Value")
+
+            For Each item In query
                 valueItem = _valueLabel(item.Value)
-                valueSisa -= valueItem
 
                 Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
                 series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartItem)
+                series.PointData(0) = New PointF(1.0F, valueItem)
                 series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm(item.Sector, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
+                stringLabel = GetSimpiTerm(item.Asset, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
                 series.Label = GlobalString.CamelCase(stringLabel) & " " & valueItem.ToString("n2") & "%"
                 slice += 1
             Next
-
-            If valueSisa > 0 Then
-                Dim series As ChartDataSeries = dat.SeriesList.AddNewSeries()
-                series.PointData.Length = 1
-                series.PointData(0) = New PointF(1.0F, chartSisa)
-                series.LineStyle.Color = ColorValue(slice Mod 8)
-                stringLabel = GetSimpiTerm("Others", IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
-                series.Label = GlobalString.CamelCase(stringLabel) & " " & valueSisa.ToString("n2") & "%"
-            End If
 
             chartAsset.Legend.Visible = True
             chartAsset.Legend.Compass = CompassEnum.East
@@ -902,19 +1188,31 @@ Public Class FundSheetDividend
     End Sub
 
     Private Sub rbNAVUnit_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbNAVUnit.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbNAVUnit.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbReturn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbReturn.SelectedIndexChanged
-        DisplayPerformancePortfolio()
+        If rbReturn.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbInception_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbInception.SelectedIndexChanged
+        If rbInception.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbYTD_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYTD.SelectedIndexChanged
+        If rbYTD.Checked Then DisplayPerformancePortfolio()
+    End Sub
+
+    Private Sub rbOneYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbOneYear.SelectedIndexChanged
+        If rbOneYear.Checked Then DisplayPerformancePortfolio()
     End Sub
 
     Private Sub rbYearOne_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearOne.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearOne.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub rbYearThis_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rbYearThis.SelectedIndexChanged
-        DisplayPerformanceMonthly()
+        If rbYearThis.Checked Then DisplayPerformanceMonthly()
     End Sub
 
     Private Sub txtBenchmark_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBenchmark.KeyDown
@@ -1047,10 +1345,10 @@ Public Class FundSheetDividend
             .AllowResizing = AllowResizingEnum.Columns
             .SelectionMode = SelectionModeEnum.Row
             fgWeek.Cols(0).Width = 75
-            fgWeek.Cols(1).Width = 40
-            fgWeek.Cols(2).Width = 40
-            fgWeek.Cols(3).Width = 40
-            fgWeek.Cols(4).Width = 40
+            fgWeek.Cols(1).Width = 45
+            fgWeek.Cols(2).Width = 45
+            fgWeek.Cols(3).Width = 45
+            fgWeek.Cols(4).Width = 45
         End With
     End Sub
 
@@ -1080,8 +1378,8 @@ Public Class FundSheetDividend
                       Order By q3.Field(Of Decimal)("Return") Descending
                       Select PositionDate = q3.Field(Of Date)("Date"), Monthly = q3.Field(Of Decimal)("Return")).Take(1)
         lblReturnBestYear.Text = (query3.ToList(0).Monthly * 100).ToString("n2")
-        lblReturnStdDev.Text = ""
-        lblReturnBeta.Text = ""
+        lblReturnStdDev.Text = (StdDev((From q4 In dtMonthly.AsEnumerable Select CDbl(q4.Field(Of Decimal)("Return"))).ToArray) * Math.Sqrt(12) * 100).ToString("n2")
+        lblReturnBeta.Text = "" 'Slope(return, benchmark)
     End Sub
 
     Private Sub DisplayPerformanceWeek()
@@ -1141,12 +1439,12 @@ Public Class FundSheetDividend
                     fgWeek(1, 5) = 0.ToString("n2")
                 End If
 
-                fgWeek.Cols(0).Width = 100
-                fgWeek.Cols(1).Width = 40
-                fgWeek.Cols(2).Width = 40
-                fgWeek.Cols(3).Width = 40
-                fgWeek.Cols(4).Width = 40
-                fgWeek.Cols(5).Width = 40
+                fgWeek.Cols(0).Width = 75
+                fgWeek.Cols(1).Width = 45
+                fgWeek.Cols(2).Width = 45
+                fgWeek.Cols(3).Width = 45
+                fgWeek.Cols(4).Width = 45
+                fgWeek.Cols(5).Width = 45
             End If
             fgWeek(1, 0) = lblPortfolioCode.Text.Trim
             fgWeek(2, 0) = GetSimpiTerm(lblBenchmark.Text.Trim, IIf(rbOption1.Checked, rbOption1.Text, rbOption2.Text))
@@ -1170,6 +1468,7 @@ Public Class FundSheetDividend
                 End If
                 .Reset()
                 .ChartGroups(0).ChartType = Chart2DTypeEnum.Bar
+                .BackColor = Color.Transparent
 
                 Dim dscoll As ChartDataSeriesCollection = .ChartGroups(0).ChartData.SeriesList
                 dscoll.Clear()
@@ -1182,17 +1481,26 @@ Public Class FundSheetDividend
                     series.Y(i) = item.Monthly
                     i += 1
                 Next
-
+                series.DataLabel.Visible = True
+                series.DataLabel.Style.Font = New Font("Microsoft Sans Serif", 7, FontStyle.Regular)
+                series.DataLabel.Compass = LabelCompassEnum.North
+                series.DataLabel.Text = "{#YVAL:0.00%}"
                 Dim ax As Axis = .ChartArea.AxisX
                 ax.AnnoMethod = AnnotationMethodEnum.ValueLabels
+                ax.AnnotationRotation = 25
+                ax.Thickness = 1
+
                 i = 0
                 For Each item In query
                     ax.ValueLabels.Add(i, item.PositionDate)
                     i += 1
                 Next
-
                 Dim ay As Axis = .ChartArea.AxisY
-                ay.AnnoFormat = FormatEnum.NumericPercentage
+                ay.AnnoFormat = FormatEnum.NumericManual
+                ay.AnnoFormatString = "p0"
+                ay.AutoOrigin = False
+                ay.Origin = 0
+                ay.Thickness = 1
 
             End With
         End If
@@ -1247,11 +1555,26 @@ Public Class FundSheetDividend
             '            Select PositionDate = n.Field(Of Date)("PositionDate"),
             '                   NAV = n.Field(Of Decimal)("NAV"), giPortfolio = n.Field(Of Decimal)("GeometricIndex"),
             '                   BenchmarkValue = b.Field(Of Decimal)("BenchmarkValue"), giBenchmark = b.Field(Of Decimal)("GeometricIndex")
-
-            Dim query = From n In dtNAV.AsEnumerable
-                        Order By n.Field(Of Date)("PositionDate") Ascending
+            Dim query As IEnumerable
+            Dim giAwal As Double = 0
+            If rbInception.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
                         Select PositionDate = n.Field(Of Date)("PositionDate"),
                                NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            ElseIf rbYTD.Checked Then
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > New Date(dtAs.Value.AddYears(-1).Year, 12, 31)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            Else
+                query = From n In dtNAV.AsEnumerable Order By n.Field(Of Date)("PositionDate") Ascending
+                        Where n.Field(Of Date)("PositionDate") > dtAs.Value.AddYears(-1)
+                        Select PositionDate = n.Field(Of Date)("PositionDate"),
+                               NAV = n.Field(Of Decimal)("NAVPerUnit"), giPortfolio = n.Field(Of Decimal)("GeometricIndex")
+                giAwal = (From q2 In query Select q2).ToList(0).giPortfolio
+            End If
 
             With chartPortfolio
                 .Style.Border.BorderStyle = C1.Win.C1Chart.BorderStyleEnum.None
@@ -1263,15 +1586,15 @@ Public Class FundSheetDividend
                 series.SymbolStyle.Shape = SymbolShapeEnum.None
                 series.FitType = FitTypeEnum.Line
 
-                series.X.CopyDataIn((From q In query Select q.PositionDate).ToArray)
+                series.X.CopyDataIn((From q In query Select CDate(q.PositionDate)).ToArray)
                 If rbNAVUnit.Checked Then
-                    series.Y.CopyDataIn((From q In query Select q.NAV).ToArray)
+                    series.Y.CopyDataIn((From q In query Select CDbl(q.NAV)).ToArray)
                 ElseIf chkRebase.Checked Then
-                    series.Y.CopyDataIn((From q In query Select (1 + (q.giPortfolio - 1))).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (1 + ((CDbl(q.giPortfolio) / giAwal) - 1))).ToArray)
                 Else
-                    series.Y.CopyDataIn((From q In query Select q.giPortfolio - 1).ToArray)
+                    series.Y.CopyDataIn((From q In query Select (CDbl(q.giPortfolio) / giAwal) - 1).ToArray)
                 End If
-                series.PointData.Length = query.Count
+                series.PointData.Length = (From q In query).Count
 
                 .BackColor = Color.Transparent
                 .ChartArea.AxisX.Max = (From q In query Select q.PositionDate).Last.ToOADate
@@ -1286,10 +1609,13 @@ Public Class FundSheetDividend
                 .ChartArea.AxisY.AnnoFormat = FormatEnum.NumericManual
                 If rbNAVUnit.Checked Then
                     .ChartArea.AxisY.AnnoFormatString = "n0"
+                    .ChartArea.AxisY.AutoOrigin = True
                 ElseIf chkRebase.Checked Then
                     .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 1
                 Else
                     .ChartArea.AxisY.AnnoFormatString = "p0"
+                    .ChartArea.AxisY.Origin = 0
                 End If
                 .ChartArea.AxisY.AutoMax = True
                 .ChartArea.AxisY.AutoMin = True
